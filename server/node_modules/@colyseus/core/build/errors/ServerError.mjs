@@ -1,0 +1,14 @@
+import { ErrorCode } from "../Protocol";
+class ServerError extends Error {
+  constructor(code = ErrorCode.MATCHMAKE_UNHANDLED, message) {
+    super(message);
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ServerError);
+    }
+    this.name = "ServerError";
+    this.code = code;
+  }
+}
+export {
+  ServerError
+};

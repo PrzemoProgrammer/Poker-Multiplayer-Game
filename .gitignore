@@ -1,7 +1,6 @@
 
 # Vendors
-Server/node_modules/
-Client/node_modules/
+/node_modules
 TestHelperForGithub/
 
 # Build

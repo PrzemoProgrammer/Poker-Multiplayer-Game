@@ -1,0 +1,32 @@
+{
+    "background": {
+      "path": "",
+      "key": "background",
+      "type": "sprite",
+      "x": 960,
+      "y": 540,
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "visible": true
+    },
+    "table": {
+        "path": "",
+        "key": "table",
+        "type": "sprite",
+        "x": 960,
+        "y": 540,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "visible": true
+    },
+    "croupier": {
+        "path": "",
+        "key": "croupier",
+        "type": "sprite",
+        "x": 960,
+        "y": 150,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "visible": true
+      }
+  }

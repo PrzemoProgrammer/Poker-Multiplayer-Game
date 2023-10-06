@@ -1,0 +1,90 @@
+{
+  "name": "pixi.js",
+  "version": "6.5.8",
+  "description": "PixiJS without the CanvasRenderer fallback, modern browsers only",
+  "author": "Mat Groves",
+  "contributors": [
+    "Ivan Popelyshev <ivan.popelyshev@gmail.com>",
+    "Matt Karl <matt@mattkarl.com>",
+    "Chad Engler <chad@pantherdev.com>",
+    "Richard Davey <rdavey@gmail.com>"
+  ],
+  "standalone": true,
+  "main": "dist/cjs/pixi.js",
+  "module": "dist/esm/pixi.mjs",
+  "bundle": "dist/browser/pixi.js",
+  "bundleModule": "dist/browser/pixi.mjs",
+  "bundleOutput": {
+    "name": "PIXI"
+  },
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./dist/esm/pixi.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./dist/cjs/pixi.js"
+      }
+    }
+  },
+  "homepage": "http://www.pixijs.com/",
+  "bugs": "https://github.com/pixijs/pixi.js/issues",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixijs/pixi.js.git"
+  },
+  "scripts": {
+    "test": "floss --path test"
+  },
+  "files": [
+    "dist/",
+    "*.d.ts"
+  ],
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/pixijs"
+  },
+  "dependencies": {
+    "@pixi/accessibility": "6.5.8",
+    "@pixi/app": "6.5.8",
+    "@pixi/compressed-textures": "6.5.8",
+    "@pixi/constants": "6.5.8",
+    "@pixi/core": "6.5.8",
+    "@pixi/display": "6.5.8",
+    "@pixi/extensions": "6.5.8",
+    "@pixi/extract": "6.5.8",
+    "@pixi/filter-alpha": "6.5.8",
+    "@pixi/filter-blur": "6.5.8",
+    "@pixi/filter-color-matrix": "6.5.8",
+    "@pixi/filter-displacement": "6.5.8",
+    "@pixi/filter-fxaa": "6.5.8",
+    "@pixi/filter-noise": "6.5.8",
+    "@pixi/graphics": "6.5.8",
+    "@pixi/interaction": "6.5.8",
+    "@pixi/loaders": "6.5.8",
+    "@pixi/math": "6.5.8",
+    "@pixi/mesh": "6.5.8",
+    "@pixi/mesh-extras": "6.5.8",
+    "@pixi/mixin-cache-as-bitmap": "6.5.8",
+    "@pixi/mixin-get-child-by-name": "6.5.8",
+    "@pixi/mixin-get-global-position": "6.5.8",
+    "@pixi/particle-container": "6.5.8",
+    "@pixi/polyfill": "6.5.8",
+    "@pixi/prepare": "6.5.8",
+    "@pixi/runner": "6.5.8",
+    "@pixi/settings": "6.5.8",
+    "@pixi/sprite": "6.5.8",
+    "@pixi/sprite-animated": "6.5.8",
+    "@pixi/sprite-tiling": "6.5.8",
+    "@pixi/spritesheet": "6.5.8",
+    "@pixi/text": "6.5.8",
+    "@pixi/text-bitmap": "6.5.8",
+    "@pixi/ticker": "6.5.8",
+    "@pixi/utils": "6.5.8"
+  },
+  "gitHead": "bce3b3e5b51ad28527e6284dc02c8e46eff113dd"
+}
