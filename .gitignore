@@ -1,0 +1,8 @@
+
+# Vendors
+Server/node_modules/
+Client/node_modules/
+TestHelperForGithub/
+
+# Build
+/npm-debug.log
