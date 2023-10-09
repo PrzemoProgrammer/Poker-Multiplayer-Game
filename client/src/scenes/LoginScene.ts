@@ -6,39 +6,35 @@ import Cookies from "js-cookie";
 export default class LoginScene extends PIXI.Container {
   login: string
   password: string
+  nick: string
     constructor() {
       super();
 
-      console.log("Login Scene")
-      this.login = "123"
-      this.password = "123"
+      this.login = "1234"
+      this.password = "1234"
+      this.nick = "ALfred"
       this.fetchPlayerData()
     }
   
   async fetchPlayerData(){
-    //const isRegisterSuccess = this.handleRegistration()
+    // const isRegisterSuccess = await this.handleRegistration()
 
     const { success, jwt } = await this.handleAuthentication()
     success ?  this.handleNextScene(jwt) : console.log("Invalid login or password !");
-  
-    // const loginData = await (await GAME_STATE({authToken })).json();
-    // console.log(loginData);
-
   }
 
   async handleRegistration(){
-    const {login, password} = this.getUserLoginAndPassword()
-        const isRegisterSuccess = await (await REGISTRATION({login, password })).json();
-       console.log(isRegisterSuccess)
+    const {login, password, nick} = this.getUserLoginAndPassword()
+    const isRegisterSuccess = await (await REGISTRATION({login, password, nick })).json();
+    console.log(isRegisterSuccess)
 
        return isRegisterSuccess
   }
 
   async handleAuthentication(){
-const {login, password} = this.getUserLoginAndPassword()
+  const {login, password} = this.getUserLoginAndPassword()
     const authToken = await (await AUTHENTICATION({login, password})).json();
     const { success, jwt } = authToken;
-    console.log(authToken)
 
     return  { success, jwt }
   }
@@ -46,7 +42,8 @@ const {login, password} = this.getUserLoginAndPassword()
   getUserLoginAndPassword(){
     const login = this.login
     const password = this.password
-    return {login, password}
+    const nick = this.nick
+    return {login, password, nick}
   }
 
     handleNextScene(jwt: string) {

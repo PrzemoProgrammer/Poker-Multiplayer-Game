@@ -25,6 +25,7 @@
     "author": "jkanchelov",
     "license": "MIT",
     "dependencies": {
+        "colyseus.js": "^0.15.14",
         "core-js": "^3.26.0",
         "js-cookie": "^3.0.5",
         "pixi-spine": "^3.0.16",

@@ -2,7 +2,7 @@ const databaseManager = require("../MongoDB/DatabaseManager");
 const passwordHasher = require("../dataHasher/PasswordHasher");
 
 async function register(req, res) {
-  const { login, password } = req.body;
+  const { login, password, nick } = req.body;
 
   try {
     const userPassword = login + password;
@@ -21,6 +21,13 @@ async function register(req, res) {
     }
 
     console.log("User password hash  does not exist in database");
+    const userData = {
+      nick: nick,
+      money: 0,
+      passwordHash: hashedPassword,
+    };
+
+    databaseManager.createUser(userData);
 
     return res.json({ success: true });
   } catch (error) {

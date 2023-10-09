@@ -2,31 +2,49 @@ import * as PIXI from "pixi.js";
 import sceneManager from "../utility/SceneManager";
 import PlayerStorage from "../utility/PlayerStorage";
 import {PLAYER_STATE } from "../services/requests/requests";
+import ColyseusClient from "../services/colyseus/ColyseusClient";
 import Cookies from "js-cookie";
 
 export default class BootstrapScene extends PIXI.Container {
+  authToken: string | undefined
     constructor() {
       super();
 
-      this.create()
+      this.init()
     }
 
-    async create(){
+    async init(){
+      this.authToken = this.getAuthToken()
       await this.fetchPlayerData()
-      this.startNextScene()
+      const isPlayerJoinedRoom = await this.tryJoinToGameRoom()
+      this.handleStartNextScene(isPlayerJoinedRoom)
     }
 
     async fetchPlayerData(){
-      const authToken = Cookies.get("authToken")
+      const authToken = this.authToken
       const playerState = await (await PLAYER_STATE({authToken})).json();
-      console.log(playerState)
       PlayerStorage.setData(playerState)
     }
-  
 
-    startNextScene() {
-      sceneManager.startScene("PlayScene");
+    private handleStartNextScene(isConnected: boolean) {
+      isConnected ? sceneManager.startScene("PlayScene") : console.log("Player not connected to the room")
     }
+
+     private async tryJoinToGameRoom(){
+      const isPlayerJoined = await ColyseusClient.joinGameRoom(Cookies.get("authToken"))
+      return isPlayerJoined
+    }
+
+    private getAuthToken(): string | undefined{
+      return Cookies.get("authToken")
+    }
+   
+
+
+
+
+
+
 
   }
   

@@ -17,10 +17,12 @@ class DatabaseManager {
       });
   }
 
-  async addPlayer(data) {
+  async createUser(data) {
+    const { nick, money, passwordHash } = data;
     const player = new Player({
-      id: data.id,
-      nick: data.nick,
+      nick: nick,
+      money: money,
+      passwordHash: passwordHash,
     });
 
     await player

@@ -20,6 +20,7 @@ export default class PreloadScene extends PIXI.Container {
       "background",
       "table",
       "croupier",
+      "default_avatar"
     ];
 
     let totalImages = images.length;
@@ -34,6 +35,7 @@ export default class PreloadScene extends PIXI.Container {
 
 
   handleStartNextScene(){
+    Cookies.remove('authToken');
     Cookies.get("authToken") ?  sceneManager.startScene("BootstrapScene") :  sceneManager.startScene("LoginScene"),
     sceneManager.removeScene("BootScene")
 }

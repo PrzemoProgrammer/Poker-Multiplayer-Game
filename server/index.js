@@ -25,4 +25,5 @@ module.exports = {
   server,
   app,
   port,
+  http,
 };
