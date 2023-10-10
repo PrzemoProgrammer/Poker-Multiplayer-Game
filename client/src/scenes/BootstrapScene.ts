@@ -4,8 +4,9 @@ import PlayerStorage from "../utility/PlayerStorage";
 import {PLAYER_STATE } from "../services/requests/requests";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import Cookies from "js-cookie";
+import BaseScene from "../abstraction/BaseScene";
 
-export default class BootstrapScene extends PIXI.Container {
+export default class BootstrapScene extends BaseScene {
   authToken: string | undefined
     constructor() {
       super();
@@ -38,12 +39,6 @@ export default class BootstrapScene extends PIXI.Container {
     private getAuthToken(): string | undefined{
       return Cookies.get("authToken")
     }
-   
-
-
-
-
-
 
 
   }

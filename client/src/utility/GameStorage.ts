@@ -28,6 +28,8 @@ class GameStorage {
         (this.game as Application).stage.addChild(gameInstance);  
     }
 
+
+
     
   }
   

@@ -4,14 +4,14 @@ import SceneStorage from "../utility/SceneStorage";
 import SceneInstanceStorage from "../utility/SceneInstanceStorage";
 
 class SceneManager {
-    game: Application | object
-    scenes: { [key: string]: Function };
-    sceneInstances: { [key: string]: Container };
+    // game: Application | object
+    // scenes: { [key: string]: Function };
+    // sceneInstances: { [key: string]: Container };
 
     constructor() {
-      this.game = GameStorage.getGame()
-      this.scenes = SceneStorage.getScenes()
-      this.sceneInstances = {};
+      // this.game = GameStorage.getGame()
+      // this.scenes = SceneStorage.getScenes()
+      // this.sceneInstances = {};
     }
   
     public addScene(scene: Function[]):void  {
@@ -32,8 +32,16 @@ class SceneManager {
     }
   
    public removeScene(key: string):void  {
-      const sceneInstance = SceneInstanceStorage.getSceneInstance(key)
+      const sceneInstance = this.getSceneInstance(key)
       GameStorage.removeChild(sceneInstance)
+    }
+
+    public getScene(key: string): Container{
+     return this.getSceneInstance(key)
+    }
+
+    private getSceneInstance(key: string){
+      return SceneInstanceStorage.getSceneInstance(key)
     }
   
     deleteScene(key: string):void  {

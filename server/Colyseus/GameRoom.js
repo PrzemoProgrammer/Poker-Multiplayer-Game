@@ -12,25 +12,38 @@ class GameRoom extends Room {
     console.log(`${client.id} joined the game.`);
     const { authToken } = options;
     const hashedPassword = JWT.decode(authToken);
-    const userDatabaseData = await databaseManager.findPlayer({
-      passwordHash: hashedPassword,
-    });
-    delete userDatabaseData.passwordHash;
+    const userDatabaseData = await databaseManager
+      .findPlayer({
+        passwordHash: hashedPassword,
+      })
+      .lean()
+      .select("-_id -passwordHash -__v");
+
     this.players[client.sessionId] = userDatabaseData;
 
     console.log(this.players);
+
+    this.onMessageToAll(
+      {
+        clientId: client.id,
+        userData: userDatabaseData,
+      },
+      "playerJoined"
+    );
   }
 
   onMessage(client, message) {
     // this.broadcast("message", { text: "Hello, everyone!" });
     console.log(`${client.id} sent a message:`, message);
 
-    // const player = this.state.players[client.sessionId];
     // // Obsługa akcji gracza, np. ruchu
     // player.x = message.x;
     // player.y = message.y;
     // // Aktualizuj stan gry i przekazuj go do wszystkich graczy
-    // this.broadcastState()
+  }
+
+  onMessageToAll(message, url) {
+    this.broadcast(url, message);
   }
 
   onLeave(client, consented) {

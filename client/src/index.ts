@@ -3,6 +3,7 @@ import PreloadScene from "./scenes/PreloadScene";
 import BootScene from "./scenes/BootScene";
 import PlayScene from "./scenes/PlayScene";
 import LoginScene from "./scenes/LoginScene";
+import SetupGameScene from "./scenes/SetupGameScene";
 import BootstrapScene from "./scenes//BootstrapScene";
 import { resizeScreen }  from "./screen/resizeScreen";
 import sceneManager from "./utility/SceneManager";
@@ -14,7 +15,7 @@ const game = GameStorage.getGame()
 document.body.appendChild(game.view);
 resizeScreen(game)
 window.addEventListener("resize", () => resizeScreen(game));
-sceneManager.addScene([BootScene, PreloadScene, BootstrapScene, LoginScene, PlayScene]);
+sceneManager.addScene([BootScene, PreloadScene, BootstrapScene, LoginScene, PlayScene, SetupGameScene]);
 sceneManager.autoStartFirstScene()
 
 

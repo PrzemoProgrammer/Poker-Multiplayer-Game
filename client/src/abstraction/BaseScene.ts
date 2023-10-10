@@ -6,7 +6,7 @@ export default class BaseScene extends PIXI.Container {
 
   }
 
-  public init(): void{
+  // public init(): void{
 
-  }
+  // }
 }

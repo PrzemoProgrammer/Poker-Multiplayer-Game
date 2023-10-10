@@ -2,8 +2,10 @@ import * as PIXI from "pixi.js";
 import sceneManager from "../utility/SceneManager";
 import AssetsManager from "../utility/AssetsManager";
 import Cookies from "js-cookie";
+import BaseScene from "../abstraction/BaseScene";
 
-export default class PreloadScene extends PIXI.Container {
+
+export default class PreloadScene extends BaseScene {
   constructor() {
     super();
 

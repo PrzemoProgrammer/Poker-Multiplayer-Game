@@ -2,8 +2,9 @@ import * as PIXI from "pixi.js";
 import sceneManager from "../utility/SceneManager";
 import AssetsManager from "../utility/AssetsManager";
 import LoadingScreen from "../components/LoadingScreen";
+import BaseScene from "../abstraction/BaseScene";
 
-export default class BootScene extends PIXI.Container {
+export default class BootScene extends BaseScene {
     constructor() {
       super();
 

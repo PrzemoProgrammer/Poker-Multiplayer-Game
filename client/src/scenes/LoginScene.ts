@@ -2,8 +2,10 @@ import * as PIXI from "pixi.js";
 import sceneManager from "../utility/SceneManager";
 import {AUTHENTICATION, REGISTRATION } from "../services/requests/requests";
 import Cookies from "js-cookie";
+import BaseScene from "../abstraction/BaseScene";
 
-export default class LoginScene extends PIXI.Container {
+
+export default class LoginScene extends BaseScene {
   login: string
   password: string
   nick: string

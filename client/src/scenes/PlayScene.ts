@@ -3,10 +3,13 @@ import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
 import spritesConfig from "../../assets/spritesConfig.json";
 import CreateComponent from "../components/CreateComponent";
 import SpriteConfig from "../interfaces/SpriteConfig";
+import sceneManager from "../utility/SceneManager";
 import Player from "../players/Player";
+import ColyseusClient from "../services/colyseus/ColyseusClient";
+import BaseScene from "../abstraction/BaseScene";
 import PlayerStorage from "../utility/PlayerStorage"
 
-export default class PlayScene extends PIXI.Container {
+export default class PlayScene extends BaseScene {
   player1: Player
   player2: Player
   player3: Player
@@ -21,6 +24,8 @@ export default class PlayScene extends PIXI.Container {
     this.player2 = this.createPlayer2()
     this.player3 = this.createPlayer3()
     this.player4 = this.createPlayer4()
+
+    // this.startSetupGameScene()
   }
   get gw() {
     return GAME_WIDTH
@@ -127,6 +132,14 @@ export default class PlayScene extends PIXI.Container {
       if (player !== null) this.addChild(player);
 
     return player
+  }
+
+  addNewPlayerToGame(){
+
+  }
+
+  startSetupGameScene(){
+    sceneManager.startScene("SetupGameScene"); 
   }
  
 }
