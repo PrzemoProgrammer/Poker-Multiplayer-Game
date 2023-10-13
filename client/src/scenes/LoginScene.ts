@@ -50,7 +50,7 @@ export default class LoginScene extends BaseScene {
 
     handleNextScene(jwt: string) {
       Cookies.set("authToken", jwt, { expires: 1 });
-        sceneManager.startScene("BootstrapScene")
+        sceneManager.startScene("PlayScene")
         sceneManager.deleteScene("MenuScene");
       }
   }

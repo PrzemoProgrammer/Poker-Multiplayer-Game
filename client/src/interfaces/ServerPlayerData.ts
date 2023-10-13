@@ -1,7 +1,5 @@
 export default interface ServerPlayerData {
-    clientId: string
-    userData: {
-        money: number,
         nick: string,
-    }
+        money: number,
+        id: string
   }

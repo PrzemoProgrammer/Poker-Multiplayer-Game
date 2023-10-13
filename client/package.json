@@ -28,6 +28,7 @@
         "colyseus.js": "^0.15.14",
         "core-js": "^3.26.0",
         "js-cookie": "^3.0.5",
+        "mini-signals": "^2.0.0",
         "pixi-spine": "^3.0.16",
         "pixi.js": "^6.5.8",
         "regenerator-runtime": "^0.13.10"

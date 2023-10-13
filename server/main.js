@@ -21,7 +21,7 @@ server.listen(port, async () => {
 
   app.post("/registration", registration);
   app.post("/authentication", authentication);
-  app.post("/playerState", playerState);
+  // app.post("/playerState", playerState);
 
   app.post("/game_state", async (req, res) => {
     let { authToken } = req.body;

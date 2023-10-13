@@ -37,8 +37,8 @@ export default class PreloadScene extends BaseScene {
 
 
   handleStartNextScene(){
-    Cookies.remove('authToken');
-    Cookies.get("authToken") ?  sceneManager.startScene("BootstrapScene") :  sceneManager.startScene("LoginScene"),
+    // Cookies.remove('authToken');
+    Cookies.get("authToken") ?  sceneManager.startScene("PlayScene") :  sceneManager.startScene("LoginScene"),
     sceneManager.removeScene("BootScene")
 }
 }

@@ -5,45 +5,41 @@ const JWT = require("../JWT/JWTManager");
 class GameRoom extends Room {
   onCreate(options) {
     console.log("Game room created:", options);
-    this.players = {};
+    this.players = {
+      FqwM02TqT: { nick: "Jan3", money: 0, id: "FqwM02TqT" },
+      SqwT22TqV: { nick: "ZByszek", money: 100, id: "SqwT22TqV" },
+    };
   }
 
   async onJoin(client, options) {
-    console.log(`${client.id} joined the game.`);
-    const { authToken } = options;
-    const hashedPassword = JWT.decode(authToken);
-    const userDatabaseData = await databaseManager
-      .findPlayer({
-        passwordHash: hashedPassword,
-      })
-      .lean()
-      .select("-_id -passwordHash -__v");
+    try {
+      const clientID = client.sessionId;
+      console.log(`User with session ID ${clientID} has joined the game.`);
 
-    this.players[client.sessionId] = userDatabaseData;
+      const { authToken } = options;
+      const hashedPassword = JWT.decode(authToken);
 
-    console.log(this.players);
+      const userDatabaseData = await databaseManager
+        .findPlayer({ passwordHash: hashedPassword })
+        .select("-_id -passwordHash -__v")
+        .lean();
 
-    this.onMessageToAll(
-      {
-        clientId: client.id,
-        userData: userDatabaseData,
-      },
-      "playerJoined"
-    );
+      userDatabaseData.id = clientID;
+      const joinedPlayer = (this.players[clientID] = userDatabaseData);
+
+      this.broadcast("playerJoined", joinedPlayer, { except: clientID });
+
+      client.send("getPlayers", this.players);
+    } catch (error) {
+      console.error(
+        "An error occurred while processing the client join request:",
+        error
+      );
+    }
   }
 
   onMessage(client, message) {
-    // this.broadcast("message", { text: "Hello, everyone!" });
     console.log(`${client.id} sent a message:`, message);
-
-    // // Obsługa akcji gracza, np. ruchu
-    // player.x = message.x;
-    // player.y = message.y;
-    // // Aktualizuj stan gry i przekazuj go do wszystkich graczy
-  }
-
-  onMessageToAll(message, url) {
-    this.broadcast(url, message);
   }
 
   onLeave(client, consented) {

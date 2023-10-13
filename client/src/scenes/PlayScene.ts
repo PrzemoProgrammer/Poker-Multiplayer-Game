@@ -8,25 +8,22 @@ import Player from "../players/Player";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import BaseScene from "../abstraction/BaseScene";
 import PlayerStorage from "../utility/PlayerStorage"
+import GameSignals from "../gameSignals/GameSignals";
+import ServerPlayerData from "../interfaces/ServerPlayerData";
+import playersManager from "../utility/PlayersManager";
+import PLAYER_CONFIG from "../config/playerConfig";
+import PlayersConfig from "../interfaces/PlayersConfig";
 
 export default class PlayScene extends BaseScene {
-  player1: Player
-  player2: Player
-  player3: Player
-  player4: Player
-
-
   constructor() {
     super()
 
     this.createComponents()
-    this.player1 = this.createPlayer1()
-    this.player2 = this.createPlayer2()
-    this.player3 = this.createPlayer3()
-    this.player4 = this.createPlayer4()
 
-    // this.startSetupGameScene()
+    this.bindSignals()
+    this.startSetupGameScene()
   }
+
   get gw() {
     return GAME_WIDTH
   }
@@ -40,6 +37,29 @@ export default class PlayScene extends BaseScene {
     // })
   }
 
+  bindSignals(): void {
+    GameSignals.onPlayerJoined.add((playerData: ServerPlayerData)=>this.addPlayerToGame(playerData))
+    GameSignals.onGetPlayers.add((playerData: PlayersConfig)=>this.addPlayersToGame(playerData))
+  }
+
+  addPlayerToGame(playerData: ServerPlayerData) {
+    if(ColyseusClient.isMyId(playerData.id)) return
+    console.log(playerData)
+    const player = this.createPlayer(playerData)
+    playersManager.addPlayer(player)
+  }
+
+  addPlayersToGame(playersData: PlayersConfig) {
+    for (const playerId in playersData) {
+      const playerData = playersData[playerId]
+      console.log(playerData)
+      this.addPlayerToGame(playerData)
+      if(ColyseusClient.isMyId(playerData.id)) return //update inerface zamias treurn
+    }
+
+    console.log(playersData)
+  }
+
   createComponents(){
     for (let spriteConfig in spritesConfig) {
       const spriteData: SpriteConfig = spritesConfig[spriteConfig as keyof typeof spritesConfig]
@@ -48,94 +68,20 @@ export default class PlayScene extends BaseScene {
     }
   }
 
-  createPlayer1(): Player{
-    const config = {
-      x: 550,
-      y: 200,
-      sprite: {
-          path: "",
-          key: "default_avatar",
-          type: "sprite",
-          x: 0,
-          y: 0,
-          anchorX: 0.5,
-          anchorY: 0.5,
-          visible: true
-  }
-}
-    const player = new Player(config)
-      if (player !== null) this.addChild(player);
+createPlayer(playerData: ServerPlayerData): Player{
+  const {id, money, nick} = playerData
+  const {x, y} = playersManager.getEmptyPosition()
+  const config = { ...PLAYER_CONFIG };
+  config.x = x
+  config.y = y
+  config.id = id
+  config.nickname.message = nick
+  config.bets.message = money
+
+  const player = new Player(config)
+  if (player !== null) this.addChild(player);
 
     return player
-  }
-
-  createPlayer2(): Player{
-    const config = {
-      x: 1380,
-      y: 200,
-      sprite: {
-          path: "",
-          key: "default_avatar",
-          type: "sprite",
-          x: 0,
-          y: 0,
-          anchorX: 0.5,
-          anchorY: 0.5,
-          visible: true
-  }
-}
-    const player = new Player(config)
-      if (player !== null) this.addChild(player);
-
-    return player
-  }
-
-  
-  createPlayer3(): Player{
-    const config = {
-      x: 1530,
-      y: 550,
-      sprite: {
-          path: "",
-          key: "default_avatar",
-          type: "sprite",
-          x: 0,
-          y: 0,
-          anchorX: 0.5,
-          anchorY: 0.5,
-          visible: true
-  }
-}
-    const player = new Player(config)
-      if (player !== null) this.addChild(player);
-
-    return player
-  }
-
-    
-  createPlayer4(): Player{
-    const config = {
-      x: 390,
-      y: 550,
-      sprite: {
-          path: "",
-          key: "default_avatar",
-          type: "sprite",
-          x: 0,
-          y: 0,
-          anchorX: 0.5,
-          anchorY: 0.5,
-          visible: true
-  }
-}
-    const player = new Player(config)
-      if (player !== null) this.addChild(player);
-
-    return player
-  }
-
-  addNewPlayerToGame(){
-
   }
 
   startSetupGameScene(){

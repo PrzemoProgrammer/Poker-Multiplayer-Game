@@ -4,14 +4,7 @@ import SceneStorage from "../utility/SceneStorage";
 import SceneInstanceStorage from "../utility/SceneInstanceStorage";
 
 class SceneManager {
-    // game: Application | object
-    // scenes: { [key: string]: Function };
-    // sceneInstances: { [key: string]: Container };
-
     constructor() {
-      // this.game = GameStorage.getGame()
-      // this.scenes = SceneStorage.getScenes()
-      // this.sceneInstances = {};
     }
   
     public addScene(scene: Function[]):void  {
