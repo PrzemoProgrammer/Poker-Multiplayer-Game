@@ -19,7 +19,6 @@ class ColyseusClient {
    async joinGameRoom(authToken: string | undefined) {
     let isConnected = false
    await this.client.joinOrCreate('game',{authToken}).then(room => {
-   // new MiniSignal<Array>().dispatch()
         console.log('Joined room', room)
         this.room = room
         this.myId = room.sessionId
@@ -38,12 +37,6 @@ class ColyseusClient {
         console.error('Failed to join room:', err)
       })
     return isConnected
-    // try {
-    //   this.room = await this.client.join('game'); //this.room = await this.joinOrCreate.join('game')
-    //   console.log('Joined game room successfully:', this.room);
-    // } catch (error) {
-    //   console.error('Failed to join game room:', error);
-    // }
   }
 
   public isMyId(id: string): boolean{
@@ -57,12 +50,11 @@ class ColyseusClient {
       });
 
       this.room.onMessage('getPlayers', (data: ServerPlayerData) => {
-        console.log(data)
         GameSignals.onGetPlayers.dispatch(data)
       });
 
       this.room.onMessage("playerJoined", (data: PlayersConfig) => {
-        console.log('Received playerJoined message:', data);
+        // console.log('Received playerJoined message:', data);
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
