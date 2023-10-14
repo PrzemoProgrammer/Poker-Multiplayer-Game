@@ -28,14 +28,14 @@ export default {
     bets: {
       message: 0,
       x: 0,
-      y: 100,
+      y: 55,
       anchorX: 0.5,
       anchorY: 0.5,
       visible: true,
       textConfig: {
         fontFamily: 'Arial',
         fontSize: 36,
-        fill: 0xFFFFFF, 
+        fill: 0x000000, 
       }
     }
 }

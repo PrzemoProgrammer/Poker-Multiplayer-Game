@@ -8,6 +8,7 @@ class GameRoom extends Room {
     this.players = {
       FqwM02TqT: { nick: "Jan3", money: 0, id: "FqwM02TqT" },
       SqwT22TqV: { nick: "ZByszek", money: 100, id: "SqwT22TqV" },
+      GLw932TQF: { nick: "Adamoss", money: 350, id: "GLw932TQF" },
     };
   }
 

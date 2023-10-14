@@ -13,12 +13,17 @@ import ServerPlayerData from "../interfaces/ServerPlayerData";
 import playersManager from "../utility/PlayersManager";
 import PLAYER_CONFIG from "../config/playerConfig";
 import PlayersConfig from "../interfaces/PlayersConfig";
+import UiInterface from "../components/UiInterface";
+import UiInterfaceManager from "../utility/UiInterfaceManager";
+
 
 export default class PlayScene extends BaseScene {
+  // uiInterface: PIXI.Container
   constructor() {
     super()
 
     this.createComponents()
+    this.createUiInterface()
 
     this.bindSignals()
     this.startSetupGameScene()
@@ -44,7 +49,6 @@ export default class PlayScene extends BaseScene {
 
   addPlayerToGame(playerData: ServerPlayerData) {
     if(ColyseusClient.isMyId(playerData.id)) return
-    console.log(playerData)
     const player = this.createPlayer(playerData)
     playersManager.addPlayer(player)
   }
@@ -52,12 +56,9 @@ export default class PlayScene extends BaseScene {
   addPlayersToGame(playersData: PlayersConfig) {
     for (const playerId in playersData) {
       const playerData = playersData[playerId]
-      console.log(playerData)
       this.addPlayerToGame(playerData)
-      if(ColyseusClient.isMyId(playerData.id)) return //update inerface zamias treurn
+      if(ColyseusClient.isMyId(playerData.id)) UiInterfaceManager.updateMoneyText(playerData.money)
     }
-
-    console.log(playersData)
   }
 
   createComponents(){
@@ -86,6 +87,10 @@ createPlayer(playerData: ServerPlayerData): Player{
 
   startSetupGameScene(){
     sceneManager.startScene("SetupGameScene"); 
+  }
+
+  createUiInterface(){
+    UiInterfaceManager.createInterface(this)
   }
  
 }

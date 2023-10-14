@@ -14,6 +14,7 @@ export default class PreloadScene extends BaseScene {
 
   async create(): Promise<void> {
     await this.loadImages();
+    await this.loadInterfaceImages()
     this.handleStartNextScene();
   }
 
@@ -30,6 +31,31 @@ export default class PreloadScene extends BaseScene {
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
       let source = `assets/${sprite}.png`
+
+      AssetsManager.addImage(sprite, source);
+    }
+  }
+
+  async loadInterfaceImages(): Promise<void> {
+    const images = [
+      "bottom_bar",
+      "call_button",
+      "call_button_push",
+      "check_button",
+      "check_button_push",
+      "check_fold_button",
+      "check_fold_button_push",
+      "fold_button",
+      "fold_button_push",
+      "raise_button",
+      "raise_button_push",
+    ];
+
+    let totalImages = images.length;
+
+    for (let i = 0; i < totalImages; i++) {
+      let sprite = images[i];
+      let source = `assets/interface/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }
