@@ -3,6 +3,7 @@
 client/node_modules/
 client/USUNAC.ts/
 server/.env/
+server/DATA.txt/
 server/node_modules/
 TestHelperForGithub/
 
