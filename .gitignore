@@ -1,6 +1,7 @@
 
 # Vendors
 client/node_modules/
+client/USUNAC.ts/
 server/node_modules/
 TestHelperForGithub/
 
