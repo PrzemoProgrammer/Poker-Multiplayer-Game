@@ -10,3 +10,4 @@ TestHelperForGithub/
 
 # Build
 /npm-debug.log
+server/.env
