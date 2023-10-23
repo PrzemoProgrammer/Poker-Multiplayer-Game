@@ -18,6 +18,12 @@ class UiInterfaceManager {
           }
     }
 
+    public updateBetText(text: number){
+        if (uiInterface.betsText) {
+            uiInterface.betsText.text = text
+          }
+    }
+
 
   }
   

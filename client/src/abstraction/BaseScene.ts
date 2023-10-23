@@ -1,9 +1,16 @@
 import * as PIXI from "pixi.js";
 
 export default class BaseScene extends PIXI.Container {
-  constructor() {
+  sceneKey: string
+  constructor(sceneKey: string) {
     super();
+
+    this.sceneKey = sceneKey
     // this.bindSignals()
+  }
+
+  init(){
+    
   }
 //   bindSignals() {
 //     this.signals = [

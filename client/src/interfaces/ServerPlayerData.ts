@@ -1,5 +1,8 @@
 export default interface ServerPlayerData {
         nick: string,
         money: number,
-        id: string
+        id: string,
+        sit: number,
+        bet: number
+        position: string
   }

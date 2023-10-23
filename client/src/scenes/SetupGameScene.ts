@@ -6,12 +6,11 @@ import ColyseusClient from "../services/colyseus/ColyseusClient";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
 
-export default class SetupGameScene extends BaseScene {
+class SetupGameScene extends BaseScene {
   authToken: string | undefined
     constructor() {
-      super();
+      super("SetupGameScene");
 
-      this.init()
     }
 
     async init(){
@@ -40,4 +39,4 @@ export default class SetupGameScene extends BaseScene {
         ColyseusClient.setupListeners()
     }
   }
-  
+  export default new SetupGameScene()

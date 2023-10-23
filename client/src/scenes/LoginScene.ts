@@ -5,16 +5,18 @@ import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
 
 
-export default class LoginScene extends BaseScene {
+ class LoginScene extends BaseScene {
   login: string
   password: string
   nick: string
     constructor() {
-      super();
-
+      super("LoginScene");
       this.login = "1234"
       this.password = "1234"
       this.nick = "ALfred"
+    }
+
+    init(){
       this.fetchPlayerData()
     }
   
@@ -55,3 +57,4 @@ export default class LoginScene extends BaseScene {
       }
   }
   
+  export default new LoginScene()

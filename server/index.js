@@ -6,6 +6,10 @@ const app = express();
 const server = http.createServer(app);
 const cors = require("cors");
 const port = process.env.PORT || SERVER_PORT;
+const { Server } = require("colyseus");
+const socketServer = new Server({
+  server: http.createServer(app),
+});
 
 app.use(
   cors({
@@ -25,5 +29,5 @@ module.exports = {
   server,
   app,
   port,
-  http,
+  socketServer,
 };

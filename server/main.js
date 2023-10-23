@@ -1,20 +1,7 @@
-const { app, server, port, http } = require("./index");
-const {
-  authentication,
-  registration,
-  playerState,
-} = require("./controllers/index");
+const { app, server, port, socketServer } = require("./index");
+const { authentication, registration } = require("./controllers/index");
 const databaseManager = require("./MongoDB/DatabaseManager");
-const JWT = require("./JWT/JWTManager");
-//? /////////////////////////////////////////////////////////////////////////
-const { Server } = require("colyseus");
 const GameRoom = require("./Colyseus/GameRoom");
-
-const socketServer = new Server({
-  server: http.createServer(app),
-});
-
-//? //////////////////////////////////////////////////////////////////////
 
 server.listen(port, async () => {
   await databaseManager.connectDatabase();
@@ -23,22 +10,22 @@ server.listen(port, async () => {
   app.post("/authentication", authentication);
   // app.post("/playerState", playerState);
 
-  app.post("/game_state", async (req, res) => {
-    let { authToken } = req.body;
+  // app.post("/game_state", async (req, res) => {
+  //   let { authToken } = req.body;
 
-    const hashedPassword = JWT.decode(authToken);
+  //   const hashedPassword = JWT.decode(authToken);
 
-    // const room = await io.roomById("game");
-    const userDatabaseData = await databaseManager.findPlayer({
-      passwordHash: hashedPassword,
-    });
+  //   // const room = await io.roomById("game");
+  //   const userDatabaseData = await databaseManager.findPlayer({
+  //     passwordHash: hashedPassword,
+  //   });
 
-    delete userDatabaseData.passwordHash;
+  //   delete userDatabaseData.passwordHash;
 
-    // room.broadcast("update_data", userDatabaseData);
+  //   // room.broadcast("update_data", userDatabaseData);
 
-    res.json(userDatabaseData);
-  });
+  //   res.json(userDatabaseData);
+  // });
 
   socketServer.define("game", GameRoom);
   socketServer.listen(2567);

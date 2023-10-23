@@ -8,7 +8,7 @@ export default class Button extends CreateSprite {
     scene: BaseScene
     scaleValue: number
     mainSprite: string
-    spritePush: string
+    spritePush: string | undefined
     originalScale: PIXI.ObservablePoint
     config: ButtonConfig
   constructor(scene: BaseScene, config: ButtonConfig) {
@@ -28,6 +28,7 @@ export default class Button extends CreateSprite {
 
   onClick(cb: Function) {
     this.on("pointerdown", () => {
+        if(this.spritePush)
         this.texture = PIXI.Texture.from(this.spritePush)
     });
     this.on("pointerup", () => {

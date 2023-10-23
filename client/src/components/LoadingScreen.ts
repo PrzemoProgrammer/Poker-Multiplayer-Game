@@ -4,9 +4,9 @@ import AssetsManager from "../utility/AssetsManager";
 
  export default class LoadingScreen{
     scene: PIXI.Container
-    woman: PIXI.Container
-    background: PIXI.Sprite
-    text: PIXI.Sprite
+    woman: PIXI.Container | undefined
+    background: PIXI.Sprite | undefined
+    text: PIXI.Sprite | undefined
 
     constructor(scene: PIXI.Container) {
  
@@ -21,6 +21,7 @@ import AssetsManager from "../utility/AssetsManager";
 
   createBackground() {
     const spritePath = AssetsManager.getImage("loading_background");
+    if(!spritePath) return
     let bg =  PIXI.Sprite.from(spritePath);
     bg.anchor.set(0.5, 0.5);
     bg.position.set(GAME_WIDTH / 2, GAME_HEIGHT / 2)
@@ -32,6 +33,7 @@ import AssetsManager from "../utility/AssetsManager";
 
     createWoman(){
         const spritePath = AssetsManager.getImage("loading_woman");
+        if(!spritePath) return
         let woman =  PIXI.Sprite.from(spritePath);
         woman.anchor.set(0.5, 1);
         woman.position.set(GAME_WIDTH / 2, GAME_HEIGHT)
@@ -42,6 +44,7 @@ import AssetsManager from "../utility/AssetsManager";
 
     createLoadingText(){
         const spritePath = AssetsManager.getImage("loading_text");
+        if(!spritePath) return
         let text =  PIXI.Sprite.from(spritePath);
         text.anchor.set(0.5, 0.5);
         text.position.set(GAME_WIDTH / 2, GAME_HEIGHT/2 - 300)

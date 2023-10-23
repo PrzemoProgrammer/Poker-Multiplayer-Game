@@ -4,14 +4,13 @@ import AssetsManager from "../utility/AssetsManager";
 import LoadingScreen from "../components/LoadingScreen";
 import BaseScene from "../abstraction/BaseScene";
 
-export default class BootScene extends BaseScene {
+class BootScene extends BaseScene {
     constructor() {
-      super();
+      super("BootScene");
 
-      this.create()
     }
 
-    async create(){
+    async init(){
       await this.preload()
       this.startLoadingScreen()
       this.startNextScene()
@@ -44,5 +43,4 @@ export default class BootScene extends BaseScene {
     }
   }
 
-  
-  
+  export default new BootScene()

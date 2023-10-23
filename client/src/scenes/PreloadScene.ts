@@ -5,16 +5,17 @@ import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
 
 
-export default class PreloadScene extends BaseScene {
+class PreloadScene extends BaseScene {
   constructor() {
-    super();
+    super("PreloadScene");
 
-    this.create();
   }
 
-  async create(): Promise<void> {
+  async init(): Promise<void> {
     await this.loadImages();
     await this.loadInterfaceImages()
+    await this.loadCardImages()
+    await this.loadBetImages()
     this.handleStartNextScene();
   }
 
@@ -29,10 +30,10 @@ export default class PreloadScene extends BaseScene {
     let totalImages = images.length;
 
     for (let i = 0; i < totalImages; i++) {
-      let sprite = images[i];
-      let source = `assets/${sprite}.png`
+      let image = images[i];
+      let source = `assets/${image}.png`
 
-      AssetsManager.addImage(sprite, source);
+      AssetsManager.addImage(image, source);
     }
   }
 
@@ -61,6 +62,42 @@ export default class PreloadScene extends BaseScene {
     }
   }
 
+  async loadCardImages(): Promise<void> {
+    const cardNumber: string[]  = ["2", "3", "4", "5", "6", "7", "8", "9", "10","J", "Q", "K", "A"]
+    const cardColor: string [] = ['d', 'c', 'h', 's'];
+    const backCard: string = "card_hidden"
+
+    for(let i = 0; i < cardColor.length; i++) {
+      const color = cardColor[0]
+      for (let j = 0; j < cardNumber.length; j++) {
+        const cardName = color + cardNumber[j]
+        let source = `assets/cards/${cardName}.png`
+        AssetsManager.addImage(cardName, source);
+      }
+    }
+
+    const source = `assets/cards/${backCard}.png`
+    AssetsManager.addImage(backCard, source);
+  }
+
+
+  async loadBetImages(): Promise<void> {
+    const images = [
+      "bet",
+      "bet_background"
+    ];
+
+    let totalImages = images.length;
+
+    for (let i = 0; i < totalImages; i++) {
+      let sprite = images[i];
+      let source = `assets/chips/${sprite}.png`
+
+      AssetsManager.addImage(sprite, source);
+    }
+  }
+
+
 
   handleStartNextScene(){
     // Cookies.remove('authToken');
@@ -68,3 +105,5 @@ export default class PreloadScene extends BaseScene {
     sceneManager.removeScene("BootScene")
 }
 }
+
+export default new PreloadScene()

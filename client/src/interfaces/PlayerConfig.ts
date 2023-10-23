@@ -1,21 +1,19 @@
 import TextConfig from "../interfaces/TextConfig";
+import Card from "../interfaces/Card";
+import SpriteConfig from "../interfaces/SpriteConfig";
+import BetConfig from "../interfaces/BetConfig";
 
 export default interface PlayerConfig {
     x: number,
     y: number,
     id: string,
-    sprite: {
-        path: string,
-        key: string,
-        type: string,
-        x: number,
-        y: number,
-        anchorX: number,
-        anchorY: number,
-        visible: boolean
-    },
-    nickname: TextConfig
-    bets: TextConfig
+    sit: number,
+    position: string,
+    cards: Card[]
+    sprite: SpriteConfig,
+    nickname: TextConfig,
+    money: TextConfig,
+    bet: BetConfig
   }
 
 

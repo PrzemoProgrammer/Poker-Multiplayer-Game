@@ -1,43 +1,33 @@
-import { Application, Container } from "pixi.js";
+import BaseScene from "../abstraction/BaseScene";
 
-interface Scene { [key: string]: Function }
-
-
-class SceneStorage {
-    scenes: Scene;
-
+  class SceneStorage {
+    scenes: Map<string, BaseScene>;
+  
     constructor() {
-      this.scenes = {}
-    }
-
-    public getScenes(): Scene{
-        return this.scenes
+      this.scenes = new Map();
     }
   
-    public addScene(scene: Function):void {
-        const key = this.getSceneKey(scene)
-        this.scenes[key] = scene;
+    public getScenes(): Map<string, BaseScene> {
+      return this.scenes;
     }
-
-    public getSceneKey(scene: Function): string{
-        return  { scene }.scene.name;
+  
+    public addScene(scene: BaseScene): void {
+      const key = scene.sceneKey;
+      this.scenes.set(key, scene);
     }
-
-    public getFirstScene(): string{
-        const keys = Object.keys(this.scenes);
-       return keys[0];
+  
+    public getScene(key: string): BaseScene | undefined {
+      return this.scenes.get(key);
     }
-
-    public getSceneInstance(key: string): Container{
-        let SceneClass = this.scenes[key] as new () => Container;
-        return new SceneClass();
+  
+    public getFirstSceneKey(): string | undefined {
+      const keys = Array.from(this.scenes.keys());
+      return keys.length > 0 ? keys[0] : undefined;
     }
-
-    public deleteScene(key: string): void{
-        delete this.scenes[key];
+  
+    public deleteScene(key: string): void {
+      this.scenes.delete(key);
     }
   }
   
-
   export default new SceneStorage();
-  

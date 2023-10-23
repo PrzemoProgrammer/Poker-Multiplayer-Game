@@ -1,6 +1,7 @@
 import * as Colyseus from 'colyseus.js';
 import ServerPlayerData from "../../interfaces/ServerPlayerData";
 import PlayersConfig from "../../interfaces/PlayersConfig";
+import ServerGameUpdateOnStart from "../../interfaces/ServerGameUpdateOnStart";
 import GameSignals from "../../gameSignals/GameSignals";
 import  {WEBSOCKET_URL} from '../config';
 
@@ -50,12 +51,23 @@ class ColyseusClient {
       });
 
       this.room.onMessage('getPlayers', (data: ServerPlayerData) => {
+        console.log(data)
         GameSignals.onGetPlayers.dispatch(data)
       });
 
       this.room.onMessage("playerJoined", (data: PlayersConfig) => {
-        // console.log('Received playerJoined message:', data);
+        console.log('Received playerJoined message:', data);
         GameSignals.onPlayerJoined.dispatch(data)  
+      });
+
+      this.room.onMessage("gameStartData", (data: ServerGameUpdateOnStart) => {
+        console.log(data)
+        GameSignals.onStartGameData.dispatch(data)  
+      });
+
+      this.room.onMessage("announcement", (data: string) => {
+        console.log("Server announcement:", data);
+        // GameSignals.onPlayerJoined.dispatch(data)  
       });
 
       // this.room.onMessage('update_data', (data) => {

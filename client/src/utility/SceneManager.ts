@@ -1,50 +1,41 @@
-import { Application, Container } from "pixi.js";
 import GameStorage from "../utility/GameStorage";
 import SceneStorage from "../utility/SceneStorage";
-import SceneInstanceStorage from "../utility/SceneInstanceStorage";
+import BaseScene from "../abstraction/BaseScene";
 
 class SceneManager {
-    constructor() {
-    }
   
-    public addScene(scene: Function[]):void  {
+    public addScene(scene: BaseScene[]):void  {
       scene.forEach((scene) => {
         SceneStorage.addScene(scene)
+        GameStorage.addChild(scene)
       });
     }
   
     public autoStartFirstScene(): void {
-      const firstSceneKey = SceneStorage.getFirstScene()
+      const firstSceneKey = SceneStorage.getFirstSceneKey()
+      if(firstSceneKey)
       this.startScene(firstSceneKey);
     }
   
     public startScene(key: string):void {
-       const sceneInstance = SceneStorage.getSceneInstance(key)
-       SceneInstanceStorage.addSceneInstance(key, sceneInstance)
-      GameStorage.addChild(sceneInstance)
+      const scene = SceneStorage.getScene(key)
+      if(scene)
+      scene.init()
     }
   
    public removeScene(key: string):void  {
-      const sceneInstance = this.getSceneInstance(key)
+     const sceneInstance = this.getScene(key)
       GameStorage.removeChild(sceneInstance)
     }
 
-    public getScene(key: string): Container{
-     return this.getSceneInstance(key)
+    public getScene(key: string){
+      return SceneStorage.getScene(key)
     }
 
-    private getSceneInstance(key: string){
-      return SceneInstanceStorage.getSceneInstance(key)
-    }
-  
     deleteScene(key: string):void  {
-      const sceneInstance = SceneInstanceStorage.getSceneInstance(key)
-      GameStorage.removeChild(sceneInstance)
+      this.removeScene(key)
       SceneStorage.deleteScene(key)
-      SceneInstanceStorage.deleteSceneInstance(key)
     }
   }
   
-
   export default new SceneManager();
-  

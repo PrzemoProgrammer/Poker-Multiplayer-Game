@@ -11,3 +11,5 @@ TestHelperForGithub/
 # Build
 /npm-debug.log
 server/.env
+server/TODO.todo
+client/TODO.todo

@@ -1,5 +1,7 @@
 import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
 import { Application, Container } from "pixi.js";
+import BaseScene from "../abstraction/BaseScene";
+
 
 class GameStorage {
     game: Application
@@ -20,15 +22,18 @@ class GameStorage {
         return this.game
     }
 
-   public removeChild(gameInstance: Container): void{
-    (this.game as Application).stage.removeChild(gameInstance); 
+    public removeChild(gameInstance: BaseScene | undefined): void{
+        if(gameInstance)
+        this.game.stage.removeChild(gameInstance); 
     }
 
-    public addChild(gameInstance: Container): void{
-        (this.game as Application).stage.addChild(gameInstance);  
+    public addChild(gameInstance: BaseScene): void{
+        this.game.stage.addChild(gameInstance);  
     }
 
-
+    public getChildren(){
+        return this.game.stage.children
+    }
   }
   
 

@@ -13,20 +13,16 @@ import ServerPlayerData from "../interfaces/ServerPlayerData";
 import playersManager from "../utility/PlayersManager";
 import PLAYER_CONFIG from "../config/playerConfig";
 import PlayersConfig from "../interfaces/PlayersConfig";
+import ServerGameUpdateOnStart from "../interfaces/ServerGameUpdateOnStart";
 import UiInterface from "../components/UiInterface";
 import UiInterfaceManager from "../utility/UiInterfaceManager";
+import SitPositionManager from "../utility/SitPositionManager";
 
 
-export default class PlayScene extends BaseScene {
-  // uiInterface: PIXI.Container
+class PlayScene extends BaseScene {
   constructor() {
-    super()
+    super("PlayScene")
 
-    this.createComponents()
-    this.createUiInterface()
-
-    this.bindSignals()
-    this.startSetupGameScene()
   }
 
   get gw() {
@@ -34,6 +30,14 @@ export default class PlayScene extends BaseScene {
   }
   get gh() {
     return GAME_HEIGHT
+  }
+
+  init(){
+    this.createComponents()
+    this.createUiInterface()
+
+    this.bindSignals()
+    this.startSetupGameScene()
   }
 
   updateGame() {
@@ -45,21 +49,61 @@ export default class PlayScene extends BaseScene {
   bindSignals(): void {
     GameSignals.onPlayerJoined.add((playerData: ServerPlayerData)=>this.addPlayerToGame(playerData))
     GameSignals.onGetPlayers.add((playerData: PlayersConfig)=>this.addPlayersToGame(playerData))
+    GameSignals.onStartGameData.add((startGameData: ServerGameUpdateOnStart)=>this.updateGameOnStart(startGameData))
   }
 
   addPlayerToGame(playerData: ServerPlayerData) {
+    SitPositionManager.setupPositions(playerData.sit)
     if(ColyseusClient.isMyId(playerData.id)) return
-    const player = this.createPlayer(playerData)
-    playersManager.addPlayer(player)
+    this.createPlayerAndAddToGame(playerData)
   }
 
   addPlayersToGame(playersData: PlayersConfig) {
     for (const playerId in playersData) {
       const playerData = playersData[playerId]
-      this.addPlayerToGame(playerData)
-      if(ColyseusClient.isMyId(playerData.id)) UiInterfaceManager.updateMoneyText(playerData.money)
+      this.createPlayerAndAddToGame(playerData)
+    if(ColyseusClient.isMyId(playerData.id)) UiInterfaceManager.updateMoneyText(playerData.money)
     }
   }
+
+  updateGameOnStart(startGameData: ServerGameUpdateOnStart){
+    const players = playersManager.getPlayers()
+    const {betsInPot, drawCards, playersBets, playersGamePositions} = startGameData
+
+
+    for (const playerId in players) {
+
+      const updateMoneyText = playersBets[playerId].money
+      players[playerId].updateMoneyText(updateMoneyText)
+      if(ColyseusClient.isMyId(playerId)) UiInterfaceManager.updateMoneyText(updateMoneyText)
+
+
+      const updateBet = playersBets[playerId].bet
+      if(playersBets[playerId] !== undefined) {
+        players[playerId].updateBets(updateBet)
+      }
+      if(ColyseusClient.isMyId(playerId)) UiInterfaceManager.updateBetText(updateBet)
+      
+
+      const updatedPosition = playersGamePositions[playerId].position
+      players[playerId].updateGamePosition(updatedPosition)
+
+
+      if(drawCards[playerId] !== undefined) {
+        const playerDrawCards = drawCards[playerId].drawCards.cards
+        players[playerId].updateCards(playerDrawCards)
+      }
+
+      console.log(players[playerId])
+    }
+
+    console.log(startGameData)
+  }
+
+createPlayerAndAddToGame(playerData: ServerPlayerData) {
+  const player = this.createPlayer(playerData)
+  playersManager.addPlayer(player)
+}
 
   createComponents(){
     for (let spriteConfig in spritesConfig) {
@@ -70,14 +114,17 @@ export default class PlayScene extends BaseScene {
   }
 
 createPlayer(playerData: ServerPlayerData): Player{
-  const {id, money, nick} = playerData
-  const {x, y} = playersManager.getEmptyPosition()
+  const {id, money, nick, sit, bet, position} = playerData
+  const {x, y} = SitPositionManager.getPosition(sit)
   const config = { ...PLAYER_CONFIG };
   config.x = x
   config.y = y
   config.id = id
+  config.sit = sit
+  config.bet.text.message = bet
+  config.position = position
   config.nickname.message = nick
-  config.bets.message = money
+  config.money.message = money
 
   const player = new Player(config)
   if (player !== null) this.addChild(player);
@@ -94,3 +141,5 @@ createPlayer(playerData: ServerPlayerData): Player{
   }
  
 }
+
+export default new PlayScene()
