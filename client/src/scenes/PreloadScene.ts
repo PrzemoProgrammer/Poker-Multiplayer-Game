@@ -68,7 +68,7 @@ class PreloadScene extends BaseScene {
     const backCard: string = "card_hidden"
 
     for(let i = 0; i < cardColor.length; i++) {
-      const color = cardColor[0]
+      const color = cardColor[i]
       for (let j = 0; j < cardNumber.length; j++) {
         const cardName = color + cardNumber[j]
         let source = `assets/cards/${cardName}.png`

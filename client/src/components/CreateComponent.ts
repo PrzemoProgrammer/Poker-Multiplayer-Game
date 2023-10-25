@@ -8,7 +8,7 @@ class CreateComponents{
 
     }
 
-public create(config: SpriteConfig): PIXI.Sprite | null {
+public create(config: SpriteConfig): CreateSprite| null {
     const defaultConfig = this.setDefaultConfig(config);
     const sprite = this.createSpriteByType(defaultConfig);
     return sprite;
@@ -20,15 +20,18 @@ private setDefaultConfig(config: SpriteConfig): DefaultSpriteConfig {
         y: 0,
         anchorX: 0.5,
         anchorY: 0.5,
+        scaleX: 1, 
+        scaleY: 1,
+        angle: 0,
         visible: true,
         ...config,
     };
     return defaultConfig;
 }
 
-private createSpriteByType(defaultConfig: DefaultSpriteConfig): PIXI.Sprite | null {
+private createSpriteByType(defaultConfig: DefaultSpriteConfig): CreateSprite | null {
     const { type } = defaultConfig;
-    let sprite: PIXI.Sprite | null = null;
+    let sprite: CreateSprite | null = null;
 
     switch (type) {
         case "sprite":
@@ -47,7 +50,7 @@ private createSpriteByType(defaultConfig: DefaultSpriteConfig): PIXI.Sprite | nu
     return sprite;
 }
 
-private createSprite(config: DefaultSpriteConfig): PIXI.Sprite {
+private createSprite(config: DefaultSpriteConfig): CreateSprite {
     return new CreateSprite(config);
 }
 

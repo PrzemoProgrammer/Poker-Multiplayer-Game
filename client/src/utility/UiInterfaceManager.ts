@@ -1,5 +1,3 @@
-import DataStorage from "../interfaces/DataStorage";
-import Player from "../players/Player";
 import uiInterface from "../components/UiInterface";
 import BaseScene from "../abstraction/BaseScene";
 
@@ -14,13 +12,13 @@ class UiInterfaceManager {
 
     public updateMoneyText(text: number){
         if (uiInterface.moneyText) {
-            uiInterface.moneyText.text = text;
+            uiInterface.moneyText.updateMessage(text);
           }
     }
 
     public updateBetText(text: number){
         if (uiInterface.betsText) {
-            uiInterface.betsText.text = text
+            uiInterface.betsText.updateMessage(text)
           }
     }
 

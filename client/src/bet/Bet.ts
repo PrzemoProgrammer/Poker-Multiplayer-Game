@@ -16,6 +16,8 @@ export default class Bet extends Container {
     this.background = this.createBackgroundImage()
     this.image = this.createBetImage()
     this.text = this.createBetsCountText()
+
+    this.setVisible(false)
   }
 
   private createBetImage(): Sprite | null {
@@ -37,5 +39,9 @@ export default class Bet extends Container {
     const betText = new CreateText(textConfig);
       this.addChild(betText);
       return betText;
+  }
+
+  public setVisible(value: boolean){
+    this.visible = value
   }
 }

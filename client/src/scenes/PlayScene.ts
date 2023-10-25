@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
-import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
+import { GAME_HEIGHT, GAME_WIDTH, MAX_PLAYER_CARDS } from "../config/gameConfig";
+import { DEAL_ANIM_DELAY, DEAL_NEXT_CARD_ANIM_DELAY, CARD_SCALE,USER_CARD_SCALE} from "../config/cardAnimationConfig";
 import spritesConfig from "../../assets/spritesConfig.json";
 import CreateComponent from "../components/CreateComponent";
 import SpriteConfig from "../interfaces/SpriteConfig";
@@ -13,10 +14,15 @@ import ServerPlayerData from "../interfaces/ServerPlayerData";
 import playersManager from "../utility/PlayersManager";
 import PLAYER_CONFIG from "../config/playerConfig";
 import PlayersConfig from "../interfaces/PlayersConfig";
+import PlayerBets from "../interfaces/PlayerBets";
+import DataStorage from "../interfaces/DataStorage";
+import PlayerGamePositions from "../interfaces/PlayerGamePositions";
 import ServerGameUpdateOnStart from "../interfaces/ServerGameUpdateOnStart";
 import UiInterface from "../components/UiInterface";
 import UiInterfaceManager from "../utility/UiInterfaceManager";
 import SitPositionManager from "../utility/SitPositionManager";
+import GameManager from "../utility/GameManager";
+import PlayersManager from "../utility/PlayersManager";
 
 
 class PlayScene extends BaseScene {
@@ -53,7 +59,7 @@ class PlayScene extends BaseScene {
   }
 
   addPlayerToGame(playerData: ServerPlayerData) {
-    SitPositionManager.setupPositions(playerData.sit)
+    SitPositionManager.setupConfigPositions(playerData.sit)
     if(ColyseusClient.isMyId(playerData.id)) return
     this.createPlayerAndAddToGame(playerData)
   }
@@ -62,48 +68,33 @@ class PlayScene extends BaseScene {
     for (const playerId in playersData) {
       const playerData = playersData[playerId]
       this.createPlayerAndAddToGame(playerData)
-    if(ColyseusClient.isMyId(playerData.id)) UiInterfaceManager.updateMoneyText(playerData.money)
+
+    if(ColyseusClient.isMyId(playerData.id)) GameManager.updateInterfaceMoneyText(playerData.money)
     }
   }
 
-  updateGameOnStart(startGameData: ServerGameUpdateOnStart){
+  async updateGameOnStart(startGameData: ServerGameUpdateOnStart){
     const players = playersManager.getPlayers()
     const {betsInPot, drawCards, playersBets, playersGamePositions} = startGameData
 
-
     for (const playerId in players) {
-
-      const updateMoneyText = playersBets[playerId].money
-      players[playerId].updateMoneyText(updateMoneyText)
-      if(ColyseusClient.isMyId(playerId)) UiInterfaceManager.updateMoneyText(updateMoneyText)
-
-
-      const updateBet = playersBets[playerId].bet
-      if(playersBets[playerId] !== undefined) {
-        players[playerId].updateBets(updateBet)
-      }
-      if(ColyseusClient.isMyId(playerId)) UiInterfaceManager.updateBetText(updateBet)
-      
-
-      const updatedPosition = playersGamePositions[playerId].position
-      players[playerId].updateGamePosition(updatedPosition)
-
-
-      if(drawCards[playerId] !== undefined) {
-        const playerDrawCards = drawCards[playerId].drawCards.cards
-        players[playerId].updateCards(playerDrawCards)
-      }
-
-      console.log(players[playerId])
+      GameManager.updatePlayerMoney(playerId, players, playersBets)
+      GameManager.updatePlayerBet(playerId, players, playersBets)
+      GameManager.updatePlayerPosition(playerId, players, playersGamePositions)
     }
+
+    await PlayersManager.playDealCardsForPlayersAnim()
+    setTimeout(() => {
+     playersManager.turnOverPlayerCardsAnim(drawCards, true)
+    }, 1000);
 
     console.log(startGameData)
   }
 
-createPlayerAndAddToGame(playerData: ServerPlayerData) {
-  const player = this.createPlayer(playerData)
-  playersManager.addPlayer(player)
-}
+  createPlayerAndAddToGame(playerData: ServerPlayerData) {
+    const player = this.createPlayer(playerData)
+    playersManager.addPlayer(player)
+  }
 
   createComponents(){
     for (let spriteConfig in spritesConfig) {
@@ -115,16 +106,24 @@ createPlayerAndAddToGame(playerData: ServerPlayerData) {
 
 createPlayer(playerData: ServerPlayerData): Player{
   const {id, money, nick, sit, bet, position} = playerData
-  const {x, y} = SitPositionManager.getPosition(sit)
+  const {sitPosition, betPosition , cardsPositions} = SitPositionManager.getConfigPositions(sit)
   const config = { ...PLAYER_CONFIG };
-  config.x = x
-  config.y = y
+  config.x = sitPosition.x
+  config.y = sitPosition.y
+  config.bet.x = betPosition.x
+  config.bet.y = betPosition.y
   config.id = id
   config.sit = sit
   config.bet.text.message = bet
   config.position = position
   config.nickname.message = nick
   config.money.message = money
+  config.cardsAnimPositions.animStartPosition = cardsPositions.dealAnimStartPositions
+  config.cardsAnimPositions.animEndPosition = cardsPositions.dealAnimEndPositions
+  for(let i = 0; i < cardsPositions.dealAnimEndPositions.length; i++) {
+    config.cards[i].x = cardsPositions.dealAnimEndPositions[i].x
+    config.cards[i].y = cardsPositions.dealAnimEndPositions[i].y
+  }
 
   const player = new Player(config)
   if (player !== null) this.addChild(player);

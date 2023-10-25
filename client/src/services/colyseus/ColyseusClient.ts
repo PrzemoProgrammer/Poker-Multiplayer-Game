@@ -44,6 +44,10 @@ class ColyseusClient {
     return  this.myId === id;
   }
 
+  public getMyId(): string {
+    return  this.myId
+  }
+
   public setupListeners() {
     if (this.room) {
       this.room.onStateChange((state) => {

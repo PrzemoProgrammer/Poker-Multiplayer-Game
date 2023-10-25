@@ -1,5 +1,5 @@
 import TextConfig from "../interfaces/TextConfig";
-import Card from "../interfaces/Card";
+import CardsConfig from "../interfaces/CardsConfig";
 import SpriteConfig from "../interfaces/SpriteConfig";
 import BetConfig from "../interfaces/BetConfig";
 
@@ -9,11 +9,16 @@ export default interface PlayerConfig {
     id: string,
     sit: number,
     position: string,
-    cards: Card[]
     sprite: SpriteConfig,
     nickname: TextConfig,
     money: TextConfig,
     bet: BetConfig
+    cards: SpriteConfig[],
+    cardsAnimPositions: {
+        animStartPosition: {x: number, y:number }[],
+        animEndPosition: {x: number, y:number }[],        
+    }
+    // cards: CardsConfig,
   }
 
 

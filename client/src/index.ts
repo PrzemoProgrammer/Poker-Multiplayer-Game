@@ -16,8 +16,8 @@ resizeScreen(game)
 window.addEventListener("resize", () => resizeScreen(game));
 sceneManager.addScene([BootScene, PreloadScene, LoginScene, PlayScene, SetupGameScene]);
 sceneManager.autoStartFirstScene()
-
-
+//@ts-ignorets
+globalThis.__PIXI_APP__ = game;
 // window.onload = async (): Promise<void> => {
 //     await loadGameAssets();
 

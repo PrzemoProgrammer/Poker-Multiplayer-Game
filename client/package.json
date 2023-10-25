@@ -27,6 +27,7 @@
     "dependencies": {
         "colyseus.js": "^0.15.14",
         "core-js": "^3.26.0",
+        "gsap": "^3.12.2",
         "js-cookie": "^3.0.5",
         "mini-signals": "^2.0.0",
         "pixi-spine": "^3.0.16",

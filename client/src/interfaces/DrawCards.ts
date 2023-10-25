@@ -1,4 +1,8 @@
 import Card from "./Card";
 export default interface DrawCards {
-    cards: Card[];
+    [key: string]: {
+        drawCards: {
+            cards: Card[];
+        };
+    };
 }

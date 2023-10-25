@@ -6,6 +6,9 @@ import CreateText from "../components/CreateText";
 import Bet from "../bet/Bet";
 import PlayerConfig from "../interfaces/PlayerConfig";
 import Card from "../interfaces/Card";
+import SpriteConfig from "../interfaces/SpriteConfig";
+import Cards from "../card/Cards";
+
 
 export default class Player extends BaseEntity {
     avatarSprite: Sprite | null
@@ -15,12 +18,11 @@ export default class Player extends BaseEntity {
     id: string
     bet: Bet
     gamePosition: string
-    cards: Card[]
+    cards: Cards
   constructor(config: PlayerConfig) {
     const {x,y} = config
     super(x,y)
     this.config = config
-    this.cards = this.config.cards
     this.id = this.config.id
     this.gamePosition = this.config.position
     
@@ -28,16 +30,17 @@ export default class Player extends BaseEntity {
     this.nickname = this.createNickname()
     this.money = this.createMoney()
     this.bet = this.createBet()
+    this.cards = this.createCards()
   }
 
-  createSprite(): Sprite | null {
+  private createSprite(): Sprite | null {
     const spriteConfig = this.config.sprite
     const sprite = CreateComponent.create(spriteConfig)
     if (sprite !== null) this.addChild(sprite);
     return sprite
   }
 
-  createNickname() {
+  private createNickname(): CreateText {
     const nicknameConfig = this.config.nickname
     const nickname = new CreateText(nicknameConfig)
     this.addChild(nickname);
@@ -45,20 +48,39 @@ export default class Player extends BaseEntity {
     return nickname
   }
 
-  createMoney() {
+  private createMoney(): CreateText {
     const moneyConfig = this.config.money
-    const nickname = new CreateText(moneyConfig)
-    this.addChild(nickname);
+    const moneyText = new CreateText(moneyConfig)
+    this.addChild(moneyText);
 
-    return nickname
+    return moneyText
   }
 
-  createBet(){
+  private createBet(): Bet{
     const betConfig = this.config.bet
     const bet = new Bet(betConfig)
     this.addChild(bet);
 
     return bet
+  }
+
+  private createCards():Cards {
+    const cards = new Cards()
+    cards.addCards(this.config.cards)
+    cards.setAnimStartPosition(this.config.cardsAnimPositions.animStartPosition)
+    cards.setAnimEndPosition(this.config.cardsAnimPositions.animEndPosition )
+    this.addChild(cards);
+
+    return cards
+  }
+
+  public scaleCards(value: number){
+    this.cards.scaleCards(value)
+  }
+
+  public scaleCard(card: Sprite , value: number){
+    card.scale.x *= value,
+    card.scale.y *= value
   }
 
   public updateMoneyText(updatedText: number){
@@ -69,12 +91,26 @@ export default class Player extends BaseEntity {
     this.gamePosition = updatedPosition
   }
 
-  public updateCards(updatedCards: Card[]): void{
-    this.cards = updatedCards
+   public startDealCardsAnim(index: number, scale: number){
+    this.cards.startDealAnim(index, scale)
   }
 
   public updateBets(updatedBets: number){
-    this.bet.text.text = updatedBets
+    this.bet.text.updateMessage(updatedBets)
   }
+
+  public setBetVisible(value: boolean){
+    this.bet.setVisible(value)
+  }
+
+  public getCards():Sprite[] {
+    return this.cards.getCards()
+  }
+
+ public turnOverCards(cardsSymbols: Card[]){
+    this.cards.turnOverCardsAnim(cardsSymbols)
+  }
+
+
 
 }

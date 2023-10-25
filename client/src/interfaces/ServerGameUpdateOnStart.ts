@@ -6,5 +6,5 @@ export default interface ServerGameUpdateOnStart {
     playersGamePositions: PlayerGamePositions;
     playersBets: PlayerBets;
     betsInPot: number;
-    drawCards: {[key: string]: {drawCards: DrawCards}}
+    drawCards: DrawCards
 }
