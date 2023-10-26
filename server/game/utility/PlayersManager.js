@@ -1,14 +1,25 @@
 const Players = require("../players/Players");
+const Player = require("../players/Player");
 
 class PlayersManager {
-  constructor() {}
-
-  addPlayer(key, data) {
-    Players.addPlayer(key, data);
+  addPlayer(key, clientData) {
+    const player = new Player(clientData);
+    Players.addPlayer(key, player);
   }
 
-  setPlayers(players) {
-    Players.setPlayers(players);
+  updatePlayerCards(playerId, newPlayerCards) {
+    const player = Players.getPlayer(playerId);
+    player.updateCards(newPlayerCards);
+  }
+
+  updatePlayerGamePosition(playerId, newPlayerGamePosition) {
+    const player = Players.getPlayer(playerId);
+    player.updateGamePosition(newPlayerGamePosition);
+  }
+
+  updatePlayerBet(playerId, newPlayerBet) {
+    const player = Players.getPlayer(playerId);
+    player.updateBet(newPlayerBet);
   }
 
   getPlayers() {
@@ -21,8 +32,30 @@ class PlayersManager {
     return playersObject;
   }
 
+  getPlayersClientData() {
+    const players = this.getPlayers();
+    const playersClientData = {};
+    for (const key in players) {
+      playersClientData[key] = players[key].getClientData();
+    }
+
+    return playersClientData;
+  }
+
+  getPlayersData() {
+    const players = this.getPlayers();
+    const playersData = {};
+    for (const key in players) {
+      playersData[key] = players[key].getData();
+    }
+
+    return playersData;
+  }
+
   getPlayer(key) {
-    return Players.getPlayer(key);
+    const player = Players.getPlayer(key);
+    const playerClientData = player.getClientData();
+    return playerClientData;
   }
 
   getPlayerCount() {

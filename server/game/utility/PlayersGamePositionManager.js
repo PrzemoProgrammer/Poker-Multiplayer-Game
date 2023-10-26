@@ -1,9 +1,31 @@
-const { SIT_POSITIONS, GAME_POSITIONS, MAX_PLAYERS } = require("../config");
+const {
+  SIT_POSITIONS,
+  GAME_POSITIONS,
+  MAX_PLAYERS,
+} = require("../config/gameConfig");
 const PlayersManager = require("./PlayersManager");
 
-class GamePositionManager {
+class PlayersGamePositionManager {
   constructor() {
     this.gamePositions = GAME_POSITIONS;
+  }
+
+  updateGamePositions(players) {
+    const gamePositions = this.getPlayersIDWithGamePositions(players);
+    this.updateGamePositionsOnServer(gamePositions);
+
+    return gamePositions;
+  }
+
+  updateGamePositionsOnServer(gamePositions) {
+    for (const playerId in gamePositions) {
+      const newPlayerGamePosition = gamePositions[playerId].position;
+      this.updateGamePositionOnServer(playerId, newPlayerGamePosition);
+    }
+  }
+
+  updateGamePositionOnServer(playerId, newPlayerGamePosition) {
+    PlayersManager.updatePlayerGamePosition(playerId, newPlayerGamePosition);
   }
 
   getPlayersIDWithGamePositions(players) {
@@ -24,11 +46,11 @@ class GamePositionManager {
 
     for (const playerId in players) {
       playersPositionData[playerId] = {};
-      if (players[playerId].sit === dealer) {
+      if (players[playerId].clientData.sit === dealer) {
         playersPositionData[playerId].position = this.gamePositions[0];
-      } else if (players[playerId].sit === smallBlind) {
+      } else if (players[playerId].clientData.sit === smallBlind) {
         playersPositionData[playerId].position = this.gamePositions[1];
-      } else if (players[playerId].sit === bigBlind) {
+      } else if (players[playerId].clientData.sit === bigBlind) {
         playersPositionData[playerId].position = this.gamePositions[2];
       } else {
         playersPositionData[playerId].position = this.gamePositions[3];
@@ -75,4 +97,4 @@ class GamePositionManager {
   }
 }
 
-module.exports = new GamePositionManager();
+module.exports = new PlayersGamePositionManager();

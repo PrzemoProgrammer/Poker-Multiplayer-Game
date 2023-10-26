@@ -2,7 +2,6 @@ const { Room } = require("colyseus");
 const databaseManager = require("../MongoDB/DatabaseManager");
 const GameManager = require("../game/utility/GameManager");
 const JWT = require("../JWT/JWTManager");
-const SitPositionManager = require("../game/utility/SitPositionManager");
 
 class GameRoom extends Room {
   onCreate(options) {
@@ -21,16 +20,11 @@ class GameRoom extends Room {
 
       const { authToken } = options;
       const hashedPassword = JWT.decode(authToken);
-      const sitPosition = SitPositionManager.getEmptyPosition();
 
       const userDatabaseData = await databaseManager
         .findPlayer({ passwordHash: hashedPassword })
         .select("-_id -passwordHash -__v")
         .lean();
-      userDatabaseData.id = clientID;
-      userDatabaseData.sit = sitPosition;
-      userDatabaseData.position = "player";
-      userDatabaseData.bet = 0;
 
       GameManager.addPlayerToGame(clientID, userDatabaseData);
       const joinedPlayer = GameManager.getPlayerFromGame(clientID);

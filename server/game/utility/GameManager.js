@@ -1,28 +1,25 @@
-const CardsManager = require("../../game/utility/CardsManager");
+const PlayersCardsManager = require("./PlayersCardsManager");
 const PlayersManager = require("./PlayersManager");
 const SitPositionManager = require("../../game/utility/SitPositionManager");
-const BetManager = require("../../game/utility/BetManager");
-const GamePositionManager = require("../../game/utility/GamePositionManager");
-const { MAX_PLAYERS } = require("../../game/config");
+const PlayersBetManager = require("./PlayersBetManager");
+const PlayersGamePositionManager = require("./PlayersGamePositionManager");
+const { MAX_PLAYERS } = require("../config/gameConfig");
 
 class GameManager {
-  constructor() {}
-
   startGame() {
-    const players = PlayersManager.getPlayers();
+    const players = PlayersManager.getPlayersData();
     const playersGamePositions =
-      GamePositionManager.getPlayersIDWithGamePositions(players);
-    const playersBets = BetManager.calculateBetsOnStart(
+      PlayersGamePositionManager.updateGamePositions(players);
+    const playersBets = PlayersBetManager.updateBets(
       playersGamePositions,
       players
     );
-    // const betsInPot = BetManager.getBets();
-    const drawCardsForPlayers = CardsManager.drawCardsForPlayers(players);
+    const drawCardsForPlayers = PlayersCardsManager.updateCards(players);
+
     //! update money in database
 
     console.log(playersGamePositions);
     console.log(playersBets);
-    // console.log(betsInPot);
     console.log(drawCardsForPlayers);
 
     return {
@@ -32,12 +29,15 @@ class GameManager {
     };
   }
 
-  addBetsToPol() {}
+  addPlayerToGame(key, userDatabaseData) {
+    const sitPosition = SitPositionManager.getEmptyPosition();
+    const userData = { ...userDatabaseData };
+    userData.id = key;
+    userData.sit = sitPosition;
+    userData.position = "player";
+    userData.bet = 0;
 
-  drawGamePositions() {}
-  //! /////////////////////////////////////////////////////////////////////////////////////
-  addPlayerToGame(key, data) {
-    PlayersManager.addPlayer(key, data);
+    PlayersManager.addPlayer(key, userData);
   }
 
   getPlayerFromGame(key) {
@@ -45,7 +45,7 @@ class GameManager {
   }
 
   getPlayersFromGame() {
-    return PlayersManager.getPlayers();
+    return PlayersManager.getPlayersClientData();
   }
 
   getPlayerCountFromGame() {
