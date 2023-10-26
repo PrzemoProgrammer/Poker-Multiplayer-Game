@@ -1,4 +1,3 @@
-const Bet = require("../bet/Bet");
 const PlayersManager = require("./PlayersManager");
 const {
   SMALL_BLIND_BET,
@@ -33,32 +32,9 @@ class PlayersBetManager {
       playersIDWithGamePositions,
       players
     );
-    // this.addStartBetsToPot();
-    // this.updatePlayersBets(playersIDWithMoney, players);
+
     return playersIDWithMoney;
   }
-
-  // addBetsToPot(bets) {
-  //   Bet.addToPot(bets);
-  // }
-
-  //   updatePlayersBets(playersIDWithMoney, players) {
-  //     for (const playerId in players) {
-  //       const player = PlayersManager.getPlayer(playerId);
-  //       const newPlayerBets = playersIDWithMoney[playerId].bet;
-  //       const actualPlayerBets = player.bet;
-  //       const updatePlayerBets = newPlayerBets + actualPlayerBets;
-  //       player.bet = updatePlayerBets;
-  //       PlayersManager.addPlayer(playerId, player);
-  //     }
-  //   }
-
-  // addStartBetsToPot() {
-  //   const smallBlindBet = SMALL_BLIND_BET;
-  //   const bigBlindBet = BIG_BLIND_BET;
-  //   const fullBet = smallBlindBet + bigBlindBet;
-  //   this.addBetsToPot(fullBet);
-  // }
 
   calculateMoneyAndBets(playersIDWithGamePositions, players) {
     const smallBlindValue = SMALL_BLIND_BET;
@@ -87,10 +63,6 @@ class PlayersBetManager {
     }
     return playersIDMoneyAndBets;
   }
-
-  // getBets() {
-  //   return Bet.getBets();
-  // }
 }
 
 module.exports = new PlayersBetManager();

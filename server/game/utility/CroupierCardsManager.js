@@ -1,6 +1,5 @@
 const { CARD_VALUE, CARD_NUMBER, CARD_COLOR } = require("../config/cardConfig");
 const CroupierCards = require("../croupier/CroupierCards");
-const PlayersCards = require("../cards/PlayersCards");
 const PlayersManager = require("./PlayersManager");
 
 class CroupierCardsManager {
