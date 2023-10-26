@@ -1,5 +1,5 @@
 import DataStorage from "../interfaces/DataStorage";
-import Player from "../players/Player";
+import Player from "../components/players/Player";
 
 class ServerPlayersStorage {
     players: DataStorage

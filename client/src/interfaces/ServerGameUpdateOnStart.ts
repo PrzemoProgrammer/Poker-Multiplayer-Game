@@ -5,6 +5,5 @@ import PlayerGamePositions from "../interfaces/PlayerGamePositions";
 export default interface ServerGameUpdateOnStart {
     playersGamePositions: PlayerGamePositions;
     playersBets: PlayerBets;
-    betsInPot: number;
     drawCards: DrawCards
 }

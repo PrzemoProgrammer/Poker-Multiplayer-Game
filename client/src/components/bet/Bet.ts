@@ -1,7 +1,7 @@
 import { Sprite, Container} from "pixi.js";
-import CreateComponent from "../components/CreateComponent";
-import CreateText from "../components/CreateText";
-import BetConfig from "../interfaces/BetConfig";
+import CreateComponent from "../CreateComponent";
+import CreateText from "../CreateText";
+import BetConfig from "../../interfaces/BetConfig";
 
 export default class Bet extends Container {
     image: Sprite | null 

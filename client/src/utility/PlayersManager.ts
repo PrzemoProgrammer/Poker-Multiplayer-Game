@@ -2,7 +2,7 @@ import serverPlayersStorage from "./ServerPlayersStorage";
 import ServerPlayerData from "../interfaces/ServerPlayerData";
 import DataStorage from "../interfaces/DataStorage";
 import DrawCards from "../interfaces/DrawCards";
-import Player from "../players/Player";
+import Player from "../components/players/Player";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import { GAME_HEIGHT, GAME_WIDTH, MAX_PLAYER_CARDS } from "../config/gameConfig";
 import { DEAL_ANIM_DELAY, DEAL_NEXT_CARD_ANIM_DELAY, CARD_SCALE,USER_CARD_SCALE} from "../config/cardAnimationConfig";

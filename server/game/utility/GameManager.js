@@ -3,7 +3,7 @@ const PlayersManager = require("./PlayersManager");
 const SitPositionManager = require("../../game/utility/SitPositionManager");
 const BetManager = require("../../game/utility/BetManager");
 const GamePositionManager = require("../../game/utility/GamePositionManager");
-const { MAX_PLAYERS, SIT_POSITIONS } = require("../../game/config");
+const { MAX_PLAYERS } = require("../../game/config");
 
 class GameManager {
   constructor() {}
@@ -16,21 +16,20 @@ class GameManager {
       playersGamePositions,
       players
     );
-    const betsInPot = BetManager.getBets();
+    // const betsInPot = BetManager.getBets();
     const drawCardsForPlayers = CardsManager.drawCardsForPlayers(players);
+    //! update money in database
 
     console.log(playersGamePositions);
     console.log(playersBets);
-    console.log(betsInPot);
+    // console.log(betsInPot);
     console.log(drawCardsForPlayers);
 
     return {
       playersGamePositions,
       playersBets,
       drawCardsForPlayers,
-      betsInPot,
     };
-    //! zupdatuj kwotę w bazie danych
   }
 
   addBetsToPol() {}

@@ -1,2 +1,2 @@
-import Player from "../players/Player";
+import Player from "../components/players/Player";
 export default interface DataStorage { [key: string]: Player }

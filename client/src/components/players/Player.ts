@@ -1,12 +1,12 @@
 // import * as PIXI from "pixi.js";
 import { Sprite, Text } from "pixi.js";
 import BaseEntity from "./BaseEntity";
-import CreateComponent from "../components/CreateComponent";
-import CreateText from "../components/CreateText";
+import CreateComponent from "../CreateComponent";
+import CreateText from "../CreateText";
 import Bet from "../bet/Bet";
-import PlayerConfig from "../interfaces/PlayerConfig";
-import Card from "../interfaces/Card";
-import SpriteConfig from "../interfaces/SpriteConfig";
+import PlayerConfig from "../../interfaces/PlayerConfig";
+import Card from "../../interfaces/CardData";
+import SpriteConfig from "../../interfaces/SpriteConfig";
 import Cards from "../card/Cards";
 
 
@@ -72,15 +72,6 @@ export default class Player extends BaseEntity {
     this.addChild(cards);
 
     return cards
-  }
-
-  public scaleCards(value: number){
-    this.cards.scaleCards(value)
-  }
-
-  public scaleCard(card: Sprite , value: number){
-    card.scale.x *= value,
-    card.scale.y *= value
   }
 
   public updateMoneyText(updatedText: number){

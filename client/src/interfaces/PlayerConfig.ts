@@ -1,6 +1,7 @@
 import TextConfig from "../interfaces/TextConfig";
 import CardsConfig from "../interfaces/CardsConfig";
 import SpriteConfig from "../interfaces/SpriteConfig";
+import DefaultSpriteConfig from "../interfaces/DefaultSpriteConfig";
 import BetConfig from "../interfaces/BetConfig";
 
 export default interface PlayerConfig {
@@ -13,7 +14,7 @@ export default interface PlayerConfig {
     nickname: TextConfig,
     money: TextConfig,
     bet: BetConfig
-    cards: SpriteConfig[],
+    cards: DefaultSpriteConfig[],
     cardsAnimPositions: {
         animStartPosition: {x: number, y:number }[],
         animEndPosition: {x: number, y:number }[],        

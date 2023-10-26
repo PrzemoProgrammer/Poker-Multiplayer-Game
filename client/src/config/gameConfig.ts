@@ -103,11 +103,11 @@ export const PLAYER_POSITIONS_CONFIG = {
             ],
             dealAnimEndPositions: [
                 {
-                    x: 100,
+                    x: 110,
                     y: -40,
                 },
                 {
-                    x: 150,
+                    x: 160,
                     y: -40,
                 },
             ]
@@ -136,11 +136,11 @@ export const PLAYER_POSITIONS_CONFIG = {
             dealAnimEndPositions: [
                 {
                     x: 110,
-                    y: 0,
+                    y: -20,
                 },
                 {
                     x: 160,
-                    y: 0,
+                    y: -20,
                 },
             ]
           },
@@ -168,11 +168,11 @@ export const PLAYER_POSITIONS_CONFIG = {
             dealAnimEndPositions: [
                 {
                     x: -160,
-                    y: 0,
+                    y: -20,
                 },
                 {
                     x: -110,
-                    y: 0,
+                    y: -20,
                 },
             ]
           },
@@ -199,11 +199,11 @@ export const PLAYER_POSITIONS_CONFIG = {
             ],
             dealAnimEndPositions: [
                 {
-                    x: -150,
+                    x: -160,
                     y: -40,
                 },
                 {
-                    x: -100,
+                    x: -110,
                     y: -40,
                 },
             ]

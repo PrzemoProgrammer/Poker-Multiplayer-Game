@@ -30,21 +30,5 @@ server.listen(port, async () => {
   socketServer.define("game", GameRoom);
   socketServer.listen(2567);
 
-  // io.on("connection", (client) => {
-  //   console.log(`Client ${client.id} connected`);
-
-  //   // Join the client to the "game" room
-  //   client.join("game");
-
-  //   client.onMessage((data) => {
-  //     // Handle messages received from this client
-  //     console.log(`Received message from client ${client.id}: ${data}`);
-  //   });
-
-  //   client.onDisconnect(() => {
-  //     console.log(`Client ${client.id} disconnected`);
-  //   });
-  // });
-
   console.log(`Listening on ${server.address().port}`);
 });

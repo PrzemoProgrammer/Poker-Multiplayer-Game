@@ -49,12 +49,8 @@ class GameRoom extends Room {
   }
 
   startGame() {
-    const {
-      playersGamePositions,
-      playersBets,
-      drawCardsForPlayers,
-      betsInPot,
-    } = GameManager.startGame();
+    const { playersGamePositions, playersBets, drawCardsForPlayers } =
+      GameManager.startGame();
 
     for (const clientId in drawCardsForPlayers) {
       const clientCards = drawCardsForPlayers[clientId];
@@ -65,7 +61,6 @@ class GameRoom extends Room {
       const mergedGameData = {
         playersGamePositions: playersGamePositions,
         playersBets: playersBets,
-        betsInPot: betsInPot,
         drawCards: drawCards,
       };
 

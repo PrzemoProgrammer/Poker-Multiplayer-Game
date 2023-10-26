@@ -1,4 +1,4 @@
-export default interface Card {
+export default interface CardData {
     name: string;
     suit: string;
     value: string;

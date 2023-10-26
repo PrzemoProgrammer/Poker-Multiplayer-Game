@@ -1,4 +1,4 @@
-import Card from "../interfaces/Card";
+import Card from "./CardData";
 
 export default interface CardsConfig {
     x: number,
