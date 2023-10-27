@@ -1,4 +1,4 @@
-const { CARD_VALUE, CARD_NUMBER, CARD_COLOR } = require("../config/cardConfig");
+const { MAX_PLAYER_CARDS } = require("../config/gameConfig");
 const PlayersManager = require("./PlayersManager");
 const CroupierCardsManager = require("./CroupierCardsManager");
 
@@ -25,7 +25,7 @@ class PlayersCardsManager {
     const playersIDDrawCards = {};
     for (const playerId in players) {
       const playerCards = [];
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < MAX_PLAYER_CARDS; i++) {
         const card = CroupierCardsManager.removeFirstCardFromDeck();
         playerCards.push(card);
       }

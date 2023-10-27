@@ -7,18 +7,19 @@ import { DEAL_ANIM_DELAY, DEAL_NEXT_CARD_ANIM_DELAY, CARD_SCALE,USER_CARD_SCALE}
 import DataStorage from "../interfaces/DataStorage";
 import PlayerBets from "../interfaces/PlayerBets";
 import PlayerGamePositions from "../interfaces/PlayerGamePositions";
+import PlayersMoney from "../interfaces/PlayersMoney";
+import PlayersTurn from "../interfaces/PlayersTurn";
 import PlayersManager from "../utility/PlayersManager";
 
 class GameManager {
-
-    public updateGameOnStart(playerId: string, players: DataStorage, playersBets: PlayerBets, playersGamePositions: PlayerGamePositions){
-        this.updatePlayerMoney(playerId, players, playersBets)
+    public updateGameOnStart(playerId: string, players: DataStorage, playersBets: PlayerBets, playersMoney: PlayersMoney , playersTurn: PlayersTurn,playersGamePositions: PlayerGamePositions){
+        this.updatePlayerMoney(playerId, players, playersMoney)
         this.updatePlayerBet(playerId, players, playersBets)
         this.updatePlayerPosition(playerId, players, playersGamePositions)
     }
 
-    public updatePlayerMoney(playerId: string, players: DataStorage, playersBets: PlayerBets){
-        const updateMoneyText = playersBets[playerId].money
+    public updatePlayerMoney(playerId: string, players: DataStorage, playersMoney: PlayersMoney){
+        const updateMoneyText = playersMoney[playerId].money
         PlayersManager.updatePlayerMoneyText(playerId, players, updateMoneyText)
         if(ColyseusClient.isMyId(playerId)) UiInterfaceManager.updateMoneyText(updateMoneyText)
       }

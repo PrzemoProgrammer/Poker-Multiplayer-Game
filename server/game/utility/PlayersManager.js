@@ -9,7 +9,11 @@ class PlayersManager {
 
   updatePlayerCards(playerId, newPlayerCards) {
     const player = Players.getPlayer(playerId);
-    player.updateCards(newPlayerCards);
+  }
+
+  updatePlayerMoney(playerId, updatedPlayerMoney) {
+    const player = Players.getPlayer(playerId);
+    player.updateMoney(updatedPlayerMoney);
   }
 
   updatePlayerGamePosition(playerId, newPlayerGamePosition) {
@@ -20,6 +24,10 @@ class PlayersManager {
   updatePlayerBet(playerId, newPlayerBet) {
     const player = Players.getPlayer(playerId);
     player.updateBet(newPlayerBet);
+
+    console.log("DUPAAAAAAA");
+    console.log(player);
+    console.log("DUPAAAAAAA");
   }
 
   getPlayers() {

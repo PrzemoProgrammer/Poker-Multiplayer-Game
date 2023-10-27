@@ -20,13 +20,20 @@ class PlayersGamePositionManager {
   updateGamePositionsOnServer(gamePositions) {
     for (const playerId in gamePositions) {
       const newPlayerGamePosition = gamePositions[playerId].position;
+      // const updatedPlayerMoney = gamePositions[playerId].money;
+
       this.updateGamePositionOnServer(playerId, newPlayerGamePosition);
+      // this.updatePlayerMoneyOnServer(playerId, updatedPlayerMoney);
     }
   }
 
   updateGamePositionOnServer(playerId, newPlayerGamePosition) {
     PlayersManager.updatePlayerGamePosition(playerId, newPlayerGamePosition);
   }
+
+  // updatePlayerMoneyOnServer(playerId, updatedPlayerMoney) {
+  //   PlayersManager.updatePlayerMoney(playerId, updatedPlayerMoney);
+  // }
 
   getPlayersIDWithGamePositions(players) {
     const gamePositions = this.drawPositions();

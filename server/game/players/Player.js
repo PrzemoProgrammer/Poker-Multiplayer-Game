@@ -15,15 +15,23 @@ class Player {
   }
 
   updateGamePosition(gamePosition) {
-    this.playerData.position = gamePosition;
+    this.playerData.clientData.position = gamePosition;
+  }
+
+  updateMoney(newMoney) {
+    this.playerData.clientData.money = newMoney;
   }
 
   updateBet(newBet) {
-    this.playerData.bet = newBet;
+    this.playerData.clientData.bet = newBet;
   }
 
   updateCards(newCards) {
     this.playerData.cards = newCards;
+  }
+
+  getId() {
+    return this.playerData.clientData.id;
   }
 }
 module.exports = Player;

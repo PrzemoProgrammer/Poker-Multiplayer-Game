@@ -70,10 +70,10 @@ class PlayScene extends BaseScene {
 
     async updateGameOnStart(startGameData: ServerGameUpdateOnStart) {
         const players = playersManager.getPlayers();
-        const {drawCards, playersBets, playersGamePositions } = startGameData;
+        const {drawCards, playersBets, playersMoney, playersTurn, playersGamePositions } = startGameData;
 
         for (const playerId in players) {
-            GameManager.updateGameOnStart(playerId, players, playersBets, playersGamePositions);
+            GameManager.updateGameOnStart(playerId, players, playersBets, playersMoney, playersTurn, playersGamePositions);
         }
 
         await PlayersManager.playDealCardsForPlayersAnim();

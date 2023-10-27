@@ -48,18 +48,14 @@ class PlayersBetManager {
       if (
         playersIDWithGamePositions[playerId].position === bigBlindGamePosition
       ) {
-        players[playerId].clientData.money -= bigBlindValue;
         playersIDMoneyAndBets[playerId].bet = bigBlindValue;
       } else if (
         playersIDWithGamePositions[playerId].position === smallBlindGamePosition
       ) {
-        players[playerId].clientData.money -= smallBlindValue;
         playersIDMoneyAndBets[playerId].bet = smallBlindValue;
       } else {
         playersIDMoneyAndBets[playerId].bet = 0;
       }
-      playersIDMoneyAndBets[playerId].money =
-        players[playerId].clientData.money;
     }
     return playersIDMoneyAndBets;
   }

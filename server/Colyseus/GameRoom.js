@@ -43,8 +43,13 @@ class GameRoom extends Room {
   }
 
   startGame() {
-    const { playersGamePositions, playersBets, drawCardsForPlayers } =
-      GameManager.startGame();
+    const {
+      playersGamePositions,
+      playersBets,
+      playersMoney,
+      drawCardsForPlayers,
+      playersTurn,
+    } = GameManager.startGame();
 
     for (const clientId in drawCardsForPlayers) {
       const clientCards = drawCardsForPlayers[clientId];
@@ -55,6 +60,8 @@ class GameRoom extends Room {
       const mergedGameData = {
         playersGamePositions: playersGamePositions,
         playersBets: playersBets,
+        playersMoney: playersMoney,
+        playersTurn: playersTurn,
         drawCards: drawCards,
       };
 
@@ -76,6 +83,7 @@ class GameRoom extends Room {
   onLeave(client, consented) {
     console.log(`${client.id} left the game.`);
     GameManager.deletePlayerFromGame(client.sessionId);
+    //WYtypuj kolejną osobę do tury jeszce raz jeśli wychodzący miał teraz turę
   }
 
   onDispose() {
