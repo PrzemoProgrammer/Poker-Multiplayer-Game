@@ -1,28 +1,24 @@
-const { SIT_POSITIONS } = require("../config/gameConfig");
+const PlayersSitPositionsStorage = require("../utility/PlayersSitPositionsStorage");
 
-class SitPositionManager {
-  constructor() {
-    this.sitPositions = SIT_POSITIONS;
-  }
+class PlayersSitPositionManager {
 
   getSmallestNumber() {
-    return Math.min.apply(null, this.sitPositions);
+    const sitPositions = PlayersSitPositionsStorage.getSitPositions();
+    return Math.min.apply(null, sitPositions);
   }
 
   sortPositions() {
-    this.sitPositions.sort(function (a, b) {
-      return a - b;
-    });
+    PlayersSitPositionsStorage.sortPositions();
   }
 
   getEmptyPosition() {
-    return this.sitPositions.shift();
+    return PlayersSitPositionsStorage.getEmptyPosition();
   }
 
   releasePosition(position) {
-    this.sitPositions.push(position);
+    PlayersSitPositionsStorage.addPosition(position);
     this.sortPositions();
   }
 }
 
-module.exports = new SitPositionManager();
+module.exports = new PlayersSitPositionManager();

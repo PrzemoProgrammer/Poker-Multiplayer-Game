@@ -4,20 +4,22 @@ import CreateText from "../CreateText";
 import BetConfig from "../../interfaces/BetConfig";
 
 export default class Bet extends Container {
+    config:  BetConfig
     image: Sprite | null 
     background: Sprite | null
     text: CreateText 
-    config:  BetConfig
+    visibleOnInit: boolean
   constructor(config: BetConfig) {
     super()
     this.config = config
     this.x = this.config.x
     this.y = this.config.y
+    this.visibleOnInit = this.config.visible
     this.background = this.createBackgroundImage()
     this.image = this.createBetImage()
     this.text = this.createBetsCountText()
 
-    this.setVisible(false)
+    this.setVisible(this.visibleOnInit)
   }
 
   private createBetImage(): Sprite | null {
@@ -43,5 +45,9 @@ export default class Bet extends Container {
 
   public setVisible(value: boolean){
     this.visible = value
+  }
+
+  public updateText(newText: number | string){
+    this.text.updateMessage(newText)
   }
 }

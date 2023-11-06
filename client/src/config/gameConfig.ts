@@ -119,8 +119,8 @@ export const PLAYER_POSITIONS_CONFIG = {
             y: 200,
         },
         betPosition: {
-            x: 100,
-            y: 110,
+            x: 170,
+            y: 90,
         },
         cardsPositions: {
             dealAnimStartPositions: [
@@ -151,8 +151,8 @@ export const PLAYER_POSITIONS_CONFIG = {
             y: 200,
         },
         betPosition: {
-            x: -100,
-            y: 110,
+            x: -170,
+            y: 90,
         },
         cardsPositions: {
             dealAnimStartPositions: [

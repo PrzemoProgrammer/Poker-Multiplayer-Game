@@ -4,7 +4,7 @@ export default {
     id: "123",
     sit: 1,
     position: "player",
-    sprite: {
+    avatar: {
         path: "",
         key: "default_avatar",
         type: "sprite",
@@ -52,6 +52,7 @@ export default {
     bet: {
       x: 100,
       y: 100,
+      visible: false,
       image: {
         path: "",
         key: "bet",
@@ -81,7 +82,7 @@ export default {
       text: {
         message: 0,
         x: 0,
-        y: 55,
+        y: 40,
         scaleX: 1, 
         scaleY: 1,
         angle: 0,
@@ -94,6 +95,32 @@ export default {
           fill: 0x000000, 
         }
       }
+    },
+    dealerSign:  {
+      path: "",
+      key: "dealer_sign",
+      type: "sprite",
+      x: -50,
+      y: -50,
+      scaleX: 1, 
+      scaleY: 1,
+      angle: 0,
+      anchorX: 0.5,
+      anchorY: 0.5,
+      visible: false
+    },
+    checkSign:  {
+      path: "",
+      key: "check_sign",
+      type: "sprite",
+      x: -50,
+      y: 22,
+      scaleX: 1, 
+      scaleY: 1,
+      angle: 0,
+      anchorX: 0.5,
+      anchorY: 0.5,
+      visible: false
     },
     cards: [
      {
@@ -132,10 +159,55 @@ export default {
         {x:100, y:0},
         {x:100, y:0}
       ],
-    }
-    // cards: {
-    //   cards: [{name: 'card_hidden', suit: '', value: ''}, {name: 'card_hidden', suit: '', value: ''}],
-    //   x: 0,
-    //   y: 0
-    // }
+    },
+    timer: {
+      countdownSeconds: 15,
+      fps: 60,
+      progressBar: {
+        x:0,
+        y:100,
+        background: {
+          path: "",
+          key: "timer_bar_background",
+          type: "sprite",
+          x: 13,
+          y: 0,
+          scaleX: 1, 
+          scaleY: 1,
+          angle: 0,
+          anchorX: 0.5,
+          anchorY: 0.5,
+          visible: true
+        },
+        container: {
+          path: "",
+          key: "timer_bar_container",
+          type: "sprite",
+          x: 0,
+          y: 0,
+          scaleX: 1, 
+          scaleY: 1,
+          angle: 0,
+          anchorX: 0.5,
+          anchorY: 0.5,
+          visible: true
+        },
+        bar: {
+          path: "",
+          key: "timer_bar",
+          type: "sprite",
+          x: 13,
+          y: 0,
+          scaleX: 1, 
+          scaleY: 1,
+          angle: 0,
+          anchorX: 0.5,
+          anchorY: 0.5,
+          visible: true
+        },
+        mask: {
+          width: 196
+        },
+      }
+    },
 }

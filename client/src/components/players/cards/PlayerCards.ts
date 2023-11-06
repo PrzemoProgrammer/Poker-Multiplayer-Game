@@ -1,9 +1,9 @@
 import { Sprite, Container} from "pixi.js";
-import DefaultSpriteConfig from "../../interfaces/DefaultSpriteConfig";
-import CardData from "../../interfaces/CardData";
-import Card from "../../components/card/Card";
+import DefaultSpriteConfig from "../../../interfaces/DefaultSpriteConfig";
+import CardData from "../../../interfaces/CardData";
+import Card from "../../card/Card";
 
-export default class Cards extends Container {
+export default class PlayerCards extends Container {
   cards: Card[]
   dealAnimEndPositions:{x: number;y: number}[];
   dealAnimStartPositions:{x: number;y: number}[];
@@ -61,7 +61,7 @@ export default class Cards extends Container {
   for (let i = 0; i < this.cards.length; i++) {
     const card = this.cards[i]
     const cardSymbolImage = cardsSymbols[i].name
-    card.turnOverCardAnim(cardSymbolImage)
+    card.turnOverAnim(cardSymbolImage)
   }
 }
 

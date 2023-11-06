@@ -1,23 +1,21 @@
 import * as PIXI from "pixi.js";
 import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
-import { TURN_OVER_CARD_DELAY } from "../config/cardAnimationConfig";
 import spritesConfig from "../../assets/spritesConfig.json";
 import CreateComponent from "../components/CreateComponent";
 import SpriteConfig from "../interfaces/SpriteConfig";
-import sceneManager from "../utility/SceneManager";
-import Player from "../components/players/Player";
+import sceneManager from "../utility/managers/SceneManager";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import BaseScene from "../abstraction/BaseScene";
 import GameSignals from "../gameSignals/GameSignals";
-import ServerPlayerData from "../interfaces/ServerPlayerData";
-import playersManager from "../utility/PlayersManager";
-import PLAYER_CONFIG from "../config/playerConfig";
+import ServerPlayerData from "../interfaces/ServerPlayerData";;;
 import PlayersConfig from "../interfaces/PlayersConfig";
+import PlayerTurnData from "../interfaces/PlayerTurnData";
 import ServerGameUpdateOnStart from "../interfaces/ServerGameUpdateOnStart";
-import UiInterfaceManager from "../utility/UiInterfaceManager";
-import SitPositionManager from "../utility/SitPositionManager";
-import GameManager from "../utility/GameManager";
-import PlayersManager from "../utility/PlayersManager";
+import NextRoundData from "../interfaces/NextRoundData";
+import SitPositionManager from "../utility/managers/SitPositionManager";
+import GameManager from "../utility/managers/GameManager";
+import PlayersManager from "../utility/managers/PlayersManager";
+import TableManager from "../utility/managers/TableManager";
 
 class PlayScene extends BaseScene {
     constructor() {
@@ -32,7 +30,8 @@ class PlayScene extends BaseScene {
     }
 
     init() {
-        this.createComponents();
+        this.createStaticComponents();
+        this.createTable()
         this.createUiInterface();
 
         this.bindSignals();
@@ -48,9 +47,12 @@ class PlayScene extends BaseScene {
     bindSignals(): void {
         GameSignals.onPlayerJoined.add((playerData: ServerPlayerData) => this.addPlayerToGame(playerData));
         GameSignals.onGetPlayers.add((playerData: PlayersConfig) => this.addPlayersToGame(playerData));
-        GameSignals.onStartGameData.add((startGameData: ServerGameUpdateOnStart) =>
-            this.updateGameOnStart(startGameData),
+        GameSignals.onStartGameData.add((initGameData: ServerGameUpdateOnStart) =>
+            this.updateGameOnStart(initGameData),
         );
+        GameSignals.onChangePlayerTurn.add((newPlayerTurn: PlayerTurnData )=> this.changePlayerTurn(newPlayerTurn))
+        GameSignals.onInitNextRound.add((initNextRoundData: NextRoundData )=> this.initNextRound(initNextRoundData)) 
+        GameSignals.onPlayerLeave.add((playerId: string )=> this.deletePlayerFromGame(playerId))
     }
 
     addPlayerToGame(playerData: ServerPlayerData) {
@@ -68,26 +70,28 @@ class PlayScene extends BaseScene {
         }
     }
 
-    async updateGameOnStart(startGameData: ServerGameUpdateOnStart) {
-        const players = playersManager.getPlayers();
-        const {drawCards, playersBets, playersMoney, playersTurn, playersGamePositions } = startGameData;
+    updateGameOnStart(initGameData: ServerGameUpdateOnStart) {
+      GameManager.updateGameOnStart(initGameData);
+    }
 
-        for (const playerId in players) {
-            GameManager.updateGameOnStart(playerId, players, playersBets, playersMoney, playersTurn, playersGamePositions);
-        }
-
-        await PlayersManager.playDealCardsForPlayersAnim();
-        setTimeout(() => {
-            playersManager.turnOverPlayerCardsAnim(drawCards, true);
-        }, TURN_OVER_CARD_DELAY);
+    changePlayerTurn(newPlayerTurn: PlayerTurnData ){
+      GameManager.updatePlayerTurn(newPlayerTurn)
     }
 
     createPlayerAndAddToGame(playerData: ServerPlayerData) {
         const player = this.createPlayer(playerData);
-        playersManager.addPlayer(player);
+        PlayersManager.addPlayer(player);
     }
 
-    createComponents() {
+    async initNextRound(nextRoundData: NextRoundData){
+      GameManager.initNextRound(nextRoundData)
+    }
+
+    deletePlayerFromGame(playerId: string){
+      GameManager.deletePlayer(playerId)
+    }
+
+    createStaticComponents() {
         for (let spriteConfig in spritesConfig) {
             const spriteData: SpriteConfig = spritesConfig[spriteConfig as keyof typeof spritesConfig];
             const sprite = CreateComponent.create(spriteData);
@@ -95,39 +99,22 @@ class PlayScene extends BaseScene {
         }
     }
 
-    createPlayer(playerData: ServerPlayerData): Player {
-        const { id, money, nick, sit, bet, position } = playerData;
-        const { sitPosition, betPosition, cardsPositions } = SitPositionManager.getConfigPositions(sit);
-        const config = { ...PLAYER_CONFIG };
-        config.x = sitPosition.x;
-        config.y = sitPosition.y;
-        config.bet.x = betPosition.x;
-        config.bet.y = betPosition.y;
-        config.id = id;
-        config.sit = sit;
-        config.bet.text.message = bet;
-        config.position = position;
-        config.nickname.message = nick;
-        config.money.message = money;
-        config.cardsAnimPositions.animStartPosition = cardsPositions.dealAnimStartPositions;
-        config.cardsAnimPositions.animEndPosition = cardsPositions.dealAnimEndPositions;
-        for (let i = 0; i < cardsPositions.dealAnimEndPositions.length; i++) {
-            config.cards[i].x = cardsPositions.dealAnimEndPositions[i].x;
-            config.cards[i].y = cardsPositions.dealAnimEndPositions[i].y;
-        }
-
-        const player = new Player(config);
-        if (player !== null) this.addChild(player);
-
-        return player;
+    createPlayer(playerData: ServerPlayerData){
+      const player = GameManager.createPlayer(playerData)
+      if (player !== null) this.addChild(player);
+      return player;
     }
 
     startSetupGameScene() {
-        sceneManager.startScene("SetupGameScene");
+      sceneManager.startScene("SetupGameScene");
     }
 
     createUiInterface() {
-        UiInterfaceManager.createInterface(this);
+      GameManager.createUiInterface(this)
+    }
+
+    createTable(){
+      TableManager.createTable(this)
     }
 }
 

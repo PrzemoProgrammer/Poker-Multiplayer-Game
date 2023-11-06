@@ -3,7 +3,7 @@ const PlayersManager = require("./PlayersManager");
 const CroupierCardsManager = require("./CroupierCardsManager");
 
 class PlayersCardsManager {
-  updateCards(players) {
+  initCards(players) {
     const playersDrawCards = this.drawCardsAndAssignToPlayersID(players);
     this.updatePlayersCardsOnServer(playersDrawCards);
 

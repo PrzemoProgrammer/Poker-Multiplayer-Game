@@ -1,5 +1,6 @@
 // import * as PIXI from "pixi.js";
 import { Sprite, Text } from "pixi.js";
+import CreateSprite from "../../components/CreateSprite";
 import BaseEntity from "./BaseEntity";
 import CreateComponent from "../CreateComponent";
 import CreateText from "../CreateText";
@@ -7,18 +8,21 @@ import Bet from "../bet/Bet";
 import PlayerConfig from "../../interfaces/PlayerConfig";
 import Card from "../../interfaces/CardData";
 import SpriteConfig from "../../interfaces/SpriteConfig";
-import Cards from "../card/Cards";
-
+import PlayerCards from "./cards/PlayerCards";
+import Timer from "../Timer";
 
 export default class Player extends BaseEntity {
     avatarSprite: Sprite | null
     config: PlayerConfig
     nickname: Text
     money: Text
+    dealerSign: CreateSprite | null
+    checkSign: CreateSprite | null
     id: string
     bet: Bet
     gamePosition: string
-    cards: Cards
+    cards: PlayerCards
+    timer: Timer
   constructor(config: PlayerConfig) {
     const {x,y} = config
     super(x,y)
@@ -26,15 +30,18 @@ export default class Player extends BaseEntity {
     this.id = this.config.id
     this.gamePosition = this.config.position
     
-    this.avatarSprite = this.createSprite()
+    this.avatarSprite = this.createAvatar()
     this.nickname = this.createNickname()
     this.money = this.createMoney()
+    this.dealerSign = this.createDealerSign()
+    this.checkSign = this.createCheckSign()
     this.bet = this.createBet()
     this.cards = this.createCards()
+    this.timer = this.createTimer()
   }
 
-  private createSprite(): Sprite | null {
-    const spriteConfig = this.config.sprite
+  private createAvatar(): Sprite | null {
+    const spriteConfig = this.config.avatar
     const sprite = CreateComponent.create(spriteConfig)
     if (sprite !== null) this.addChild(sprite);
     return sprite
@@ -64,14 +71,39 @@ export default class Player extends BaseEntity {
     return bet
   }
 
-  private createCards():Cards {
-    const cards = new Cards()
+  private createCards():PlayerCards {
+    const cards = new PlayerCards()
     cards.addCards(this.config.cards)
     cards.setAnimStartPosition(this.config.cardsAnimPositions.animStartPosition)
     cards.setAnimEndPosition(this.config.cardsAnimPositions.animEndPosition )
     this.addChild(cards);
 
     return cards
+  }
+
+  private createTimer() {
+    const config = this.config.timer
+    const timer = new Timer(config)
+    timer.setVisible(false)
+    this.addChild(timer);
+
+    return timer
+  }
+
+  private createDealerSign(): CreateSprite | null  {
+    const config = this.config.dealerSign
+    const dealerSign = CreateComponent.create(config);
+    if (dealerSign !== null) this.addChild(dealerSign);
+
+    return dealerSign
+  }
+
+  private createCheckSign(): CreateSprite | null  {
+    const config = this.config.checkSign
+    const checkSign = CreateComponent.create(config);
+    if (checkSign !== null)  this.addChild(checkSign);
+
+    return checkSign
   }
 
   public updateMoneyText(updatedText: number){
@@ -102,6 +134,16 @@ export default class Player extends BaseEntity {
     this.cards.turnOverCardsAnim(cardsSymbols)
   }
 
+  public startTimer(serverTime: number, respondTime: number){
+    this.timer.startCountdown(serverTime, respondTime)
+  }
 
+  public resetBet(){
+    this.bet.setVisible(false)
+    this.bet.updateText(0)
+  }
 
+  setDealerSignVisible(value: boolean){
+    this.dealerSign?.setVisible(value)
+  }
 }

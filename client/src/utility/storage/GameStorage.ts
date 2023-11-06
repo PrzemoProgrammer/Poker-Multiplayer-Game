@@ -1,6 +1,6 @@
-import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
+import { GAME_HEIGHT, GAME_WIDTH } from "../../config/gameConfig";
 import { Application, Container } from "pixi.js";
-import BaseScene from "../abstraction/BaseScene";
+import BaseScene from "../../abstraction/BaseScene";
 
 
 class GameStorage {

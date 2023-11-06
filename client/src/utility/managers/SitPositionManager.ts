@@ -1,5 +1,5 @@
-import { PLAYER_POSITIONS_CONFIG} from "../config/gameConfig";
-import PlayerPositionsConfig from "../interfaces/PlayerPositionsConfig";
+import { PLAYER_POSITIONS_CONFIG} from "../../config/gameConfig";
+import PlayerPositionsConfig from "../../interfaces/PlayerPositionsConfig";
 // import PlayerPositionsConfig from "../interfaces/PlayerPositionsConfig";
 
 class SitPositionManager {

@@ -36,6 +36,15 @@ class CroupierCardsManager {
   removeFirstCardFromDeck() {
     return CroupierCards.subtractFirstCard();
   }
+
+  getCardsFromDeck(numberOfCards) {
+    const cards = [];
+    for (let i = 0; i < numberOfCards; i++) {
+      const card = this.removeFirstCardFromDeck();
+      cards.push(card);
+    }
+    return cards;
+  }
 }
 
 module.exports = new CroupierCardsManager();

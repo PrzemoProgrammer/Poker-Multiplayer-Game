@@ -1,4 +1,4 @@
-import BaseScene from "../abstraction/BaseScene";
+import BaseScene from "../../abstraction/BaseScene";
 
   class SceneStorage {
     scenes: Map<string, BaseScene>;

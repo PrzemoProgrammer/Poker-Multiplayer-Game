@@ -30,8 +30,28 @@ class Player {
     this.playerData.cards = newCards;
   }
 
+  //   updateTurn(newTurn) {
+  //     this.playerData.clientData.turn = newTurn;
+  //   }
+
+  isCheck() {
+    return this.playerData.clientData.check;
+  }
+
+  getBet() {
+    return this.playerData.clientData.bet;
+  }
+
   getId() {
     return this.playerData.clientData.id;
+  }
+
+  getGamePosition() {
+    return this.playerData.clientData.position;
+  }
+
+  getSitPosition() {
+    return this.playerData.clientData.sit;
   }
 }
 module.exports = Player;

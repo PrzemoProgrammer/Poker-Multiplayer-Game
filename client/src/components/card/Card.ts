@@ -1,15 +1,20 @@
 import * as PIXI from "pixi.js";
 import CreateSprite from "../CreateSprite";
 import DefaultSpriteConfig from "../../interfaces/DefaultSpriteConfig";
-import { DEAL_ANIM_CONFIG } from "../../config/cardAnimationConfig";
+import { DEAL_ANIM_CONFIG, LAY_OF_ANIM_CONFIG, SLIDE_FROM_TOP_ANIM_CONFIG } from "../../config/cardAnimsConfig";
 import gsap from "gsap";
 
 export default class Card extends CreateSprite {
+  isTurned: boolean
+  isSlideDown: boolean
     constructor(config: DefaultSpriteConfig) {
         super(config)
+
+        this.isTurned = false
+        this.isSlideDown = false
       }
 
-      public turnOverCardAnim(newTexture: string){
+      public turnOverAnim(newTexture: string){
         gsap.to(this, {
           width: 0,
           duration: 0.2,
@@ -18,6 +23,7 @@ export default class Card extends CreateSprite {
           repeat: 1,
           onRepeat: () => {
             this.changeTexture(newTexture)
+            this.isTurned = true
           },
         });
       }
@@ -42,6 +48,31 @@ export default class Card extends CreateSprite {
         });
       }
 
+      public async slideFromTopAnim(){
+        const {ease, duration, y}= SLIDE_FROM_TOP_ANIM_CONFIG
+       await  gsap.to(this, {
+          y: y,
+          duration: duration,
+          ease: ease,
+          onComplete: () => {
+            this.isSlideDown = true
+          },
+        });
+      }
+ 
+      public async moveXAnim(newX: number){
+        const {ease, duration} = LAY_OF_ANIM_CONFIG
+        await  gsap.to(this, {
+           x: newX,
+           duration: duration,
+           ease: ease,
+         });
+       }
+
+      setYPosition(newY: number){
+        this.y = newY
+      }
+
       public setScale(value: number){
         this.scale.x = value
         this.scale.y = value
@@ -49,5 +80,9 @@ export default class Card extends CreateSprite {
 
       public setVisible(value: boolean){
         this.visible = value
+      }
+
+      public isPlacedOnTable(): boolean{
+        return this.isTurned && this.isSlideDown
       }
 }

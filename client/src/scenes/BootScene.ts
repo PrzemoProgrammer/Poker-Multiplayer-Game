@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import sceneManager from "../utility/SceneManager";
-import AssetsManager from "../utility/AssetsManager";
+import sceneManager from "../utility/managers/SceneManager";
+import AssetsManager from "../utility/managers/AssetsManager";
 import LoadingScreen from "../components/LoadingScreen";
 import BaseScene from "../abstraction/BaseScene";
 

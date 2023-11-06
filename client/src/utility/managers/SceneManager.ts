@@ -1,6 +1,6 @@
-import GameStorage from "../utility/GameStorage";
-import SceneStorage from "../utility/SceneStorage";
-import BaseScene from "../abstraction/BaseScene";
+import GameStorage from "../storage/GameStorage";
+import SceneStorage from "../storage/SceneStorage";
+import BaseScene from "../../abstraction/BaseScene";
 
 class SceneManager {
   

@@ -1,4 +1,5 @@
 const PlayersManager = require("./PlayersManager");
+
 const {
   SMALL_BLIND_BET,
   BIG_BLIND_BET,
@@ -6,7 +7,7 @@ const {
 } = require("../config/gameConfig");
 
 class PlayersBetManager {
-  updateBets(playersIDWithGamePositions, players) {
+  initBets(playersIDWithGamePositions, players) {
     const calculatedPlayersBets = this.calculateBetsOnStart(
       playersIDWithGamePositions,
       players
@@ -58,6 +59,14 @@ class PlayersBetManager {
       }
     }
     return playersIDMoneyAndBets;
+  }
+
+  resetPlayersBets() {
+    const players = PlayersManager.getPlayersObject();
+    for (const playerId in players) {
+      const player = players[playerId];
+      player.updateBet(0);
+    }
   }
 }
 

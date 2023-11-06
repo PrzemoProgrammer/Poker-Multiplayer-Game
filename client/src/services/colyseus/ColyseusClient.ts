@@ -2,6 +2,8 @@ import * as Colyseus from 'colyseus.js';
 import ServerPlayerData from "../../interfaces/ServerPlayerData";
 import PlayersConfig from "../../interfaces/PlayersConfig";
 import ServerGameUpdateOnStart from "../../interfaces/ServerGameUpdateOnStart";
+import PlayerTurnData from "../../interfaces/PlayerTurnData";
+import FlopRoundData from "../../interfaces/NextRoundData";
 import GameSignals from "../../gameSignals/GameSignals";
 import  {WEBSOCKET_URL} from '../config';
 
@@ -64,9 +66,21 @@ class ColyseusClient {
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
-      this.room.onMessage("gameStartData", (data: ServerGameUpdateOnStart) => {
+      this.room.onMessage("initPreflopRound", (data: ServerGameUpdateOnStart) => {
         console.log(data)
         GameSignals.onStartGameData.dispatch(data)  
+      });
+
+      this.room.onMessage('updateGameTurn', (data: PlayerTurnData) => {
+        GameSignals.onChangePlayerTurn.dispatch(data)          
+      });
+
+      this.room.onMessage('initNextRound', (data: FlopRoundData) => {
+        GameSignals.onInitNextRound.dispatch(data)          
+      });
+
+      this.room.onMessage('playerLeaveGame', (data: string) => {
+        GameSignals.onPlayerLeave.dispatch(data)          
       });
 
       this.room.onMessage("announcement", (data: string) => {

@@ -1,6 +1,6 @@
 // import { Howl, Howler } from "howler";
 import * as PIXI from "pixi.js";
-import ImageStorage from "./ImageStorage";
+import ImageStorage from "../storage/ImageStorage";
 
 class AssetsManager {
 // loadingProgress: number;

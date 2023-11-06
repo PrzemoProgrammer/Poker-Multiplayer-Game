@@ -9,4 +9,13 @@ export const DEAL_ANIM_CONFIG = {
     angle: 360,
     scaleOnStart: 0.5,
 }
+export const LAY_OF_ANIM_CONFIG = {
+    duration: 0.5,
+    ease: "none",
+}
+export const SLIDE_FROM_TOP_ANIM_CONFIG = {
+    y: 400,
+    duration: 0.3,
+    ease: "none",
+}
 

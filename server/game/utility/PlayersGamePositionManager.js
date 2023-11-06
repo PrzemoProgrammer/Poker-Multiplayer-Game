@@ -10,7 +10,7 @@ class PlayersGamePositionManager {
     this.gamePositions = GAME_POSITIONS;
   }
 
-  updateGamePositions(players) {
+  initGamePositions(players) {
     const gamePositions = this.getPlayersIDWithGamePositions(players);
     this.updateGamePositionsOnServer(gamePositions);
 
@@ -53,17 +53,39 @@ class PlayersGamePositionManager {
 
     for (const playerId in players) {
       playersPositionData[playerId] = {};
-      if (players[playerId].clientData.sit === dealer) {
-        playersPositionData[playerId].position = this.gamePositions[0];
-      } else if (players[playerId].clientData.sit === smallBlind) {
-        playersPositionData[playerId].position = this.gamePositions[1];
-      } else if (players[playerId].clientData.sit === bigBlind) {
-        playersPositionData[playerId].position = this.gamePositions[2];
-      } else {
-        playersPositionData[playerId].position = this.gamePositions[3];
+      switch (players[playerId].clientData.sit) {
+        case dealer:
+          playersPositionData[playerId].position = this.gamePositions[0];
+          break;
+        case smallBlind:
+          playersPositionData[playerId].position = this.gamePositions[1];
+          break;
+        case bigBlind:
+          playersPositionData[playerId].position = this.gamePositions[2];
+          break;
+        default:
+          playersPositionData[playerId].position = this.gamePositions[3];
+          break;
       }
     }
+
     return playersPositionData;
+
+    // const playersPositionData = {};
+
+    // for (const playerId in players) {
+    //   playersPositionData[playerId] = {};
+    //   if (players[playerId].clientData.sit === dealer) {
+    //     playersPositionData[playerId].position = this.gamePositions[0];
+    //   } else if (players[playerId].clientData.sit === smallBlind) {
+    //     playersPositionData[playerId].position = this.gamePositions[1];
+    //   } else if (players[playerId].clientData.sit === bigBlind) {
+    //     playersPositionData[playerId].position = this.gamePositions[2];
+    //   } else {
+    //     playersPositionData[playerId].position = this.gamePositions[3];
+    //   }
+    // }
+    // return playersPositionData;
   }
 
   drawDealer() {

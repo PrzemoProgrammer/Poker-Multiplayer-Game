@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import AssetsManager from "../utility/AssetsManager";
+import AssetsManager from "../utility/managers/AssetsManager";
 import DefaultSpriteConfig from "../interfaces/DefaultSpriteConfig";
 
 export default class Sprite extends PIXI.Sprite {
@@ -21,7 +21,7 @@ export default class Sprite extends PIXI.Sprite {
         }
     }
 
-    changeTexture(newTexture: string) {
+    public changeTexture(newTexture: string) {
         const updatedTexture = AssetsManager.getImage(newTexture)
         if (updatedTexture) {
             const texture = PIXI.Texture.from(updatedTexture);
@@ -29,5 +29,9 @@ export default class Sprite extends PIXI.Sprite {
         } else {
             console.error(`Image with key "${newTexture}" not found.`);
         }
+    }
+
+    public setVisible(value: boolean) {
+        this.visible = value
     }
 }

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
-import AssetsManager from "../utility/AssetsManager";
+import AssetsManager from "../utility/managers/AssetsManager";
 
  export default class LoadingScreen{
     scene: PIXI.Container

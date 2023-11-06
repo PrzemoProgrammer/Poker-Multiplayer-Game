@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import sceneManager from "../utility/SceneManager";
+import sceneManager from "../utility/managers/SceneManager";
 import {AUTHENTICATION, REGISTRATION } from "../services/requests/requests";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";

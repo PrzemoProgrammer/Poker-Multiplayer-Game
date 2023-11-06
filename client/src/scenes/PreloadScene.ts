@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
-import sceneManager from "../utility/SceneManager";
-import AssetsManager from "../utility/AssetsManager";
+import sceneManager from "../utility/managers/SceneManager";
+import AssetsManager from "../utility/managers/AssetsManager";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
 
@@ -16,6 +16,8 @@ class PreloadScene extends BaseScene {
     await this.loadInterfaceImages()
     await this.loadCardImages()
     await this.loadBetImages()
+    await this.loadTimerImages()
+    await this.loadSignImages()
     this.handleStartNextScene();
   }
 
@@ -92,6 +94,40 @@ class PreloadScene extends BaseScene {
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
       let source = `assets/chips/${sprite}.png`
+
+      AssetsManager.addImage(sprite, source);
+    }
+  }
+
+  async loadTimerImages(): Promise<void> {
+    const images = [
+      "timer_bar_background",
+      "timer_bar_container",
+      "timer_bar"
+    ];
+
+    let totalImages = images.length;
+
+    for (let i = 0; i < totalImages; i++) {
+      let sprite = images[i];
+      let source = `assets/interface/timer/${sprite}.png`
+
+      AssetsManager.addImage(sprite, source);
+    }
+  }
+
+
+  async loadSignImages(): Promise<void> {
+    const images = [
+      "check_sign",
+      "dealer_sign",
+    ];
+
+    let totalImages = images.length;
+
+    for (let i = 0; i < totalImages; i++) {
+      let sprite = images[i];
+      let source = `assets/interface/signs/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }

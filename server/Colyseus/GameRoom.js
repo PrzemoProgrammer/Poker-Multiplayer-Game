@@ -48,7 +48,9 @@ class GameRoom extends Room {
       playersBets,
       playersMoney,
       drawCardsForPlayers,
-      playersTurn,
+      playerIdGameTurn,
+      serverTime,
+      turnRespondTime,
     } = GameManager.startGame();
 
     for (const clientId in drawCardsForPlayers) {
@@ -58,15 +60,144 @@ class GameRoom extends Room {
       drawCards[clientId].drawCards = clientCards;
 
       const mergedGameData = {
-        playersGamePositions: playersGamePositions,
-        playersBets: playersBets,
-        playersMoney: playersMoney,
-        playersTurn: playersTurn,
-        drawCards: drawCards,
+        players: {
+          playersGamePositions: playersGamePositions,
+          playersBets: playersBets,
+          playersMoney: playersMoney,
+          drawCards: drawCards,
+        },
+        game: {
+          playerTurnData: {
+            playerIdGameTurn,
+            serverTime,
+            turnRespondTime,
+          },
+        },
       };
 
-      this.sendMessageToClientID(clientId, "gameStartData", mergedGameData);
+      this.sendMessageToClientID(clientId, "initPreflopRound", mergedGameData);
     }
+
+    GameManager.startGameTurnTimer(() => {
+      this.updateGameTurn();
+    });
+  }
+
+  updateGameTurn() {
+    //! ////////////////////// PREFLOP ////////////////////////////////
+
+    //! ////////////////////// FLOP ////////////////////////////////
+    // if (GameManager.isPreflopRoundFinish()) {
+    const {
+      newCardsOnTable,
+      betsInPool,
+      playerIdGameTurn,
+      serverTime,
+      turnRespondTime,
+    } = GameManager.initNextRound(3);
+
+    const mergedGameData = {
+      game: {
+        tableBets: betsInPool,
+        tableCards: newCardsOnTable,
+        playerTurnData: {
+          playerIdGameTurn,
+          serverTime,
+          turnRespondTime,
+        },
+      },
+    };
+
+    this.broadcast("initNextRound", mergedGameData);
+    // }
+    //! ////////////////////// TURN ////////////////////////////////
+    // if (GameManager.isFlopRoundFinish()) {
+    setTimeout(() => {
+      const {
+        newCardsOnTable,
+        betsInPool,
+        playerIdGameTurn,
+        serverTime,
+        turnRespondTime,
+      } = GameManager.initNextRound(1);
+
+      const mergedGameData = {
+        game: {
+          tableBets: betsInPool,
+          tableCards: newCardsOnTable,
+          playerTurnData: {
+            playerIdGameTurn,
+            serverTime,
+            turnRespondTime,
+          },
+        },
+      };
+
+      this.broadcast("initNextRound", mergedGameData);
+    }, 4000);
+
+    setTimeout(() => {
+      const {
+        newCardsOnTable,
+        betsInPool,
+        playerIdGameTurn,
+        serverTime,
+        turnRespondTime,
+      } = GameManager.initNextRound(1);
+
+      const mergedGameData = {
+        game: {
+          tableBets: betsInPool,
+          tableCards: newCardsOnTable,
+          playerTurnData: {
+            playerIdGameTurn,
+            serverTime,
+            turnRespondTime,
+          },
+        },
+      };
+
+      this.broadcast("initNextRound", mergedGameData);
+    }, 8000);
+    // }
+
+    //! ////////////////////// RIVER ////////////////////////////////
+    if (GameManager.isTurnRoundFinish()) {
+      const {
+        newCardsOnTable,
+        betsInPool,
+        playerIdGameTurn,
+        serverTime,
+        turnRespondTime,
+      } = GameManager.initNextRound(1);
+
+      const mergedGameData = {
+        game: {
+          tableBets: betsInPool,
+          tableCards: newCardsOnTable,
+          playerTurnData: {
+            playerIdGameTurn,
+            serverTime,
+            turnRespondTime,
+          },
+        },
+      };
+
+      this.broadcast("initNextRound", mergedGameData);
+    }
+
+    //! ////////////////////// INIT WINNER ////////////////////////////////
+    if (GameManager.isRiverRoundFinish()) {
+      this.broadcast("initWinner", mergedGameData);
+    }
+
+    //! ////////////////////// RESET GAME ////////////////////////////////
+    if (GameManager.isGameWinner()) {
+      this.broadcast("initLobby", mergedGameData);
+    }
+    //! //////////////// CHANGE PLAYER TURN /////////////////////////////////
+    const playerTurnData = GameManager.changePlayerTurn();
+    this.broadcast("updateGameTurn", playerTurnData);
   }
 
   sendMessageToClientID(clientID, url, message) {
@@ -83,6 +214,7 @@ class GameRoom extends Room {
   onLeave(client, consented) {
     console.log(`${client.id} left the game.`);
     GameManager.deletePlayerFromGame(client.sessionId);
+    this.broadcast("playerLeaveGame", client.id);
     //WYtypuj kolejną osobę do tury jeszce raz jeśli wychodzący miał teraz turę
   }
 

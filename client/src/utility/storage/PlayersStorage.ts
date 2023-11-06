@@ -1,0 +1,31 @@
+import DataStorage from "../../interfaces/DataStorage";
+import Player from "../../components/players/Player";
+
+class PlayersStorage {
+    players: DataStorage
+
+    constructor() {
+        this.players = {};
+    }
+
+    public addPlayer(player: Player):void {
+        const playerID = player.id
+        this.players[playerID] = player
+    }
+
+    public getPlayers(): DataStorage{
+        return this.players
+    }
+
+    public getPlayer(id: string): Player{
+        return  this.players[id]
+    }
+
+    public deletePlayer(playerId: string):void {
+       delete this.players[playerId]
+    }
+
+  }
+  
+  export default new PlayersStorage();
+  

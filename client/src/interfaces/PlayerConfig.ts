@@ -1,8 +1,8 @@
 import TextConfig from "../interfaces/TextConfig";
-import CardsConfig from "../interfaces/CardsConfig";
 import SpriteConfig from "../interfaces/SpriteConfig";
 import DefaultSpriteConfig from "../interfaces/DefaultSpriteConfig";
 import BetConfig from "../interfaces/BetConfig";
+import TimerConfig from "../interfaces/TimerConfig";
 
 export default interface PlayerConfig {
     x: number,
@@ -10,16 +10,16 @@ export default interface PlayerConfig {
     id: string,
     sit: number,
     position: string,
-    sprite: SpriteConfig,
+    avatar: SpriteConfig,
     nickname: TextConfig,
     money: TextConfig,
     bet: BetConfig
+    dealerSign: SpriteConfig,
+    checkSign: SpriteConfig,
     cards: DefaultSpriteConfig[],
     cardsAnimPositions: {
         animStartPosition: {x: number, y:number }[],
         animEndPosition: {x: number, y:number }[],        
     }
-    // cards: CardsConfig,
+    timer: TimerConfig
   }
-
-
