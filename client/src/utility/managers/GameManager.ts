@@ -1,25 +1,25 @@
 import AssetsManager from "../../utility/managers/AssetsManager";
 import BaseScene from "../../abstraction/BaseScene";
 import ColyseusClient from "../../services/colyseus/ColyseusClient";
-import PokerBarManager from "./PokerBarManager";
-import BettingManager from "./BettingManager";
+import PokerBarManager from "../../UI/pokerBar/manager/PokerBarManager";
+import BettingManager from "../../UI/betting/manager/BettingManager";
 import DataStorage from "../../interfaces/DataStorage";
 import PlayerBets from "../../interfaces/PlayerBets";
 import PlayerGamePositions from "../../interfaces/PlayerGamePositions";
 import PlayersMoney from "../../interfaces/PlayersMoney";
-import PlayersManager from "./PlayersManager";
+import PlayersManager from "../../game/players/manager/PlayersManager";
 import ServerGameUpdateOnStart from "../../interfaces/ServerGameUpdateOnStart";
 import PlayerTurnData from "../../interfaces/PlayerTurnData";
 import ServerPlayerData from "../../interfaces/ServerPlayerData";
-import { TURN_OVER_PLAYER_CARD_DELAY } from "../../config/cardAnimsConfig";
-import SitPositionManager from "./SitPositionManager";
-import Player from "../../components/players/Player";
-import PLAYER_CONFIG from "../../config/playerConfig";
+import { TURN_OVER_PLAYER_CARD_DELAY } from "../../game/card/config/cardAnimsConfig";
+import SitPositionManager from "../../game/manager/PlayerSitPositionManager";
+import Player from "../../game/players/player/Player";
+import PLAYER_CONFIG from "../../game/players/player/config/playerConfig";
 import NextRoundData from "../../interfaces/NextRoundData";
 import UpdatePlayerTurnAction from "../../interfaces/UpdatePlayerTurnAction";
-import TableManager from "../../utility/managers/TableManager";
+import TableManager from "../../game/table/manager/TableManager";
 import GameSignals from "../../gameSignals/GameSignals";
-import {BUTTON_TYPES} from "../../config/gameConfig";
+import {BUTTON_TYPES} from "../../game/config/gameConfig";
 
 class GameManager {
     public async updateGameOnStart(initGameData: ServerGameUpdateOnStart){

@@ -2,7 +2,7 @@
 import {InteractionEvent, Point, PointerEvents } from "pixi.js";
 import CreateSprite from "./CreateSprite";
 import DefaultSpriteConfig from "../interfaces/DefaultSpriteConfig";
-import {ARROW_CONFIG} from "../config/bettingConfig";
+import {ARROW_CONFIG} from "../UI/betting/config/bettingConfig";
 
 export default class DragObject extends CreateSprite {
   minY: number

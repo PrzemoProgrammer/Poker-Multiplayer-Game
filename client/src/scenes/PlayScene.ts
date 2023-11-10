@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
+import { GAME_HEIGHT, GAME_WIDTH } from "../config/config";
 import spritesConfig from "../../assets/images/spritesConfig.json";
 import CreateComponent from "../components/CreateComponent";
 import SpriteConfig from "../interfaces/SpriteConfig";
@@ -12,10 +12,10 @@ import PlayersConfig from "../interfaces/PlayersConfig";
 import PlayerTurnData from "../interfaces/PlayerTurnData";
 import ServerGameUpdateOnStart from "../interfaces/ServerGameUpdateOnStart";
 import NextRoundData from "../interfaces/NextRoundData";
-import SitPositionManager from "../utility/managers/SitPositionManager";
+import SitPositionManager from "../game/manager/PlayerSitPositionManager";
 import GameManager from "../utility/managers/GameManager";
-import PlayersManager from "../utility/managers/PlayersManager";
-import TableManager from "../utility/managers/TableManager";
+import PlayersManager from "../game/players/manager/PlayersManager";
+import TableManager from "../game/table/manager/TableManager";
 import UpdatePlayerTurnAction from "../interfaces/UpdatePlayerTurnAction";
 
 class PlayScene extends BaseScene {

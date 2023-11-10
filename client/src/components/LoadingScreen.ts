@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
+import { GAME_HEIGHT, GAME_WIDTH } from "../config/config";
 import AssetsManager from "../utility/managers/AssetsManager";
 
  export default class LoadingScreen{
