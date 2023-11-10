@@ -28,7 +28,7 @@ class BootScene extends BaseScene {
 
       for (let i = 0; i < totalImages; i++) {
         let sprite = images[i];
-        let source = `assets/loadScreen/${sprite}.png`
+        let source = `assets/images/loadScreen/${sprite}.png`
   
         AssetsManager.addImage(sprite, source);
     }

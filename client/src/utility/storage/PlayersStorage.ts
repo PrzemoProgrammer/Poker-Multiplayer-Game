@@ -8,12 +8,12 @@ class PlayersStorage {
         this.players = {};
     }
 
-    public addPlayer(player: Player):void {
+    public addPlayer(player: Player) {
         const playerID = player.id
         this.players[playerID] = player
     }
 
-    public getPlayers(): DataStorage{
+    public get getPlayers(): DataStorage{
         return this.players
     }
 

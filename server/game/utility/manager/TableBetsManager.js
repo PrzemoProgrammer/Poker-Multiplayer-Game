@@ -1,4 +1,4 @@
-const TableBets = require("../table/TableBets");
+const TableBets = require("../../table/TableBets");
 
 class TableBetsManager {
   addBetToPot(bet) {

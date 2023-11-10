@@ -1,7 +1,6 @@
-const PlayersSitPositionsStorage = require("../utility/PlayersSitPositionsStorage");
+const PlayersSitPositionsStorage = require("../storage/PlayersSitPositionsStorage");
 
 class PlayersSitPositionManager {
-
   getSmallestNumber() {
     const sitPositions = PlayersSitPositionsStorage.getSitPositions();
     return Math.min.apply(null, sitPositions);

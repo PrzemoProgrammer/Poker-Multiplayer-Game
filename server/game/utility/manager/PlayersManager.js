@@ -1,6 +1,6 @@
-const Players = require("../players/Players");
-const Player = require("../players/Player");
-const { GAME_POSITIONS } = require("../config/gameConfig");
+const Players = require("../../players/Players");
+const Player = require("../../players/Player");
+const { GAME_POSITIONS } = require("../../config/gameConfig");
 
 class PlayersManager {
   addPlayer(key, clientData) {
@@ -9,36 +9,31 @@ class PlayersManager {
   }
 
   updatePlayerCards(playerId, newPlayerCards) {
-    const player = Players.getPlayer(playerId);
-    player.updateCards(newPlayerCards);
+    const player = this.getPlayer(playerId);
+    player.updateCards = newPlayerCards;
   }
 
   updatePlayerMoney(playerId, updatedPlayerMoney) {
-    const player = Players.getPlayer(playerId);
-    player.updateMoney(updatedPlayerMoney);
+    const player = this.getPlayer(playerId);
+    player.updateMoney = updatedPlayerMoney;
   }
 
   updatePlayerGamePosition(playerId, newPlayerGamePosition) {
-    const player = Players.getPlayer(playerId);
-    player.updateGamePosition(newPlayerGamePosition);
+    const player = this.getPlayer(playerId);
+    player.updateGamePosition = newPlayerGamePosition;
   }
 
   updatePlayerBet(playerId, newPlayerBet) {
-    const player = Players.getPlayer(playerId);
-    player.updateBet(newPlayerBet);
+    const player = this.getPlayer(playerId);
+    player.updateBet = newPlayerBet;
   }
-
-  // updatePlayerTurn(playerId, turn) {
-  //   const player = Players.getPlayer(playerId);
-  //   player.updateTurn(turn);
-  // }
 
   getBiggestBetFromPlayers() {
     const players = this.getPlayersObject();
     const playersBets = [];
 
     for (const playerId in players) {
-      const playerBets = players[playerId].getBet();
+      const playerBets = players[playerId].getBet;
       playersBets.push(playerBets);
     }
 
@@ -50,9 +45,9 @@ class PlayersManager {
     const players = this.getPlayersObject();
     const smallBlindPlayerData = {};
     for (const playerId in players) {
-      const playerGamePosition = players[playerId].getGamePosition();
+      const playerGamePosition = players[playerId].getGamePosition;
       if (playerGamePosition === GAME_POSITIONS[1]) {
-        const playerSitPosition = players[playerId].getSitPosition();
+        const playerSitPosition = players[playerId].getSitPosition;
         smallBlindPlayerData.playerIdGameTurn = playerId;
         smallBlindPlayerData.sitPosition = playerSitPosition;
       }
@@ -111,8 +106,12 @@ class PlayersManager {
     return Players.getPlayers();
   }
 
+  getPlayer(playerId) {
+    return Players.getPlayer(playerId);
+  }
+
   getPlayersObject() {
-    const playersMap = Players.getPlayers();
+    const playersMap = this.getPlayers();
     const playersToObject = Object.fromEntries(playersMap);
 
     return playersToObject;
@@ -122,7 +121,7 @@ class PlayersManager {
     const players = this.getPlayersObject();
     const playersClientData = {};
     for (const key in players) {
-      playersClientData[key] = players[key].getClientData();
+      playersClientData[key] = players[key].getClientData;
     }
 
     return playersClientData;
@@ -132,15 +131,15 @@ class PlayersManager {
     const players = this.getPlayersObject();
     const playersData = {};
     for (const key in players) {
-      playersData[key] = players[key].getData();
+      playersData[key] = players[key].getData;
     }
 
     return playersData;
   }
 
-  getPlayer(key) {
-    const player = Players.getPlayer(key);
-    const playerClientData = player.getClientData();
+  getPlayerClientData(playerId) {
+    const player = this.getPlayer(playerId);
+    const playerClientData = player.getClientData;
     return playerClientData;
   }
 
@@ -150,6 +149,28 @@ class PlayersManager {
 
   deletePlayer(clientID) {
     Players.deletePlayer(clientID);
+  }
+
+  setPlayerCheckStatus(playerId, value) {
+    const player = this.getPlayer(playerId);
+    player.setCheckStatus = value;
+  }
+
+  restPlayersSigns() {
+    const players = this.getPlayersObject();
+    for (const key in players) {
+      this.setPlayerCheckStatus(key, false);
+    }
+  }
+
+  getPlayerBet(playerId) {
+    const player = this.getPlayer(playerId);
+    return player.getBet;
+  }
+
+  getPlayerMoney(playerId) {
+    const player = this.getPlayer(playerId);
+    return player.getMoney;
   }
 }
 

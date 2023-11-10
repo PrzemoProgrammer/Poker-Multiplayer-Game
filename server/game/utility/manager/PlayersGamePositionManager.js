@@ -2,7 +2,7 @@ const {
   SIT_POSITIONS,
   GAME_POSITIONS,
   MAX_PLAYERS,
-} = require("../config/gameConfig");
+} = require("../../config/gameConfig");
 const PlayersManager = require("./PlayersManager");
 
 class PlayersGamePositionManager {

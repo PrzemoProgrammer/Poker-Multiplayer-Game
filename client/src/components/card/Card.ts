@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
 import CreateSprite from "../CreateSprite";
 import DefaultSpriteConfig from "../../interfaces/DefaultSpriteConfig";
-import { DEAL_ANIM_CONFIG, LAY_OF_ANIM_CONFIG, SLIDE_FROM_TOP_ANIM_CONFIG } from "../../config/cardAnimsConfig";
+import { DEAL_ANIM_CONFIG, LAY_OF_ANIM_CONFIG, SLIDE_FROM_TOP_ANIM_CONFIG, TURN_OVER_ANIM_CONFIG } from "../../config/cardAnimsConfig";
 import gsap from "gsap";
 
 export default class Card extends CreateSprite {
@@ -14,13 +14,14 @@ export default class Card extends CreateSprite {
         this.isSlideDown = false
       }
 
-      public turnOverAnim(newTexture: string){
-        gsap.to(this, {
+      public async turnOverAnim(newTexture: string){
+        const {duration, ease, yoyo, repeat} = TURN_OVER_ANIM_CONFIG
+        await gsap.to(this, {
           width: 0,
-          duration: 0.2,
-          ease: "none",
-          yoyo: true,
-          repeat: 1,
+          duration: duration,
+          ease: ease,
+          yoyo: yoyo,
+          repeat: repeat,
           onRepeat: () => {
             this.changeTexture(newTexture)
             this.isTurned = true
@@ -30,7 +31,6 @@ export default class Card extends CreateSprite {
 
       public dealAnim(x: number,y: number, scale: number){
         const {duration, ease, scaleOnStart, angle} = DEAL_ANIM_CONFIG
-    
         const scaleProps = {scale:this.scale.x*scaleOnStart, angle:this.angle,x:this.x,y:this.y}
          gsap.to(scaleProps, {
           scale: scale, 

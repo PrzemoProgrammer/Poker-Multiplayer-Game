@@ -4,7 +4,7 @@ const {
   SMALL_BLIND_BET,
   BIG_BLIND_BET,
   GAME_POSITIONS,
-} = require("../config/gameConfig");
+} = require("../../config/gameConfig");
 
 class PlayersBetManager {
   initBets(playersIDWithGamePositions, players) {
@@ -25,7 +25,15 @@ class PlayersBetManager {
   }
 
   updateBetOnServer(playerId, newPlayerBet) {
-    PlayersManager.updatePlayerBet(playerId, newPlayerBet);
+    const actualPlayerBet = PlayersManager.getPlayerBet(playerId);
+
+    // const player = PlayersManager.getPlayer(playerId);
+    // console.log(player);
+    // const actualPlayerBet = player.getBet();
+
+    const updateNewPlayerBet = actualPlayerBet + newPlayerBet;
+
+    PlayersManager.updatePlayerBet(playerId, updateNewPlayerBet);
   }
 
   calculateBetsOnStart(playersIDWithGamePositions, players) {
@@ -58,6 +66,7 @@ class PlayersBetManager {
         playersIDMoneyAndBets[playerId].bet = 0;
       }
     }
+
     return playersIDMoneyAndBets;
   }
 
@@ -65,7 +74,7 @@ class PlayersBetManager {
     const players = PlayersManager.getPlayersObject();
     for (const playerId in players) {
       const player = players[playerId];
-      player.updateBet(0);
+      player.updateBet = 0;
     }
   }
 }

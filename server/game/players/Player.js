@@ -6,52 +6,56 @@ class Player {
     };
   }
 
-  getClientData() {
+  get getClientData() {
     return this.playerData.clientData;
   }
 
-  getData() {
+  get getData() {
     return this.playerData;
   }
 
-  updateGamePosition(gamePosition) {
-    this.playerData.clientData.position = gamePosition;
-  }
-
-  updateMoney(newMoney) {
-    this.playerData.clientData.money = newMoney;
-  }
-
-  updateBet(newBet) {
-    this.playerData.clientData.bet = newBet;
-  }
-
-  updateCards(newCards) {
-    this.playerData.cards = newCards;
-  }
-
-  //   updateTurn(newTurn) {
-  //     this.playerData.clientData.turn = newTurn;
-  //   }
-
-  isCheck() {
+  get isCheck() {
     return this.playerData.clientData.check;
   }
 
-  getBet() {
+  get getBet() {
     return this.playerData.clientData.bet;
   }
 
-  getId() {
+  get getId() {
     return this.playerData.clientData.id;
   }
 
-  getGamePosition() {
+  get getGamePosition() {
     return this.playerData.clientData.position;
   }
 
-  getSitPosition() {
+  get getSitPosition() {
     return this.playerData.clientData.sit;
+  }
+
+  get getMoney() {
+    return this.playerData.clientData.money;
+  }
+
+  set updateGamePosition(gamePosition) {
+    this.playerData.clientData.position = gamePosition;
+  }
+
+  set updateMoney(newMoney) {
+    this.playerData.clientData.money = newMoney;
+  }
+
+  set updateBet(newBet) {
+    this.playerData.clientData.bet = newBet;
+  }
+
+  set updateCards(newCards) {
+    this.playerData.cards = newCards;
+  }
+
+  set setCheckStatus(value) {
+    this.playerData.clientData.check = value;
   }
 }
 module.exports = Player;

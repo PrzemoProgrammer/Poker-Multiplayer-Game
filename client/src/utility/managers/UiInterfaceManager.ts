@@ -1,27 +1,32 @@
-import UiInterface from "../../components/UiInterface";
-import BaseScene from "../../abstraction/BaseScene";
-import UiInterfaceFactory from "../factory/UiInterfaceFactory";
+// import UiInterface from "../../components/UiInterface";
+// import BaseScene from "../../abstraction/BaseScene";
+// import BettingFactory from "../factory/BettingFactory";
+// import {BUTTON_TYPES} from "../../config/gameConfig";
+// import UiInterfaceManager from "../../utility/managers/UiInterfaceManager";
+// import BettingManager from "../../utility/managers/BettingManager";
 
-class UiInterfaceManager {
-    uiInterface: UiInterface | null
-    constructor() {
-        this.uiInterface = null
-    }
 
-    public createInterface(scene: BaseScene){
-     this.uiInterface = UiInterfaceFactory.createInterface(scene)
-    }
 
-    public updateMoneyText(text: number){
-     this.uiInterface?.moneyText?.updateMessage(text);
-    }
+// export default  class NewUiInterfaceManager {
+//     betting: UiInterface | null
+//     constructor(scene) {
+//         this.scene = scene;
+//         UiInterfaceManager.createInterface(this.scene)
+//         BettingManager.createBetting(this.scene)
+//         // this.bottomBelt = this.createBottomBelt()
+//         // this.betting = this.createBetting()
+//     }
 
-    public updateBetText(text: number){
-        this.uiInterface?.betsText?.updateMessage(text)
- 
-    }
+//     // private createBetting(scene: BaseScene){
+//     //     const betting =  new BettingFactory(scene)
+//     //     this.scene.addChild(betting)
+//     // }
 
-  }
+//     // private createBottomBelt(scene: BaseScene){
+//     //     const bottomBelt =  new UiInterface(scene);
+//     //     this.scene.addChild(bottomBelt)
+//     // }
+
+//   }
   
-  export default new UiInterfaceManager();
   

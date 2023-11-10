@@ -1,7 +1,7 @@
 const PlayersManager = require("./PlayersManager");
-const CurrentPlayerTurnStorage = require("../gameTurn/CurrentPlayerTurnStorage");
-const GamePlayersSitPositionsStorage = require("../utility/PlayersSitPositionsStorage");
-const { GAME_POSITIONS, MAX_PLAYERS } = require("../config/gameConfig");
+const CurrentPlayerTurnStorage = require("../../gameTurn/CurrentPlayerTurnStorage");
+const GamePlayersSitPositionsStorage = require("../storage/PlayersSitPositionsStorage");
+const { GAME_POSITIONS, MAX_PLAYERS } = require("../../config/gameConfig");
 
 class PlayersTurnManager {
   initPlayerIdGameTurn(playersGamePositions, players) {
@@ -161,6 +161,10 @@ class PlayersTurnManager {
 
   isMoreThanMaxPlayers(value) {
     return value > MAX_PLAYERS;
+  }
+
+  isCurrentPlayerTurn(playerId) {
+    return playerId === CurrentPlayerTurnStorage.getId();
   }
 }
 

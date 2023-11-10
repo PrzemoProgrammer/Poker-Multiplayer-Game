@@ -3,6 +3,7 @@ import TableCardsConfig from "../../interfaces/TableCardsConfig";
 import DefaultSpriteConfig from "../../interfaces/DefaultSpriteConfig";
 import CardData from "../../interfaces/CardData";
 import Card from "../../components/card/Card";
+import AssetsManager from "../../utility/managers/AssetsManager";
 
 export default class TableCards extends Container{
     config:TableCardsConfig
@@ -29,23 +30,25 @@ export default class TableCards extends Container{
     }
   }
 
-  private layOutCards(){
+  private async layOutCards(){
     const spacing = this.cardsSpace;
     const firstCardX = this.cards[0].x;
-  
+    const movePromises = []
     for (let i = 1; i < this.cards.length; i++) {
         const card = this.getCard(i)
       const newCardX = firstCardX + (i * spacing);
-      card.moveXAnim(newCardX)
+      const movePromise = card.moveXAnim(newCardX)
+      movePromises.push(movePromise)
     }
+    await Promise.all(movePromises)
   }
 
-  public newCardsTurnOverAnim(cardsSymbols: CardData[], turnedCardsLength: number){
+  public async newCardsTurnOverAnim(cardsSymbols: CardData[], turnedCardsLength: number){
     const newCardsLength = cardsSymbols.length
     const cardsLengthToTurn = turnedCardsLength + newCardsLength
     for (let i = turnedCardsLength; i < cardsLengthToTurn; i++) {
         const newCardSymbol = cardsSymbols[i - turnedCardsLength].name
-        this.turnOverCardAnim(i , newCardSymbol)
+        await this.turnOverCardAnim(i , newCardSymbol)
     }
   }
 
@@ -57,24 +60,23 @@ export default class TableCards extends Container{
   }
 
   async slideCardFormTopAnim(cardIndex: number){
+    AssetsManager.playAudio("slide_card")
     const card = this.getCard(cardIndex)
     await card.slideFromTopAnim()
   }
 
-  turnOverCardAnim(cardIndex: number, cardSymbol: string){
+  async turnOverCardAnim(cardIndex: number, cardSymbol: string){
+    AssetsManager.playAudio("turn_card")
     const card = this.getCard(cardIndex)
-    card.turnOverAnim(cardSymbol)
+    await card.turnOverAnim(cardSymbol)
   }
 
   public async dealCardsToTable(cardsSymbols: CardData[]){
-    const cardsOnTableLength = this.cards.length
     const newUpdatedCardsLength = cardsSymbols.length
-    
     const tableLaidCardsLength = this.getTableLaidCardsLength()
-
       await this.newCardsSlideFromTopAnim(newUpdatedCardsLength, tableLaidCardsLength)
-       this.newCardsTurnOverAnim(cardsSymbols, tableLaidCardsLength)
-       if(tableLaidCardsLength === 0) await this.layOutCards()
+      if(tableLaidCardsLength === 0) await this.layOutCards()
+       await this.newCardsTurnOverAnim(cardsSymbols, tableLaidCardsLength)
   }
 
   private createCard(config: DefaultSpriteConfig): Card | null  {

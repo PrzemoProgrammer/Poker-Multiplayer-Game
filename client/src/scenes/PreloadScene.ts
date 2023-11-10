@@ -18,6 +18,7 @@ class PreloadScene extends BaseScene {
     await this.loadBetImages()
     await this.loadTimerImages()
     await this.loadSignImages()
+    await this.loadAudio()
     this.handleStartNextScene();
   }
 
@@ -26,14 +27,19 @@ class PreloadScene extends BaseScene {
       "background",
       "table",
       "croupier",
-      "default_avatar"
+      "default_avatar",
+      "betting_background",
+      "betting_hide_button",
+      "betting_show_button",
+      "betting_text_field",
+      "batting_arrow"
     ];
 
     let totalImages = images.length;
 
     for (let i = 0; i < totalImages; i++) {
       let image = images[i];
-      let source = `assets/${image}.png`
+      let source = `assets/images/${image}.png`
 
       AssetsManager.addImage(image, source);
     }
@@ -52,13 +58,15 @@ class PreloadScene extends BaseScene {
       "fold_button_push",
       "raise_button",
       "raise_button_push",
+      "bet_button",
+      "bet_button_push"
     ];
 
     let totalImages = images.length;
 
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
-      let source = `assets/interface/${sprite}.png`
+      let source = `assets/images/interface/buttons/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }
@@ -73,12 +81,12 @@ class PreloadScene extends BaseScene {
       const color = cardColor[i]
       for (let j = 0; j < cardNumber.length; j++) {
         const cardName = color + cardNumber[j]
-        let source = `assets/cards/${cardName}.png`
+        let source = `assets/images/cards/${cardName}.png`
         AssetsManager.addImage(cardName, source);
       }
     }
 
-    const source = `assets/cards/${backCard}.png`
+    const source = `assets/images/cards/${backCard}.png`
     AssetsManager.addImage(backCard, source);
   }
 
@@ -93,7 +101,7 @@ class PreloadScene extends BaseScene {
 
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
-      let source = `assets/chips/${sprite}.png`
+      let source = `assets/images/chips/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }
@@ -110,7 +118,7 @@ class PreloadScene extends BaseScene {
 
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
-      let source = `assets/interface/timer/${sprite}.png`
+      let source = `assets/images/interface/timer/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }
@@ -127,13 +135,23 @@ class PreloadScene extends BaseScene {
 
     for (let i = 0; i < totalImages; i++) {
       let sprite = images[i];
-      let source = `assets/interface/signs/${sprite}.png`
+      let source = `assets/images/interface/signs/${sprite}.png`
 
       AssetsManager.addImage(sprite, source);
     }
   }
 
+  async loadAudio() {
+    const audios = ["deal_card", "player_leave", "player_turn_end", "player_win" ,"turn_card", "slide_card"];
+    let totalAudios = audios.length;
 
+    for (let i = 0; i < totalAudios; i++) {
+      let audio = audios[i];
+      let source = `assets/audio/${audio}.mp3`;
+
+      AssetsManager.addAudio(audio, source);
+    }
+  }
 
   handleStartNextScene(){
     // Cookies.remove('authToken');

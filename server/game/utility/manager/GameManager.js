@@ -1,13 +1,13 @@
 const PlayersCardsManager = require("./PlayersCardsManager");
 const PlayersManager = require("./PlayersManager");
-const SitPositionManager = require("../../game/utility/SitPositionManager");
+const SitPositionManager = require("./SitPositionManager");
 const PlayersBetManager = require("./PlayersBetManager");
 const PlayersGamePositionManager = require("./PlayersGamePositionManager");
 const PlayersMoneyManager = require("./PlayersMoneyManager");
 const PlayersTurnManager = require("./PlayersTurnManager");
 const CroupierCardsManager = require("./CroupierCardsManager");
 const TableCardsManager = require("./TableCardsManager");
-const GameTurnTimer = require("../gameTurn/GameTurnTimer");
+const GameTurnTimer = require("../../gameTurn/GameTurnTimer");
 const TableBetsManager = require("./TableBetsManager");
 const RoundNameManager = require("./RoundNameManager");
 
@@ -15,7 +15,7 @@ const {
   MAX_PLAYERS,
   DEFAULT_PLAYER_GAME_POSITION,
   DEFAULT_PLAYER_BET_COUNT,
-} = require("../config/gameConfig");
+} = require("../../config/gameConfig");
 
 class GameManager {
   startGame() {
@@ -71,12 +71,10 @@ class GameManager {
   }
 
   startGameTurnTimer(callback) {
-    // const playerGameTurnDuration = GameTurnTimer.getTurnRespondTime();
-    // setTimeout(() => {
+    GameTurnTimer.stopTimer();
     GameTurnTimer.startTimer(() => {
       callback();
     });
-    // }, playerGameTurnDuration * 1000);
   }
 
   changePlayerTurn() {
@@ -114,6 +112,7 @@ class GameManager {
     PlayersBetManager.resetPlayersBets();
     const { serverTime, turnRespondTime } = this.getGameTurnTimeData();
     RoundNameManager.startTurnRound();
+    PlayersManager.restPlayersSigns();
 
     return {
       newCardsOnTable,
@@ -122,6 +121,37 @@ class GameManager {
       serverTime,
       turnRespondTime,
     };
+  }
+
+  playerTurnAction(clientId, clientData) {
+    console.log("Tura prawidłowego playera");
+    const { action, data } = clientData;
+    const respondData = { playerId: "", type: "", bet: null, money: null };
+
+    if (action === "check") {
+      PlayersManager.setPlayerCheckStatus(clientId, true);
+      respondData.playerId = clientId;
+      respondData.type = "check";
+    }
+    if (action === "bet") {
+      PlayersMoneyManager.updatePlayerMoney(clientId, data);
+      const playerMoney = PlayersManager.getPlayerMoney(clientId);
+      console.log(playerMoney);
+      PlayersBetManager.updateBetOnServer(clientId, data);
+      TableBetsManager.addBetToPot(data);
+      const newBet = PlayersManager.getPlayerBet(clientId);
+      respondData.playerId = clientId;
+      respondData.type = "bet";
+      respondData.bet = newBet;
+      respondData.money = playerMoney;
+      //! update money in database
+    }
+
+    return respondData;
+  }
+
+  isCurrentPlayerTurn(clientId) {
+    return PlayersTurnManager.isCurrentPlayerTurn(clientId);
   }
 
   isPreflopRoundFinish() {
@@ -149,7 +179,7 @@ class GameManager {
   }
 
   getPlayerFromGame(key) {
-    return PlayersManager.getPlayer(key);
+    return PlayersManager.getPlayerClientData(key);
   }
 
   getPlayersFromGame() {
@@ -161,7 +191,7 @@ class GameManager {
   }
 
   deletePlayerFromGame(clientID) {
-    const player = PlayersManager.getPlayer(clientID);
+    const player = PlayersManager.getPlayerClientData(clientID);
     SitPositionManager.releasePosition(player.sit);
     PlayersManager.deletePlayer(clientID);
   }

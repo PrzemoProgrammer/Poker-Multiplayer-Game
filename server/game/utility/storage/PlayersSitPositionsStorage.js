@@ -1,4 +1,4 @@
-const { SIT_POSITIONS } = require("../config/gameConfig");
+const { SIT_POSITIONS } = require("../../config/gameConfig");
 
 class PlayersSitPositionsStorage {
   constructor() {

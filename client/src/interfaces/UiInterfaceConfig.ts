@@ -8,7 +8,7 @@ export default interface UiInterfaceConfig {
     moneyText: TextConfig,
     betsText:  TextConfig,
     foldButton: ButtonConfig,
-    checkFoldButton:ButtonConfig,
+    betButton:ButtonConfig,
     checkButton: ButtonConfig,
     callButton: ButtonConfig,
     raiseButton: ButtonConfig

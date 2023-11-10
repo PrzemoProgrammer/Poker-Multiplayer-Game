@@ -1,7 +1,6 @@
 import { Container} from "pixi.js";
 import ProgressBar from "./ProgressBar";
 import TimerConfig from "../interfaces/TimerConfig";
-import gsap from "gsap";
 
 export default class Timer extends Container {
 progressBar: ProgressBar
@@ -54,12 +53,12 @@ fps: number
         this.progressBar.resetMaskWidth()
     }
 
-    public getActualTime(): number{
+    public get getActualTime(): number{
         return new Date().getTime()
     }
 
     public calculatePlayerTurnTime(serverTime: number, respondTime: number): number{
-        return respondTime - Math.floor((this.getActualTime() - serverTime) / 1000);
+        return respondTime - Math.floor((this.getActualTime - serverTime) / 1000);
     }
 }
 

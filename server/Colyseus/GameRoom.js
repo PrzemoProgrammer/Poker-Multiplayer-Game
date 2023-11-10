@@ -1,11 +1,12 @@
 const { Room } = require("colyseus");
 const databaseManager = require("../MongoDB/DatabaseManager");
-const GameManager = require("../game/utility/GameManager");
+const GameManager = require("../game/utility/manager/GameManager");
 const JWT = require("../JWT/JWTManager");
 
 class GameRoom extends Room {
   onCreate(options) {
     console.log("Game room created:", options);
+    this.setupListeners();
   }
 
   async onJoin(client, options) {
@@ -78,126 +79,122 @@ class GameRoom extends Room {
       this.sendMessageToClientID(clientId, "initPreflopRound", mergedGameData);
     }
 
-    GameManager.startGameTurnTimer(() => {
-      this.updateGameTurn();
-    });
+    this.startGameTurnTimer();
   }
 
-  updateGameTurn() {
+  updateGameRound() {
     //! ////////////////////// PREFLOP ////////////////////////////////
 
     //! ////////////////////// FLOP ////////////////////////////////
     // if (GameManager.isPreflopRoundFinish()) {
-    const {
-      newCardsOnTable,
-      betsInPool,
-      playerIdGameTurn,
-      serverTime,
-      turnRespondTime,
-    } = GameManager.initNextRound(3);
+    // const {
+    //   newCardsOnTable,
+    //   betsInPool,
+    //   playerIdGameTurn,
+    //   serverTime,
+    //   turnRespondTime,
+    // } = GameManager.initNextRound(3);
 
-    const mergedGameData = {
-      game: {
-        tableBets: betsInPool,
-        tableCards: newCardsOnTable,
-        playerTurnData: {
-          playerIdGameTurn,
-          serverTime,
-          turnRespondTime,
-        },
-      },
-    };
-
-    this.broadcast("initNextRound", mergedGameData);
+    // const mergedGameData = {
+    //   game: {
+    //     tableBets: betsInPool,
+    //     tableCards: newCardsOnTable,
+    //     playerTurnData: {
+    //       playerIdGameTurn,
+    //       serverTime,
+    //       turnRespondTime,
+    //     },
+    //   },
+    // };
+    // this.broadcast("initNextRound", mergedGameData);
     // }
     //! ////////////////////// TURN ////////////////////////////////
     // if (GameManager.isFlopRoundFinish()) {
-    setTimeout(() => {
-      const {
-        newCardsOnTable,
-        betsInPool,
-        playerIdGameTurn,
-        serverTime,
-        turnRespondTime,
-      } = GameManager.initNextRound(1);
+    // setTimeout(() => {
+    //   const {
+    //     newCardsOnTable,
+    //     betsInPool,
+    //     playerIdGameTurn,
+    //     serverTime,
+    //     turnRespondTime,
+    //   } = GameManager.initNextRound(1);
 
-      const mergedGameData = {
-        game: {
-          tableBets: betsInPool,
-          tableCards: newCardsOnTable,
-          playerTurnData: {
-            playerIdGameTurn,
-            serverTime,
-            turnRespondTime,
-          },
-        },
-      };
+    //   const mergedGameData = {
+    //     game: {
+    //       tableBets: betsInPool,
+    //       tableCards: newCardsOnTable,
+    //       playerTurnData: {
+    //         playerIdGameTurn,
+    //         serverTime,
+    //         turnRespondTime,
+    //       },
+    //     },
+    //   };
 
-      this.broadcast("initNextRound", mergedGameData);
-    }, 4000);
+    //   this.broadcast("initNextRound", mergedGameData);
+    // }, 4000);
 
-    setTimeout(() => {
-      const {
-        newCardsOnTable,
-        betsInPool,
-        playerIdGameTurn,
-        serverTime,
-        turnRespondTime,
-      } = GameManager.initNextRound(1);
+    // setTimeout(() => {
+    //   const {
+    //     newCardsOnTable,
+    //     betsInPool,
+    //     playerIdGameTurn,
+    //     serverTime,
+    //     turnRespondTime,
+    //   } = GameManager.initNextRound(1);
 
-      const mergedGameData = {
-        game: {
-          tableBets: betsInPool,
-          tableCards: newCardsOnTable,
-          playerTurnData: {
-            playerIdGameTurn,
-            serverTime,
-            turnRespondTime,
-          },
-        },
-      };
+    //   const mergedGameData = {
+    //     game: {
+    //       tableBets: betsInPool,
+    //       tableCards: newCardsOnTable,
+    //       playerTurnData: {
+    //         playerIdGameTurn,
+    //         serverTime,
+    //         turnRespondTime,
+    //       },
+    //     },
+    //   };
 
-      this.broadcast("initNextRound", mergedGameData);
-    }, 8000);
+    //   this.broadcast("initNextRound", mergedGameData);
+    // }, 8000);
     // }
 
     //! ////////////////////// RIVER ////////////////////////////////
-    if (GameManager.isTurnRoundFinish()) {
-      const {
-        newCardsOnTable,
-        betsInPool,
-        playerIdGameTurn,
-        serverTime,
-        turnRespondTime,
-      } = GameManager.initNextRound(1);
+    // if (GameManager.isTurnRoundFinish()) {
+    //   const {
+    //     newCardsOnTable,
+    //     betsInPool,
+    //     playerIdGameTurn,
+    //     serverTime,
+    //     turnRespondTime,
+    //   } = GameManager.initNextRound(1);
 
-      const mergedGameData = {
-        game: {
-          tableBets: betsInPool,
-          tableCards: newCardsOnTable,
-          playerTurnData: {
-            playerIdGameTurn,
-            serverTime,
-            turnRespondTime,
-          },
-        },
-      };
+    //   const mergedGameData = {
+    //     game: {
+    //       tableBets: betsInPool,
+    //       tableCards: newCardsOnTable,
+    //       playerTurnData: {
+    //         playerIdGameTurn,
+    //         serverTime,
+    //         turnRespondTime,
+    //       },
+    //     },
+    //   };
 
-      this.broadcast("initNextRound", mergedGameData);
-    }
+    //   this.broadcast("initNextRound", mergedGameData);
+    // }
 
     //! ////////////////////// INIT WINNER ////////////////////////////////
-    if (GameManager.isRiverRoundFinish()) {
-      this.broadcast("initWinner", mergedGameData);
-    }
+    // if (GameManager.isRiverRoundFinish()) {
+    //   this.broadcast("initWinner", mergedGameData);
+    // }
 
     //! ////////////////////// RESET GAME ////////////////////////////////
-    if (GameManager.isGameWinner()) {
-      this.broadcast("initLobby", mergedGameData);
-    }
+    // if (GameManager.isGameWinner()) {
+    //   this.broadcast("initLobby", mergedGameData);
+    // }
     //! //////////////// CHANGE PLAYER TURN /////////////////////////////////
-    const playerTurnData = GameManager.changePlayerTurn();
-    this.broadcast("updateGameTurn", playerTurnData);
+    this.updatePlayerTurn();
   }
 
   sendMessageToClientID(clientID, url, message) {
@@ -207,8 +204,26 @@ class GameRoom extends Room {
     }
   }
 
-  onMessage(client, message) {
-    console.log(`${client.id} sent a message:`, message);
+  setupListeners() {
+    this.onMessage("playerTurnAction", (client, data) => {
+      const clientId = client.sessionId;
+      // if (!GameManager.isCurrentPlayerTurn(clientId)) return;
+      const respondData = GameManager.playerTurnAction(clientId, data);
+      this.startGameTurnTimer();
+      this.updatePlayerTurn();
+      this.broadcast("updatePlayerTurnAction", respondData);
+    });
+  }
+
+  startGameTurnTimer() {
+    GameManager.startGameTurnTimer(() => {
+      this.updateGameRound();
+    });
+  }
+
+  updatePlayerTurn() {
+    const playerTurnData = GameManager.changePlayerTurn();
+    this.broadcast("updateGameTurn", playerTurnData);
   }
 
   onLeave(client, consented) {

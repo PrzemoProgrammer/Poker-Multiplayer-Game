@@ -23,6 +23,10 @@ private roundNumbersToK(updateMessage: number): string {
   return updateMessage >= 1000 ? (Math.floor(updateMessage / 1000) + 'k') : '0';
 }
 
+get getTextInNumber(): number | undefined{
+  const textWithoutK = this.text.replace('k', '');
+  return  parseInt(textWithoutK) * 1000
+}
 // private roundNumbersToK(updateMessage: number){
 //   let roundedNumber = ""
 //   if (updateMessage >= 1000) {

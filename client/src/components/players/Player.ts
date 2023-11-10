@@ -143,7 +143,16 @@ export default class Player extends BaseEntity {
     this.bet.updateText(0)
   }
 
-  setDealerSignVisible(value: boolean){
+  public setDealerSignVisible(value: boolean){
     this.dealerSign?.setVisible(value)
   }
+
+  public turnOffTimer(){
+    this.timer.resetTimer()
+  }
+
+  public setCheckSignVisible(value: boolean){
+    this.checkSign?.setVisible(value)
+  }
+  
 }

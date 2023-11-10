@@ -8,5 +8,7 @@ export default class GameSignals {
     static onChangePlayerTurn = new MiniSignal();
     static onInitNextRound = new MiniSignal();
     static onPlayerLeave = new MiniSignal();
+    static onUpdatePlayerTurnAction = new MiniSignal();
 
+    static playerTurnAction = new MiniSignal();
   } 

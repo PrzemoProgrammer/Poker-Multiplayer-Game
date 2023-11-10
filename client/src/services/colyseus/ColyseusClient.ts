@@ -4,6 +4,7 @@ import PlayersConfig from "../../interfaces/PlayersConfig";
 import ServerGameUpdateOnStart from "../../interfaces/ServerGameUpdateOnStart";
 import PlayerTurnData from "../../interfaces/PlayerTurnData";
 import FlopRoundData from "../../interfaces/NextRoundData";
+import PlayerTurnAction from "../../interfaces/PlayerTurnAction";
 import GameSignals from "../../gameSignals/GameSignals";
 import  {WEBSOCKET_URL} from '../config';
 
@@ -17,6 +18,7 @@ class ColyseusClient {
     this.client = new Colyseus.Client('ws://localhost:2567');
     this.myId = ""
 
+    this.bindSignals()
   }
 
    async joinGameRoom(authToken: string | undefined) {
@@ -25,16 +27,7 @@ class ColyseusClient {
         console.log('Joined room', room)
         this.room = room
         this.myId = room.sessionId
-
-        // Listen for messages from the server
-        // room.onMessage('message', message => {
-        //   console.log('Received message from server:', message)
-        // });
-      
-        // Send a message to the server
-        // room.send('message', { text: 'Hello, server!' });
         isConnected = true
-        // this.setupListeners();
       }).catch(err => {
         isConnected= false
         console.error('Failed to join room:', err)
@@ -50,40 +43,56 @@ class ColyseusClient {
     return  this.myId
   }
 
+  private bindSignals(): void {
+    GameSignals.playerTurnAction.add((actionData: PlayerTurnAction) => this.playerTurnAction(actionData));
+  }
+
+  playerTurnAction(data: PlayerTurnAction){
+    this.sendMessage("playerTurnAction", data);
+  }
+
+  public sendMessage(type: string, data: any){
+   this.room?.send(type, data)
+  }
+
   public setupListeners() {
-    if (this.room) {
-      this.room.onStateChange((state) => {
+
+      this.room?.onStateChange((state) => {
         console.log('Room state changed:', state)
       });
 
-      this.room.onMessage('getPlayers', (data: ServerPlayerData) => {
+      this.room?.onMessage('getPlayers', (data: ServerPlayerData) => {
         console.log(data)
-        GameSignals.onGetPlayers.dispatch(data)
+        GameSignals.onGetPlayers.dispatch(data)     
       });
 
-      this.room.onMessage("playerJoined", (data: PlayersConfig) => {
+      this.room?.onMessage("playerJoined", (data: PlayersConfig) => {
         console.log('Received playerJoined message:', data);
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
-      this.room.onMessage("initPreflopRound", (data: ServerGameUpdateOnStart) => {
+      this.room?.onMessage("initPreflopRound", (data: ServerGameUpdateOnStart) => {
         console.log(data)
         GameSignals.onStartGameData.dispatch(data)  
       });
 
-      this.room.onMessage('updateGameTurn', (data: PlayerTurnData) => {
+      this.room?.onMessage('updateGameTurn', (data: PlayerTurnData) => {
         GameSignals.onChangePlayerTurn.dispatch(data)          
       });
 
-      this.room.onMessage('initNextRound', (data: FlopRoundData) => {
+      this.room?.onMessage('initNextRound', (data: FlopRoundData) => {
         GameSignals.onInitNextRound.dispatch(data)          
       });
 
-      this.room.onMessage('playerLeaveGame', (data: string) => {
+      this.room?.onMessage('playerLeaveGame', (data: string) => {
         GameSignals.onPlayerLeave.dispatch(data)          
       });
 
-      this.room.onMessage("announcement", (data: string) => {
+      this.room?.onMessage('updatePlayerTurnAction', (data: string) => {
+        GameSignals.onUpdatePlayerTurnAction.dispatch(data)          
+      });
+
+      this.room?.onMessage("announcement", (data: string) => {
         console.log("Server announcement:", data);
         // GameSignals.onPlayerJoined.dispatch(data)  
       });
@@ -93,10 +102,9 @@ class ColyseusClient {
       //   // GameSignals.updatePlayer.dispatch(data)
       // });
 
-      this.room.onLeave((data) => {
+      this.room?.onLeave((data) => {
         console.log('Leave room:', data)
       });
-    }
 
     // this.client.onClose(() => {
     //   console.log('Connection closed.')

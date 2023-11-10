@@ -1,8 +1,18 @@
-export const DEAL_ANIM_DELAY = 200
-export const DEAL_NEXT_CARD_ANIM_DELAY = 100
-export const CARD_SCALE = 0.5
-export const USER_CARD_SCALE = 1.2
-export const TURN_OVER_CARD_DELAY = 1000
+export const TURN_OVER_PLAYER_CARD_DELAY = 1000
+export const CROUPIER_CARD_DEAL_CONFIG = {
+    nextAnimDelay: 200,
+    nextCardDeal: 100,
+    cardScale: {
+        owner: 1.2,
+        other:0.5
+    }
+}
+export const TURN_OVER_ANIM_CONFIG = {
+    duration: 0.1,
+    ease: "none",
+    yoyo: true,
+    repeat: 1,
+}
 export const DEAL_ANIM_CONFIG = {
     duration: 0.5,
     ease: "circ.out",
@@ -10,12 +20,12 @@ export const DEAL_ANIM_CONFIG = {
     scaleOnStart: 0.5,
 }
 export const LAY_OF_ANIM_CONFIG = {
-    duration: 0.5,
+    duration: 0.3,
     ease: "none",
 }
 export const SLIDE_FROM_TOP_ANIM_CONFIG = {
     y: 400,
-    duration: 0.3,
+    duration: 0.2,
     ease: "none",
 }
 

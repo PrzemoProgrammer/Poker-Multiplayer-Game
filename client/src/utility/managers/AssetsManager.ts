@@ -1,6 +1,6 @@
-// import { Howl, Howler } from "howler";
-import * as PIXI from "pixi.js";
+import { Howl} from "howler";
 import ImageStorage from "../storage/ImageStorage";
+import AudioStorage from "../storage/AudioStorage";
 
 class AssetsManager {
 // loadingProgress: number;
@@ -27,6 +27,22 @@ class AssetsManager {
   public getImage(key: string): string | undefined {
    return ImageStorage.getImage(key);
   }
+
+  public addAudio(key:string, source: string) {
+    const sound = new Howl({
+      src: [source],
+    })
+    AudioStorage.addAudio(key, sound);
+  }
+
+  public getAudio(key: string): Howl | undefined {
+   return AudioStorage.getAudio(key);
+  }
+
+  public playAudio(key: string) {
+    const audio = this.getAudio(key);
+    audio?.play()
+   }
 
   // public async loadAssets(): Promise<void> {
   //   return new Promise((resolve, reject) => {

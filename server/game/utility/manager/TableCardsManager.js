@@ -1,4 +1,4 @@
-const TableCards = require("../table/TableCards");
+const TableCards = require("../../table/TableCards");
 
 class TableCardsManager {
   addCards(cards) {

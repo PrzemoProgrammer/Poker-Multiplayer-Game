@@ -1,4 +1,4 @@
-const { MAX_PLAYER_CARDS } = require("../config/gameConfig");
+const { MAX_PLAYER_CARDS } = require("../../config/gameConfig");
 const PlayersManager = require("./PlayersManager");
 const CroupierCardsManager = require("./CroupierCardsManager");
 

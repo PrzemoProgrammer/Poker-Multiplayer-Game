@@ -22,11 +22,11 @@ class GameTurnTimer {
     this.timeLimit = this.turnDurationInSeconds;
   }
 
-  resetTimer() {
-    clearInterval(this.countdownInterval);
-    this.resetTimeLimit();
-    this.startTimer();
-  }
+  // resetTimer() {
+  //   clearInterval(this.countdownInterval);
+  //   this.resetTimeLimit();
+  //   this.startTimer();
+  // }
 
   stopTimer() {
     clearInterval(this.countdownInterval);

@@ -50,7 +50,7 @@ private createSpriteByType(defaultConfig: DefaultSpriteConfig): CreateSprite | n
     return sprite;
 }
 
-private createSprite(config: DefaultSpriteConfig): CreateSprite {
+public createSprite(config: DefaultSpriteConfig): CreateSprite {
     return new CreateSprite(config);
 }
 

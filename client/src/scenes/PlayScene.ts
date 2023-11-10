@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import { GAME_HEIGHT, GAME_WIDTH } from "../config/gameConfig";
-import spritesConfig from "../../assets/spritesConfig.json";
+import spritesConfig from "../../assets/images/spritesConfig.json";
 import CreateComponent from "../components/CreateComponent";
 import SpriteConfig from "../interfaces/SpriteConfig";
 import sceneManager from "../utility/managers/SceneManager";
@@ -16,6 +16,7 @@ import SitPositionManager from "../utility/managers/SitPositionManager";
 import GameManager from "../utility/managers/GameManager";
 import PlayersManager from "../utility/managers/PlayersManager";
 import TableManager from "../utility/managers/TableManager";
+import UpdatePlayerTurnAction from "../interfaces/UpdatePlayerTurnAction";
 
 class PlayScene extends BaseScene {
     constructor() {
@@ -53,6 +54,8 @@ class PlayScene extends BaseScene {
         GameSignals.onChangePlayerTurn.add((newPlayerTurn: PlayerTurnData )=> this.changePlayerTurn(newPlayerTurn))
         GameSignals.onInitNextRound.add((initNextRoundData: NextRoundData )=> this.initNextRound(initNextRoundData)) 
         GameSignals.onPlayerLeave.add((playerId: string )=> this.deletePlayerFromGame(playerId))
+        GameSignals.onUpdatePlayerTurnAction.add((playerSignData: UpdatePlayerTurnAction )=> this.updatePlayerTurnAction(playerSignData))
+
     }
 
     addPlayerToGame(playerData: ServerPlayerData) {
@@ -91,12 +94,8 @@ class PlayScene extends BaseScene {
       GameManager.deletePlayer(playerId)
     }
 
-    createStaticComponents() {
-        for (let spriteConfig in spritesConfig) {
-            const spriteData: SpriteConfig = spritesConfig[spriteConfig as keyof typeof spritesConfig];
-            const sprite = CreateComponent.create(spriteData);
-            if (sprite !== null) this.addChild(sprite);
-        }
+    updatePlayerTurnAction(playerSignData: UpdatePlayerTurnAction ){
+      GameManager.updatePlayerTurnAction(playerSignData)
     }
 
     createPlayer(playerData: ServerPlayerData){
@@ -116,6 +115,14 @@ class PlayScene extends BaseScene {
     createTable(){
       TableManager.createTable(this)
     }
+
+    createStaticComponents() {
+      for (let spriteConfig in spritesConfig) {
+          const spriteData: SpriteConfig = spritesConfig[spriteConfig as keyof typeof spritesConfig];
+          const sprite = CreateComponent.create(spriteData);
+          if (sprite !== null) this.addChild(sprite);
+      }
+  }
 }
 
 export default new PlayScene();

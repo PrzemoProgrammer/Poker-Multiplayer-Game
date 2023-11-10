@@ -58,6 +58,9 @@ class Players {
   }
 
   getPlayer(key) {
+    // console.log(key);
+
+    // console.log(this.players.get(key));
     return this.players.get(key);
   }
 

@@ -1,5 +1,5 @@
-const RoundNameStorage = require("../round/RoundNameStorage");
-const { GAME_ROUND_NAMES } = require("../config/gameConfig");
+const RoundNameStorage = require("../../round/RoundNameStorage");
+const { GAME_ROUND_NAMES } = require("../../config/gameConfig");
 
 class RoundNameManager {
   setRoundName(roundIndex) {
