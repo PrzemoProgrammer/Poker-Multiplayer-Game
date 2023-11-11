@@ -82,7 +82,7 @@ class GameManager {
           console.log(4)
         })    
         PokerBarManager.setupButtonOnClick(bet, ()=>{
-          const selectedBetValue = BettingManager.getBetValueNumber()
+          const selectedBetValue = BettingManager.getBetValueNumber
           requestData.action = bet
          if(selectedBetValue) requestData.data = selectedBetValue
           console.log(selectedBetValue)
@@ -98,8 +98,8 @@ class GameManager {
       }
 
       public createUiInterface(scene: BaseScene){
-        BettingManager.createBetting(scene)
-        PokerBarManager.createPokerBar(scene);
+        BettingManager.initBetting(scene)
+        PokerBarManager.initPokerBar(scene);
       }
 
       public createPlayer(playerData: ServerPlayerData){

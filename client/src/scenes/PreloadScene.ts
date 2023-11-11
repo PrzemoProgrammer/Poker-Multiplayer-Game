@@ -3,6 +3,7 @@ import sceneManager from "../utility/managers/SceneManager";
 import AssetsManager from "../utility/managers/AssetsManager";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
+import ImageStorage from "../utility/storage/ImageStorage";
 
 
 class PreloadScene extends BaseScene {

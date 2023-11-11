@@ -1,48 +1,54 @@
 // bettingFactory.ts
 import BettingFactory from "../factory/BettingFactory";
+import DragObject from "../../../components/DragObject";
+import Button from "../../../components/Button";
 
 class BettingFactoryAdapter {
-    private betting: BettingFactory;
+    private betting: BettingFactory | null
 
     constructor() {
-        this.betting = new BettingFactory();
+        this.betting = null
     }
 
-    public getArrowYPosition(): number | undefined {
-        return this.betting.arrow?.y;
+    public createBetting(): BettingFactory{
+        return this.betting = new BettingFactory();
+    }
+
+    public get getBettingY(): number{
+        return this.betting!.y
+    }
+
+    public get getBettingFactory(): BettingFactory{
+        return this.betting!
+    }
+
+    public get getArrow(): DragObject | null{
+        return this.betting!.arrow
+    }
+
+    public get getArrowYPosition(): number | undefined {
+        const arrow = this.getArrow
+        return arrow?.y;
+    }
+
+    public get getToggleButton(): Button | null{
+        return this.betting!.toggleButton
     }
 
     public updateBetText(newText: number): void {
-        this.betting.betText?.updateMessage(newText);
+        this.betting!.betText?.updateMessage(newText);
     }
 
-    public initDragEvent(callback: () => void): void {
-        this.betting.arrow?.initEvents(callback);
+    public set setIsBettingOpen(updateValue: boolean) {
+        this.betting!.isOpen = updateValue
     }
 
-    // Add other methods as needed
-
-    get isOpen(): boolean {
-        return this.betting.isOpen;
+    public get isBettingOpen(): boolean {
+        return this.betting!.isOpen;
     }
 
-    set isOpen(value: boolean) {
-        this.betting.isOpen = value;
-    }
-
-    public startSlideAnimation(config: { duration: number; ease: any; shiftY: number }): void {
-        const { duration, ease, shiftY } = config;
-        const direction = this.isOpen ? 1 : -1;
-
-        gsap.to(this.betting, {
-            y: this.betting.y + shiftY * direction,
-            duration,
-            ease,
-        });
-    }
-
-    public getBetValueNumber(): number | undefined {
-        return this.betting.betText?.getTextInNumber;
+    public get getBetTextNumber(){
+        return this.betting!.betText?.getTextInNumber
     }
 }
 

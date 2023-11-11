@@ -1,6 +1,4 @@
-import * as PIXI from "pixi.js";
 import { Sprite, Container } from "pixi.js";
-import BaseScene from "../../../abstraction/BaseScene";
 import CreateComponent from "../../../components/CreateComponent";
 import CreateText from "../../../components/CreateText";
 import Button from "../../../components/Button";
@@ -18,10 +16,9 @@ export default class PokerBarFactory extends Container {
   raiseButton: Button | null;
   config: UiInterfaceConfig;
 
-  constructor(scene: BaseScene) {
+  constructor() {
     super();
     this.config = uiInterfaceConfig;
-  
     this.bottomBar = this.createBottomBar();
     this.moneyText = this.createMoneyText();
     this.betsText = this.createBetsText();
@@ -30,8 +27,6 @@ export default class PokerBarFactory extends Container {
     this.checkButton = this.createCheckButton();
     this.callButton = this.createCallButton();
     this.raiseButton = this.createRaiseButton();
-    
-    scene.addChild(this);
   }
 
   public createBottomBar(): Sprite | null {

@@ -1,19 +1,19 @@
 import BaseScene from "../../../abstraction/BaseScene";
-import BettingFactory from "../factory/BettingFactory";
+import BettingFactoryAdapter from "../adapter/BettingFactoryAdapter";
 import {SLIDE_ANIM_CONFIG, MODIFY_NUMBER_CONFIG} from "../config/bettingConfig";
 import gsap from "gsap";
 
 class BettingManager {
-    betting: BettingFactory | null
+    bettingAdapter: BettingFactoryAdapter 
     constructor() {
-        this.betting = null
+        this.bettingAdapter = new BettingFactoryAdapter()
     }
 
-    public createBetting(scene: BaseScene){
-     this.betting = new BettingFactory()
-     this.setupEvents()
-     scene.addChild(this.betting)
-    }
+    public initBetting(scene: BaseScene){
+        const bettingFactory = this.bettingAdapter.createBetting()
+        this.setupEvents()
+        scene.addChild(bettingFactory)
+       }
 
     private setupEvents(){
         this.initDragEvent(this.handleBetTextUpdate)
@@ -21,114 +21,40 @@ class BettingManager {
     }
 
     public initDragEvent(callback: () => void){
-        this.betting?.arrow?.initEvents(callback.bind(this))
-    }
-
-    public getArrowYPosition(): number | undefined  {
-       return this.betting?.arrow?.y
-    }
-
-    public updateBetText(newText: number){
-        this.betting?.betText?.updateMessage(newText)
+        this.bettingAdapter.getArrow?.initEvents(callback.bind(this))
     }
 
     public handleBetTextUpdate(){
         const {maxValue, substrate, increaseZeros} = MODIFY_NUMBER_CONFIG
-        const arrowY = this.getArrowYPosition() 
+        const arrowY = this.bettingAdapter.getArrowYPosition
        const roundArrowY =  Math.round(arrowY!);
        const modifiedNumber = maxValue - (roundArrowY + substrate)*increaseZeros
-        this.updateBetText(modifiedNumber)
+       this.bettingAdapter.updateBetText(modifiedNumber)
     }
 
     public setupToggleButtonOnClick(){
-        const button = this.betting?.toggleButton
+        const button = this.bettingAdapter.getToggleButton
         button?.onClick(()=> this.startBettingSlideAnim())
     }
 
     public startBettingSlideAnim(){
         const {duration, ease, shiftY} = SLIDE_ANIM_CONFIG
-        const direction = this.betting?.isOpen? 1 : -1
-        this.betting!.isOpen = !this.betting?.isOpen
+        const betting = this.bettingAdapter.getBettingFactory
+        const bettingY = this.bettingAdapter.getBettingY
+        const isOpen = this.bettingAdapter.isBettingOpen
+        const direction =  isOpen? 1 : -1
+        this.bettingAdapter.setIsBettingOpen = !isOpen
 
-        gsap.to(this.betting, {
-         y: this.betting!.y + shiftY * direction,
+        gsap.to(betting, {
+         y: bettingY + shiftY * direction,
          duration: duration,
          ease: ease,
        });
     }
 
-    public getBetValueNumber(): number | undefined{
-        return this.betting?.betText?.getTextInNumber
+    public get getBetValueNumber(): number | undefined{
+        return this.bettingAdapter.getBetTextNumber
     }
   }
   
   export default new BettingManager();
-
-
-
-
-//   import BaseScene from "../../abstraction/BaseScene";
-// import BettingFactory from "../factory/BettingFactory";
-// import {SLIDE_ANIM_CONFIG, MODIFY_NUMBER_CONFIG} from "../../config/bettingConfig";
-// import gsap from "gsap";
-
-// class BettingManager {
-//     betting: BettingFactory | null
-//     constructor() {
-//         this.betting = null
-//     }
-
-//     public createBetting(scene: BaseScene){
-//      this.betting = new BettingFactory()
-//      this.setupEvents()
-//      scene.addChild(this.betting)
-//     }
-
-//     private setupEvents(){
-//         this.initDragEvent(this.handleBetTextUpdate)
-//         this.setupToggleButtonOnClick()
-//     }
-
-//     public initDragEvent(callback: () => void){
-//         this.betting?.arrow?.initEvents(callback.bind(this))
-//     }
-
-//     public getArrowYPosition(): number | undefined  {
-//        return this.betting?.arrow?.y
-//     }
-
-//     public updateBetText(newText: number){
-//         this.betting?.betText?.updateMessage(newText)
-//     }
-
-//     public handleBetTextUpdate(){
-//         const {maxValue, substrate, increaseZeros} = MODIFY_NUMBER_CONFIG
-//         const arrowY = this.getArrowYPosition() 
-//        const roundArrowY =  Math.round(arrowY!);
-//        const modifiedNumber = maxValue - (roundArrowY + substrate)*increaseZeros
-//         this.updateBetText(modifiedNumber)
-//     }
-
-//     public setupToggleButtonOnClick(){
-//         const button = this.betting?.toggleButton
-//         button?.onClick(()=> this.startBettingSlideAnim())
-//     }
-
-//     public startBettingSlideAnim(){
-//         const {duration, ease, shiftY} = SLIDE_ANIM_CONFIG
-//         const direction = this.betting?.isOpen? 1 : -1
-//         this.betting!.isOpen = !this.betting?.isOpen
-
-//         gsap.to(this.betting, {
-//          y: this.betting!.y + shiftY * direction,
-//          duration: duration,
-//          ease: ease,
-//        });
-//     }
-
-//     public getBetValueNumber(): number | undefined{
-//         return this.betting?.betText?.getTextInNumber
-//     }
-//   }
-  
-//   export default new BettingManager();

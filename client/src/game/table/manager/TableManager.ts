@@ -1,27 +1,29 @@
-import Table from "../factory/Table";
+import TableFactoryAdapter from "../adapter/TableFactoryAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
-import TableFactory from "../factory/TableFactory";
 import CardData from "../../../interfaces/CardData";
 
 
 class TableManager {
-    table: Table | null
+    tableAdapter: TableFactoryAdapter 
     constructor() {
-        this.table = null
+        this.tableAdapter = new TableFactoryAdapter()
     }
 
-    public createTable(scene: BaseScene){
-     this.table = TableFactory.createTable(scene)
+    public initTable(scene: BaseScene){
+    const bettingFactory = this.tableAdapter.createTable()
+    scene.addChild(bettingFactory)
     }
 
     public async layOutCards(cardsSymbols: CardData[]){
-        await this.table?.layOutCards(cardsSymbols)
+        const tableCards = this.tableAdapter.getCards
+        await tableCards.dealCardsToTable(cardsSymbols)
     }
 
     public updateTotalBetsText(updatedText: string | number){
-        this.table?.updateTotalBets(updatedText)
+        this.tableAdapter.setTotalBetsVisible(true)
+        this.tableAdapter.updateTotalBetsText(updatedText)
+
     }
   }
   
   export default new TableManager();
-  

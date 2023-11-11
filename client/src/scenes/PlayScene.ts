@@ -113,7 +113,7 @@ class PlayScene extends BaseScene {
     }
 
     createTable(){
-      TableManager.createTable(this)
+      TableManager.initTable(this)
     }
 
     createStaticComponents() {

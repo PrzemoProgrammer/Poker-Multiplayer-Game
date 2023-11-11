@@ -1,32 +1,34 @@
 import PokerBarFactory from "../factory/PokerBarFactory";
+import PokerBarFactoryAdapter from "../adater/PokerBarFactoryAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
 import {BUTTON_TYPES} from "../../../game/config/gameConfig";
 
 class PokerBarManager {
-    pokerBar: PokerBarFactory | null
+    pokerBarAdapter: PokerBarFactoryAdapter 
     constructor() {
-        this.pokerBar = null
+        this.pokerBarAdapter = new PokerBarFactoryAdapter()
     }
 
-    public createPokerBar(scene: BaseScene){
-     this.pokerBar = new PokerBarFactory(scene);
+    public initPokerBar(scene: BaseScene){
+        const pokerBarFactory = this.pokerBarAdapter.createPokerBar()
+        scene.addChild(pokerBarFactory)
     }
 
     public updateMoneyText(text: number){
-     this.pokerBar?.moneyText?.updateMessage(text);
+        this.pokerBarAdapter.updateMoneyText(text)
     }
 
     public updateBetText(text: number){
-        this.pokerBar?.betsText?.updateMessage(text)
+        this.pokerBarAdapter.updateBetText(text)
     }
 
     public setupButtonOnClick(type: string, callback: () => void){
        const [fold, check, call, raise, bet] = BUTTON_TYPES
-        if(type === fold) this.pokerBar?.foldButton?.onClick(callback)
-        if(type === check) this.pokerBar?.checkButton?.onClick(callback)
-        if(type === call) this.pokerBar?.callButton?.onClick(callback)
-        if(type === raise) this.pokerBar?.raiseButton?.onClick(callback)
-        if(type === bet) this.pokerBar?.betButton?.onClick(callback)
+        if(type === fold) this.pokerBarAdapter.getFoldButton?.onClick(callback)
+        if(type === check) this.pokerBarAdapter.getCheckButton?.onClick(callback)
+        if(type === call)this.pokerBarAdapter.getCallButton?.onClick(callback)
+        if(type === raise) this.pokerBarAdapter.getRaiseButton?.onClick(callback)
+        if(type === bet) this.pokerBarAdapter.getBetButton?.onClick(callback)
     }
   }
   
