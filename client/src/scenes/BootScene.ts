@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import sceneManager from "../utility/managers/SceneManager";
-import AssetsManager from "../utility/managers/AssetsManager";
-import LoadingScreen from "../components/LoadingScreen";
+import sceneManager from "../managers/SceneManager";
+import AssetsManager from "../managers/AssetsManager";
+import LoadingScreen from "../components/loadingScreen/LoadingScreen";
 import BaseScene from "../abstraction/BaseScene";
 
 class BootScene extends BaseScene {

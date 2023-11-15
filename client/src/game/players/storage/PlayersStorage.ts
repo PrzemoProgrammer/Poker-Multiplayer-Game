@@ -1,8 +1,8 @@
-import DataStorage from "../../../interfaces/DataStorage";
+import IPlayersDataStorage from "./interface/IPlayersDataStorage";
 import Player from "../player/Player";
 
 class PlayersStorage {
-    players: DataStorage
+    players: IPlayersDataStorage
 
     constructor() {
         this.players = {};
@@ -13,7 +13,7 @@ class PlayersStorage {
         this.players[playerID] = player
     }
 
-    public get getPlayers(): DataStorage{
+    public get getPlayers(): IPlayersDataStorage{
         return this.players
     }
 

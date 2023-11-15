@@ -1,4 +1,4 @@
-import { GAME_HEIGHT, GAME_WIDTH } from "../config/config";
+import { GAME_HEIGHT, GAME_WIDTH, VIEW_POSITION } from "../config/config";
 import { Application} from "pixi.js";
 
 export function resizeScreen(game:Application ): void{
@@ -8,14 +8,14 @@ export function resizeScreen(game:Application ): void{
 
   game.renderer.resize(newWidth, newHeight);
 
-  game.view.style.position = "absolute";
+  game.view.style.position = VIEW_POSITION;
   game.view.style.left = `${(window.innerWidth - newWidth) / 2}px`;
   game.view.style.top = `${(window.innerHeight - newHeight) / 2}px`;
 
   game.stage.scale.set(scaleFactor);
 }
 
-function calculateScaleFactor(): number {
+export function calculateScaleFactor(): number {
   const scaleFactor = Math.min(
     window.innerWidth / GAME_WIDTH,
     window.innerHeight / GAME_HEIGHT

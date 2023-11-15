@@ -3,10 +3,12 @@ const passwordHasher = require("../dataHasher/PasswordHasher");
 const JWT = require("../JWT/JWTManager");
 
 async function authentication(req, res) {
-  const { login, password } = req.body;
+  const { username, password } = req.body;
+  const usernameString = String(username);
+  const passwordString = String(password);
 
   try {
-    const userPassword = login + password;
+    const userPassword = usernameString + passwordString;
 
     const hashedPassword = await passwordHasher.hashPassword(userPassword);
 

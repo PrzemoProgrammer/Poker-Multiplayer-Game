@@ -1,6 +1,7 @@
 import BaseScene from "../../../abstraction/BaseScene";
 import BettingFactoryAdapter from "../adapter/BettingFactoryAdapter";
-import {SLIDE_ANIM_CONFIG, MODIFY_NUMBER_CONFIG} from "../config/bettingConfig";
+import {SLIDE_ANIM_CONFIG, MODIFY_NUMBER_CONFIG, AUDIO} from "../config/bettingConfig";
+import AssetsManager from "../../../managers/AssetsManager";
 import gsap from "gsap";
 
 class BettingManager {
@@ -39,6 +40,7 @@ class BettingManager {
 
     public startBettingSlideAnim(){
         const {duration, ease, shiftY} = SLIDE_ANIM_CONFIG
+        AssetsManager.playAudio(AUDIO.swipeButton)
         const betting = this.bettingAdapter.getBettingFactory
         const bettingY = this.bettingAdapter.getBettingY
         const isOpen = this.bettingAdapter.isBettingOpen

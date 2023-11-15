@@ -1,9 +1,9 @@
 import { Sprite, Container } from "pixi.js";
-import CreateComponent from "../../../components/CreateComponent";
-import CreateText from "../../../components/CreateText";
-import Button from "../../../components/Button";
-import uiInterfaceConfig from "../config/pokerBarConfig";
-import UiInterfaceConfig from "../../../interfaces/UiInterfaceConfig";
+import CreateComponent from "../../../actions/CreateComponent";
+import CreateText from "../../../components/text/Text";
+import Button from "../../../components/button/Button";
+import {POKER_BAR_CONFIG} from "../config/pokerBarConfig";
+import IPokerBarConfig from "../interface/IPokerBarConfig";
 
 export default class PokerBarFactory extends Container {
   bottomBar: Sprite | null;
@@ -14,11 +14,11 @@ export default class PokerBarFactory extends Container {
   checkButton: Button | null;
   callButton: Button | null;
   raiseButton: Button | null;
-  config: UiInterfaceConfig;
+  config: IPokerBarConfig;
 
   constructor() {
     super();
-    this.config = uiInterfaceConfig;
+    this.config = POKER_BAR_CONFIG;
     this.bottomBar = this.createBottomBar();
     this.moneyText = this.createMoneyText();
     this.betsText = this.createBetsText();

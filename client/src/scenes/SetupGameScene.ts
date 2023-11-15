@@ -1,6 +1,3 @@
-import * as PIXI from "pixi.js";
-import sceneManager from "../utility/managers/SceneManager";
-import {PLAYER_STATE } from "../services/requests/requests";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";

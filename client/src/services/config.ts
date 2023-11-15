@@ -1,4 +1,4 @@
-import { SERVER_PORT } from "../services/requests/config";
+import { SERVER_PORT } from "./requests/config/config";
 
 let SERVER_URL = `${location.protocol}//${location.hostname}`;
 let WEBSOCKET_URL = `ws://${location.hostname}:${SERVER_PORT}`;

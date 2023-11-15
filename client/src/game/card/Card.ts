@@ -1,15 +1,14 @@
 import * as PIXI from "pixi.js";
-import CreateSprite from "../../components/CreateSprite";
-import DefaultSpriteConfig from "../../interfaces/DefaultSpriteConfig";
+import CreateSprite from "../../components/sprite/Sprite";
+import IDefaultSpriteConfig from "../../components/sprite/interface/IDefaultSpriteConfig";
 import { DEAL_ANIM_CONFIG, LAY_OF_ANIM_CONFIG, TURN_OVER_ANIM_CONFIG } from "./config/cardAnimsConfig";
-import {  SLIDE_FROM_TOP_ANIM_CONFIG } from "../table/cards/tableCardsConfig";
-
+import {  SLIDE_FROM_TOP_ANIM_CONFIG } from "../table/cards/config/tableCardsConfig";
 import gsap from "gsap";
 
 export default class Card extends CreateSprite {
   isTurned: boolean
   isSlideDown: boolean
-    constructor(config: DefaultSpriteConfig) {
+    constructor(config: IDefaultSpriteConfig) {
         super(config)
 
         this.isTurned = false

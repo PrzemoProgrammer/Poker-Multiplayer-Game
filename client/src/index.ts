@@ -5,8 +5,8 @@ import PlayScene from "./scenes/PlayScene";
 import LoginScene from "./scenes/LoginScene";
 import SetupGameScene from "./scenes/SetupGameScene";
 import { resizeScreen }  from "./screen/resizeScreen";
-import sceneManager from "./utility/managers/SceneManager";
-import GameStorage from "./utility/storage/GameStorage";
+import sceneManager from "./managers/SceneManager";
+import GameStorage from "./storage/GameStorage";
 import "./style.css";
 
 const game = GameStorage.getGame()

@@ -1,7 +1,6 @@
-import PokerBarFactory from "../factory/PokerBarFactory";
 import PokerBarFactoryAdapter from "../adater/PokerBarFactoryAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
-import {BUTTON_TYPES} from "../../../game/config/gameConfig";
+import {BUTTON_TYPES} from "../../../UI/pokerBar/config/pokerBarConfig";
 
 class PokerBarManager {
     pokerBarAdapter: PokerBarFactoryAdapter 

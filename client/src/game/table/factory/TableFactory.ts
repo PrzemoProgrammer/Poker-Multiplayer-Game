@@ -1,11 +1,11 @@
 import { Container } from "pixi.js";
 import Bet from "../../bet/Bet";
 import TableCards from "../cards/TableCards";
-import TableConfig from "../../../interfaces/TableConfig";
+import ITableConfig from "../interface/ITableConfig";
 import tableConfig from "../config/tableConfig";
 
 export default class TableFactory extends Container {
-    config: TableConfig
+    config: ITableConfig
     totalBets: Bet 
     cards:TableCards 
     constructor() {

@@ -1,14 +1,14 @@
 import { PLAYER_POSITIONS_CONFIG} from "../config/gameConfig";
-import PlayerPositionsConfig from "../../interfaces/PlayerPositionsConfig";
+import IPlayerPositionsConfig from "../../interfaces/IPlayerPositionsConfig";
 
-class SitPositionManager {
-    positionsConfig: PlayerPositionsConfig[]
+class PlayerSitPositionManager {
+    positionsConfig: IPlayerPositionsConfig[]
     constructor() {
 
     this.positionsConfig = this.convertConfigToArray()
     }
 
-    private convertConfigToArray(): PlayerPositionsConfig[] {
+    private convertConfigToArray(): IPlayerPositionsConfig[] {
         return Object.values(PLAYER_POSITIONS_CONFIG);
       }
 
@@ -20,10 +20,10 @@ class SitPositionManager {
       }
     }
 
-    public getConfigPositions(positionNumber: number): PlayerPositionsConfig {
+    public getPositionsConfig(positionNumber: number): IPlayerPositionsConfig {
         return  this.positionsConfig[positionNumber-1]
     }
 
   }
   
-  export default new SitPositionManager();
+  export default new PlayerSitPositionManager();

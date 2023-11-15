@@ -1,5 +1,5 @@
 import PokerBarFactory from "../factory/PokerBarFactory";
-import Button from "../../../components/Button";
+import Button from "../../../components/button/Button";
 
 class PokerBarAdapter {
     pokerBar: PokerBarFactory | null

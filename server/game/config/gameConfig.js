@@ -5,6 +5,7 @@ const DEFAULT_PLAYER_GAME_POSITION = "player";
 const DEFAULT_PLAYER_BET_COUNT = 0;
 const GAME_POSITIONS = ["dealer", "smallBlind", "bigBlind", "player"];
 const GAME_ROUND_NAMES = ["Lobby", "Preflop", "Flop", "Turn", "River"];
+const BUTTON_TYPES = ["fold", "check", "call", "raise", "bet"];
 const SMALL_BLIND_BET = 1000;
 const BIG_BLIND_BET = 2 * SMALL_BLIND_BET;
 const PLAYER_TURN_DURATION = 15;
@@ -20,4 +21,5 @@ module.exports = {
   DEFAULT_PLAYER_BET_COUNT,
   PLAYER_TURN_DURATION,
   GAME_ROUND_NAMES,
+  BUTTON_TYPES,
 };

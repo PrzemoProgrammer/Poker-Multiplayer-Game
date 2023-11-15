@@ -1,10 +1,8 @@
 import * as PIXI from "pixi.js";
-import sceneManager from "../utility/managers/SceneManager";
-import AssetsManager from "../utility/managers/AssetsManager";
+import sceneManager from "../managers/SceneManager";
+import AssetsManager from "../managers/AssetsManager";
 import Cookies from "js-cookie";
 import BaseScene from "../abstraction/BaseScene";
-import ImageStorage from "../utility/storage/ImageStorage";
-
 
 class PreloadScene extends BaseScene {
   constructor() {
@@ -20,6 +18,7 @@ class PreloadScene extends BaseScene {
     await this.loadTimerImages()
     await this.loadSignImages()
     await this.loadAudio()
+    await this.loadLoginScreenImages()
     this.handleStartNextScene();
   }
 
@@ -142,8 +141,23 @@ class PreloadScene extends BaseScene {
     }
   }
 
+  async loadLoginScreenImages(): Promise<void> {
+    const images = [
+      "login_screen_background",
+    ];
+
+    let totalImages = images.length;
+
+    for (let i = 0; i < totalImages; i++) {
+      let sprite = images[i];
+      let source = `assets/images/loginScreen/${sprite}.png`
+
+      AssetsManager.addImage(sprite, source);
+    }
+  }
+
   async loadAudio() {
-    const audios = ["deal_card", "player_leave", "player_turn_end", "player_win" ,"turn_card", "slide_card"];
+    const audios = ["deal_card", "player_leave", "player_turn_end", "player_win" ,"turn_card", "slide_card", "swipe_button", "player_turn_start" ];
     let totalAudios = audios.length;
 
     for (let i = 0; i < totalAudios; i++) {
@@ -156,7 +170,8 @@ class PreloadScene extends BaseScene {
 
   handleStartNextScene(){
     // Cookies.remove('authToken');
-    Cookies.get("authToken") ?  sceneManager.startScene("PlayScene") :  sceneManager.startScene("LoginScene"),
+    // Cookies.get("authToken") ?  sceneManager.startScene("PlayScene") :  sceneManager.startScene("LoginScene"),
+    sceneManager.startScene("LoginScene")
     sceneManager.removeScene("BootScene")
 }
 }

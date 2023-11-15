@@ -1,13 +1,13 @@
 import { Container} from "pixi.js";
-import ProgressBar from "../../../../components/ProgressBar";
-import TimerConfig from "../../../../interfaces/TimerConfig";
+import ProgressBar from "../../../../components/progressBar/ProgressBar";
+import ITimerConfig from "./interface/ITimerConfig";
 
 export default class Timer extends Container {
 progressBar: ProgressBar
-config: TimerConfig
+config: ITimerConfig
 countdownInterval: NodeJS.Timeout | null;
 fps: number
-  constructor(config: TimerConfig) {
+  constructor(config: ITimerConfig) {
     super()
     this.config = config;
     this.fps = this.config.fps

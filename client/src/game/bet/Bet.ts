@@ -1,15 +1,15 @@
 import { Sprite, Container} from "pixi.js";
-import CreateComponent from "../../components/CreateComponent";
-import CreateText from "../../components/CreateText";
-import BetConfig from "../../interfaces/BetConfig";
+import CreateComponent from "../../actions/CreateComponent";
+import CreateText from "../../components/text/Text";
+import IBetConfig from "./interface/IBetConfig";
 
 export default class Bet extends Container {
-    config:  BetConfig
+    config:  IBetConfig
     image: Sprite | null 
     background: Sprite | null
     text: CreateText 
     visibleOnInit: boolean
-  constructor(config: BetConfig) {
+  constructor(config: IBetConfig) {
     super()
     this.config = config
     this.x = this.config.x

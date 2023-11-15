@@ -1,13 +1,14 @@
 import * as Colyseus from 'colyseus.js';
-import ServerPlayerData from "../../interfaces/ServerPlayerData";
-import PlayersConfig from "../../interfaces/PlayersConfig";
-import ServerGameUpdateOnStart from "../../interfaces/ServerGameUpdateOnStart";
-import PlayerTurnData from "../../interfaces/PlayerTurnData";
-import FlopRoundData from "../../interfaces/NextRoundData";
-import PlayerTurnAction from "../../interfaces/PlayerTurnAction";
+import IServerPlayerData from "../../interfaces/IServerPlayerData";
+import IPlayersConfig from "../../game/players/interface/IPlayersConfig";
+import IServerGameUpdateOnStart from "../../interfaces/IServerGameUpdateOnStart";
+import IPlayerTurnData from "../../interfaces/IPlayerTurnData";
+import INextRoundData from "../../interfaces/INextRoundData";
+import IPlayerTurnAction from "../../interfaces/IPlayerTurnAction";
+import IGameResultData from "../../interfaces/IGameResultData";
+import IUpdatePlayerTurnAction from "../../interfaces/IUpdatePlayerTurnAction";
 import GameSignals from "../../gameSignals/GameSignals";
 import  {WEBSOCKET_URL} from '../config';
-
 
 class ColyseusClient {
   private client: Colyseus.Client;
@@ -15,7 +16,7 @@ class ColyseusClient {
   myId: string
 
   constructor() {
-    this.client = new Colyseus.Client('ws://localhost:2567');
+    this.client = new Colyseus.Client(WEBSOCKET_URL);
     this.myId = ""
 
     this.bindSignals()
@@ -39,15 +40,15 @@ class ColyseusClient {
     return  this.myId === id;
   }
 
-  public getMyId(): string {
+  public get getMyId(): string {
     return  this.myId
   }
 
   private bindSignals(): void {
-    GameSignals.playerTurnAction.add((actionData: PlayerTurnAction) => this.playerTurnAction(actionData));
+    GameSignals.playerTurnAction.add((actionData: IPlayerTurnAction) => this.playerTurnAction(actionData));
   }
 
-  playerTurnAction(data: PlayerTurnAction){
+  playerTurnAction(data: IPlayerTurnAction){
     this.sendMessage("playerTurnAction", data);
   }
 
@@ -61,26 +62,26 @@ class ColyseusClient {
         console.log('Room state changed:', state)
       });
 
-      this.room?.onMessage('getPlayers', (data: ServerPlayerData) => {
+      this.room?.onMessage('getPlayers', (data: IServerPlayerData) => {
         console.log(data)
         GameSignals.onGetPlayers.dispatch(data)     
       });
 
-      this.room?.onMessage("playerJoined", (data: PlayersConfig) => {
+      this.room?.onMessage("playerJoined", (data: IPlayersConfig) => {
         console.log('Received playerJoined message:', data);
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
-      this.room?.onMessage("initPreflopRound", (data: ServerGameUpdateOnStart) => {
+      this.room?.onMessage("initPreflopRound", (data: IServerGameUpdateOnStart) => {
         console.log(data)
         GameSignals.onStartGameData.dispatch(data)  
       });
 
-      this.room?.onMessage('updateGameTurn', (data: PlayerTurnData) => {
+      this.room?.onMessage('updateGameTurn', (data: IPlayerTurnData) => {
         GameSignals.onChangePlayerTurn.dispatch(data)          
       });
 
-      this.room?.onMessage('initNextRound', (data: FlopRoundData) => {
+      this.room?.onMessage('initNextRound', (data: INextRoundData) => {
         GameSignals.onInitNextRound.dispatch(data)          
       });
 
@@ -88,13 +89,16 @@ class ColyseusClient {
         GameSignals.onPlayerLeave.dispatch(data)          
       });
 
-      this.room?.onMessage('updatePlayerTurnAction', (data: string) => {
+      this.room?.onMessage('updatePlayerTurnAction', (data: IUpdatePlayerTurnAction) => {
         GameSignals.onUpdatePlayerTurnAction.dispatch(data)          
+      });
+
+      this.room?.onMessage('gameResult', (data: IGameResultData) => {
+        GameSignals.onGameResult.dispatch(data)          
       });
 
       this.room?.onMessage("announcement", (data: string) => {
         console.log("Server announcement:", data);
-        // GameSignals.onPlayerJoined.dispatch(data)  
       });
 
       // this.room.onMessage('update_data', (data) => {

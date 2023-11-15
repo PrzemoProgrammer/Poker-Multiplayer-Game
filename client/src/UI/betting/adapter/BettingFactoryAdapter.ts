@@ -1,7 +1,7 @@
 // bettingFactory.ts
 import BettingFactory from "../factory/BettingFactory";
-import DragObject from "../../../components/DragObject";
-import Button from "../../../components/Button";
+import DragObject from "../../../components/draggableObject/DraggableObject";
+import Button from "../../../components/button/Button";
 
 class BettingFactoryAdapter {
     private betting: BettingFactory | null

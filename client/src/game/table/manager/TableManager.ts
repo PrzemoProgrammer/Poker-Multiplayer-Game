@@ -1,6 +1,6 @@
 import TableFactoryAdapter from "../adapter/TableFactoryAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
-import CardData from "../../../interfaces/CardData";
+import ICardData from "../../../interfaces/ICardData";
 
 
 class TableManager {
@@ -14,7 +14,7 @@ class TableManager {
     scene.addChild(bettingFactory)
     }
 
-    public async layOutCards(cardsSymbols: CardData[]){
+    public async layOutCards(cardsSymbols: ICardData[]){
         const tableCards = this.tableAdapter.getCards
         await tableCards.dealCardsToTable(cardsSymbols)
     }

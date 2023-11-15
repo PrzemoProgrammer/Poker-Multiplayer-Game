@@ -1,8 +1,10 @@
 import { Sprite, Container} from "pixi.js";
-import AssetsManager from "../../../../utility/managers/AssetsManager";
-import DefaultSpriteConfig from "../../../../interfaces/DefaultSpriteConfig";
-import CardData from "../../../../interfaces/CardData";
+import AssetsManager from "../../../../managers/AssetsManager";
+import IDefaultSpriteConfig from "../../../../components/sprite/interface/IDefaultSpriteConfig";
+import ICardData from "../../../../interfaces/ICardData";
 import Card from "../../../card/Card";
+import { SCALE_UP_ANIM_CONFIG } from "../../../card/config/cardAnimsConfig";
+import gsap from "gsap";
 
 
 export default class PlayerCards extends Container {
@@ -17,20 +19,7 @@ export default class PlayerCards extends Container {
     this.cards = []
   }
 
-  public addCard(cardConfig: DefaultSpriteConfig){
-    const card = this.createCard(cardConfig)
-    if (card !== null)
-    this.cards.push(card)
-  }
-
-  public addCards(cardsConfig: DefaultSpriteConfig[]) {
-    for(let i = 0; i < cardsConfig.length; i++) {
-      const cardSpriteConfig = cardsConfig[i]
-      this.addCard(cardSpriteConfig)
-    }
-  }
-
-  private createCard(config: DefaultSpriteConfig): Card | null  {
+  private createCard(config: IDefaultSpriteConfig): Card | null  {
     const cardConfig = config
     const sprite = new Card(cardConfig)
     if (sprite !== null) this.addChild(sprite);
@@ -47,6 +36,19 @@ export default class PlayerCards extends Container {
       this.cards[index].y = this.dealAnimStartPositions[index].y
   }
 
+  public addCard(cardConfig: IDefaultSpriteConfig){
+    const card = this.createCard(cardConfig)
+    if (card !== null)
+    this.cards.push(card)
+  }
+
+  public addCards(cardsConfig: IDefaultSpriteConfig[]) {
+    for(let i = 0; i < cardsConfig.length; i++) {
+      const cardSpriteConfig = cardsConfig[i]
+      this.addCard(cardSpriteConfig)
+    }
+  }
+
   public startDealAnim(index: number, scale: number){
       const x = this.dealAnimEndPositions[index].x
       const y = this.dealAnimEndPositions[index].y
@@ -60,7 +62,7 @@ export default class PlayerCards extends Container {
     return this.cards
   }
 
- public turnOverCardsAnim(cardsSymbols: CardData[]){
+ public turnOverCardsAnim(cardsSymbols: ICardData[]){
   for (let i = 0; i < this.cards.length; i++) {
     const card = this.cards[i]
     const cardSymbolImage = cardsSymbols[i].name
@@ -74,6 +76,24 @@ export default class PlayerCards extends Container {
 
   public setAnimEndPosition(newPositions: {x: number;y: number}[]){
     this.dealAnimEndPositions = newPositions
+  }
+
+  public  async startScaleUpCardsAnim(){
+    const {duration, ease, scale} = SCALE_UP_ANIM_CONFIG
+    const scaleProps = {scale:this.scale.x}
+    await gsap.to(scaleProps, {
+      scale: scale,
+      duration: duration,
+      ease: ease,
+      onUpdate:()=>{
+        this.setScale(scaleProps.scale)
+      }
+    });
+  }
+
+  public setScale(value: number){
+    this.scale.x = value
+    this.scale.y = value
   }
 
 }

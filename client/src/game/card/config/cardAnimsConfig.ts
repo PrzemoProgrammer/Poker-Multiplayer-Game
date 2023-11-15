@@ -23,5 +23,9 @@ export const LAY_OF_ANIM_CONFIG = {
     duration: 0.3,
     ease: "none",
 }
-
+export const SCALE_UP_ANIM_CONFIG = {
+    duration: 0.3,
+    ease: "none",
+    scale: 1.5,
+}
 

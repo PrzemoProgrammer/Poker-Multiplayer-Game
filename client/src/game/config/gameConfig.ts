@@ -1,7 +1,6 @@
 export const MAX_PLAYERS = 5
 export const MAX_PLAYER_CARDS = 2
-export const BUTTON_TYPES = ["fold", "check", "call", "raise", "bet"]
-
+export const GAME_POSITIONS = ["dealer", "smallBlind", "bigBlind", "player"];
 export const PLAYER_POSITIONS_CONFIG = {
     player1: {
         sitPosition: {

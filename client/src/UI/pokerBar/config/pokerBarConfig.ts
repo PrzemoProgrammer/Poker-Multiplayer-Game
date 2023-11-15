@@ -1,6 +1,7 @@
 import { GAME_HEIGHT } from "../../../config/config";
 
-export default {
+export const BUTTON_TYPES = ["fold", "check", "call", "raise", "bet"]
+export const POKER_BAR_CONFIG = {
     bottomBar: {
         path: "",
         key: "bottom_bar",

@@ -20,16 +20,16 @@ client.join("game").then((room) => {
 
 import * as PIXI from "pixi.js";
 import CreateSprite from "../components/CreateSprite";
-import SpriteConfig from "../interfaces/SpriteConfig";
-import DefaultSpriteConfig from "../interfaces/DefaultSpriteConfig";
+import ISpriteConfig from "../interfaces/ISpriteConfig";
+import IDefaultSpriteConfig from "../interfaces/IDefaultSpriteConfig";
 
 class CreateComponents{
     constructor() {
 
     }
 
-    public create(config: SpriteConfig): PIXI.Sprite | null{
-        const defaultConfig: DefaultSpriteConfig = {
+    public create(config: ISpriteConfig): PIXI.Sprite | null{
+        const defaultConfig: IDefaultSpriteConfig = {
             x: 0,
             y: 0,
             anchorX: 0.5,

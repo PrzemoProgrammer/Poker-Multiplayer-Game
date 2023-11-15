@@ -88,21 +88,6 @@ export const MODIFY_NUMBER_CONFIG = {
     increaseZeros: 1000
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export const AUDIO = {
+    swipeButton: "swipe_button"
+};

@@ -1,8 +1,9 @@
 const crypto = require("crypto");
+const { SPECIAL_SIGN } = require("./config");
 
 class PasswordHasher {
   constructor() {
-    this.specialSign = "432965207bb2b7dbe29787a1f68c554ac6";
+    this.specialSign = SPECIAL_SIGN;
   }
 
   hashPassword(password) {

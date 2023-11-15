@@ -1,16 +1,16 @@
 import { Sprite, Container} from "pixi.js";
-import TableCardsConfig from "../../../interfaces/TableCardsConfig";
-import DefaultSpriteConfig from "../../../interfaces/DefaultSpriteConfig";
-import CardData from "../../../interfaces/CardData";
+import ITableCardsConfig from "./interface/ITableCardsConfig";
+import IDefaultSpriteConfig from "../../../components/sprite/interface/IDefaultSpriteConfig";
+import ICardData from "../../../interfaces/ICardData";
 import Card from "../../card/Card";
-import AssetsManager from "../../../utility/managers/AssetsManager";
+import AssetsManager from "../../../managers/AssetsManager";
 
 export default class TableCards extends Container{
-    config:TableCardsConfig
+    config:ITableCardsConfig
     initCardCount: number
     cardsSpace: number
     cards: Card[]
-  constructor(config: TableCardsConfig) {
+  constructor(config: ITableCardsConfig) {
     super()
 
     this.config = config
@@ -43,7 +43,7 @@ export default class TableCards extends Container{
     await Promise.all(movePromises)
   }
 
-  public async newCardsTurnOverAnim(cardsSymbols: CardData[], turnedCardsLength: number){
+  public async newCardsTurnOverAnim(cardsSymbols: ICardData[], turnedCardsLength: number){
     const newCardsLength = cardsSymbols.length
     const cardsLengthToTurn = turnedCardsLength + newCardsLength
     for (let i = turnedCardsLength; i < cardsLengthToTurn; i++) {
@@ -71,7 +71,7 @@ export default class TableCards extends Container{
     await card.turnOverAnim(cardSymbol)
   }
 
-  public async dealCardsToTable(cardsSymbols: CardData[]){
+  public async dealCardsToTable(cardsSymbols: ICardData[]){
     const newUpdatedCardsLength = cardsSymbols.length
     const tableLaidCardsLength = this.getTableLaidCardsLength()
       await this.newCardsSlideFromTopAnim(newUpdatedCardsLength, tableLaidCardsLength)
@@ -79,7 +79,7 @@ export default class TableCards extends Container{
        await this.newCardsTurnOverAnim(cardsSymbols, tableLaidCardsLength)
   }
 
-  private createCard(config: DefaultSpriteConfig): Card | null  {
+  private createCard(config: IDefaultSpriteConfig): Card | null  {
     const cardConfig = config
     const sprite = new Card(cardConfig)
     if (sprite !== null) this.addChild(sprite);

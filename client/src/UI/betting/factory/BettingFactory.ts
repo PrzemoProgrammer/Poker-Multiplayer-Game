@@ -1,10 +1,10 @@
 import { Sprite, Container, InteractionEvent} from "pixi.js";
-import CreateComponent from "../../../components/CreateComponent";
-import Button from "../../../components/Button";
-import DragObject from "../../../components/DragObject";
-import CreateText from "../../../components/CreateText";
+import CreateComponent from "../../../actions/CreateComponent";
+import Button from "../../../components/button/Button";
+import DragObject from "../../../components/draggableObject/DraggableObject";
+import CreateText from "../../../components/text/Text";
 import {FACTORY_CONFIG} from "../config/bettingConfig";
-import BettingConfig from "../../../interfaces/BettingConfig";
+import IBettingConfig from "../interface/IBettingConfig";
 
 export default class BettingFactory extends Container {
   isOpen: boolean
@@ -13,7 +13,7 @@ toggleButton: Button | null;
 betText: CreateText | null;
 textField: Sprite | null
 arrow: DragObject | null
-config: BettingConfig;
+config: IBettingConfig;
 
   constructor() {
     super();
