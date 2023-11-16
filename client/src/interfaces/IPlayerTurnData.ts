@@ -1,4 +1,4 @@
-export default interface PlayerTurnData {
+export default interface IPlayerTurnData {
     playerIdGameTurn: string,
     serverTime: number,
     turnRespondTime: number

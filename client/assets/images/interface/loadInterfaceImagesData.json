@@ -1,0 +1,66 @@
+{
+    "betButtonPush": {
+      "path": "interface/buttons",
+      "key": "bet_button_push"
+    },
+    "betButton": {
+        "path": "interface/buttons",
+        "key": "bet_button"
+      },
+      "bettingHideButton": {
+        "path": "interface/buttons",
+        "key": "betting_hide_button"
+      },
+      "bettingShowButton": {
+        "path": "interface/buttons",
+        "key": "betting_show_button"
+      },
+      "callButtonPush": {
+        "path": "interface/buttons",
+        "key": "call_button_push"
+      },
+      "callButton": {
+        "path": "interface/buttons",
+        "key": "call_button"
+      },
+      "checkButtonPush": {
+        "path": "interface/buttons",
+        "key": "check_button_push"
+      },
+      "checkButton": {
+        "path": "interface/buttons",
+        "key": "check_button"
+      },
+      "foldButtonPush": {
+        "path": "interface/buttons",
+        "key": "fold_button_push"
+      },
+      "foldButton": {
+        "path": "interface/buttons",
+        "key": "fold_button"
+      },
+      "raiseButtonPush": {
+        "path": "interface/buttons",
+        "key": "raise_button_push"
+      },
+      "raiseButton": {
+        "path": "interface/buttons",
+        "key": "raise_button"
+      },
+    "battingArrow": {
+        "path": "interface",
+        "key": "batting_arrow"
+      },
+      "bettingBackground": {
+        "path": "interface",
+        "key": "betting_background"
+      },
+      "bettingTextField": {
+        "path": "interface",
+        "key": "betting_text_field"
+      },
+      "bottomBar": {
+        "path": "interface",
+        "key": "bottom_bar"
+      }
+  }

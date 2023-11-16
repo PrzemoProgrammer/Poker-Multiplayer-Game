@@ -1,0 +1,46 @@
+{
+    "gameBackground": {
+      "path": "game/backgrounds",
+      "key": "background"
+    },
+    "betBackground": {
+        "path": "game/backgrounds",
+        "key": "bet_background"
+      },
+      "defaultPlayerAvatar": {
+        "path": "game/avatar",
+        "key": "default_avatar"
+      },
+      "betChip": {
+        "path": "game/chips",
+        "key": "bet"
+      },
+      "croupier": {
+        "path": "game/croupier",
+        "key": "croupier"
+      },
+      "playerCheckSign": {
+        "path": "game/signs",
+        "key": "check_sign"
+      },
+      "playerDealerSign": {
+        "path": "game/signs",
+        "key": "dealer_sign"
+      },
+    "gameTable": {
+      "path": "game/tables",
+      "key": "table"
+    },
+    "timerBackground": {
+        "path": "game/timer",
+        "key": "timer_bar_background"
+      },
+      "timerContainer": {
+        "path": "game/timer",
+        "key": "timer_bar_container"
+      },
+      "timerBar": {
+        "path": "game/timer",
+        "key": "timer_bar"
+      }
+  }

@@ -11,16 +11,9 @@ class SetupGameScene extends BaseScene {
 
     async init(){
       this.authToken = this.getAuthToken()
-    //   await this.fetchPlayerData()
       await this.tryJoinToGameRoom()
       this.startSocketListeners()
     }
-
-    // async fetchPlayerData(){
-    //   const authToken = this.authToken
-    //   const playerState = await (await PLAYER_STATE({authToken})).json();
-    //   PlayerStorage.setData(playerState)
-    // }
 
      private async tryJoinToGameRoom(){
       const isPlayerJoined = await ColyseusClient.joinGameRoom(Cookies.get("authToken"))
