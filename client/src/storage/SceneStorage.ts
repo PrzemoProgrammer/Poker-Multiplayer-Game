@@ -7,10 +7,6 @@ import BaseScene from "../abstraction/BaseScene";
       this.scenes = new Map();
     }
   
-    public getScenes(): Map<string, BaseScene> {
-      return this.scenes;
-    }
-  
     public addScene(scene: BaseScene): void {
       const key = scene.sceneKey;
       this.scenes.set(key, scene);
@@ -20,7 +16,7 @@ import BaseScene from "../abstraction/BaseScene";
       return this.scenes.get(key);
     }
   
-    public getFirstSceneKey(): string | undefined {
+    public get getFirstSceneKey(): string | undefined {
       const keys = Array.from(this.scenes.keys());
       return keys.length > 0 ? keys[0] : undefined;
     }

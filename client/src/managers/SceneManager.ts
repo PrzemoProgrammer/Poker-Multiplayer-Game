@@ -12,7 +12,7 @@ class SceneManager {
     }
   
     public autoStartFirstScene(): void {
-      const firstSceneKey = SceneStorage.getFirstSceneKey()
+      const firstSceneKey = SceneStorage.getFirstSceneKey
       if(firstSceneKey)
       this.startScene(firstSceneKey);
     }
