@@ -25,11 +25,11 @@ fps: number
   public startCountdown(serverTime: number, respondTime: number):void {
     const playerRespondTime = this.calculatePlayerTurnTime(serverTime, respondTime)
     this.setVisible(true)
-    const progressBarMaskWidth = this.progressBar.getBarMaskWidth() 
+    const progressBarMaskWidth = this.progressBar.getBarMaskWidth 
     const decreaseAmount =  progressBarMaskWidth / ( playerRespondTime  * this.fps); 
 
     this.countdownInterval = setInterval(() => {
-        const progressBarMaskWidth = this.progressBar.getBarMaskWidth()
+        const progressBarMaskWidth = this.progressBar.getBarMaskWidth
       if (progressBarMaskWidth > 1) {
         let updateWidth = progressBarMaskWidth - decreaseAmount
         this.progressBar.updateBar(updateWidth)

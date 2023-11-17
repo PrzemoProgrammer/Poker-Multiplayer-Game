@@ -8,7 +8,10 @@ export default interface IProgressBarConfig {
     container: ISpriteConfig,
     bar: ISpriteConfig,
     mask: {
+      x: number,
+      y: number
       width: number,
+      height: number
     }
   }
   

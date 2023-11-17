@@ -78,7 +78,8 @@ class GameManager {
           GameSignals.playerTurnAction.dispatch(requestData)
         })
         PokerBarManager.setupButtonOnClick(call, ()=>{
-          console.log(3)
+          requestData.action = call
+          GameSignals.playerTurnAction.dispatch(requestData)
         })    
         PokerBarManager.setupButtonOnClick(raise, ()=>{
           console.log(4)
@@ -95,7 +96,7 @@ class GameManager {
         const {playerIdGameTurn, serverTime, turnRespondTime} = gamePlayerTurnData
         AssetsManager.playAudio("player_turn_start")
         PlayersManager.turnOffPlayersTimer()
-        PlayersManager.setPlayerSignsVisible(playerIdGameTurn, false)
+        PlayersManager.setPlayerActionSignVisible(playerIdGameTurn, false)
         const player = PlayersManager.getPlayer(playerIdGameTurn)
         if(player) player.startTimer(serverTime, turnRespondTime )
       }
@@ -147,9 +148,21 @@ class GameManager {
         const {playerId, type, bet, money} = playerTurnAction
         const player = PlayersManager.getPlayer(playerId)
         AssetsManager.playAudio("player_turn_end")
-        if(type === checkType) player.setCheckSignVisible(true)
-        if(type === betType) {  
+        if(type === checkType) {
+          const signTexture = "check_sign"
+          player.setActionSignVisibleAndTexture(signTexture, true)
+        }
+        else if(type === betType) {  
           const players = PlayersManager.getPlayers();
+         PlayersManager.updatePlayerBet(playerId, players, bet)
+          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(bet)
+          PlayersManager.updatePlayerMoneyText(playerId, players, money)
+          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateMoneyText(money)
+        }
+        else if(type === callType) {  
+          const players = PlayersManager.getPlayers();
+          const signTexture = "call_sign"
+          player.setActionSignVisibleAndTexture(signTexture,true)
          PlayersManager.updatePlayerBet(playerId, players, bet)
           if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(bet)
           PlayersManager.updatePlayerMoneyText(playerId, players, money)

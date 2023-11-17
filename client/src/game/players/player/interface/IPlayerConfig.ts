@@ -15,7 +15,7 @@ export default interface IPlayerConfig {
     money: ITextConfig,
     bet: IBetConfig
     dealerSign: ISpriteConfig,
-    checkSign: ISpriteConfig,
+    actionSign: ISpriteConfig,
     cards: IDefaultSpriteConfig[],
     cardsAnimPositions: {
         animStartPosition: {x: number, y:number }[],

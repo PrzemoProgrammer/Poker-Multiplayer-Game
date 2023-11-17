@@ -87,11 +87,11 @@ class GameManager {
   get areAllPlayersDoneBetting() {
     const players = PlayersManager.getPlayersObject;
     const maxGameBet = PlayersManager.getBiggestBetFromPlayers;
-
+    const areAllPlayersCheck = PlayersManager.areAllPlayersCheck;
     const areAllPlayersDoneBetting = Object.values(players).every(
       (player) =>
-        player.playerData.clientData.bet === maxGameBet ||
-        player.playerData.clientData.check === true ||
+        (player.playerData.clientData.bet === maxGameBet && maxGameBet > 0) ||
+        areAllPlayersCheck ||
         (player.playerData.clientData.bet > 0 &&
           player.playerData.clientData.money === 0)
     );
@@ -129,8 +129,18 @@ class GameManager {
       PlayersManager.setPlayerCheckStatus(clientId, true);
       respondData.playerId = clientId;
       respondData.type = check;
-    }
-    if (action === bet) {
+    } else if (action === call) {
+      const newBet = PlayersManager.calculateBetDifferenceToHightest(clientId);
+      PlayersMoneyManager.updatePlayerMoney(clientId, newBet);
+      const playerMoney = PlayersManager.getPlayerMoney(clientId);
+      PlayersBetManager.updateBetOnServer(clientId, newBet);
+      TableBetsManager.addBetToPot(newBet);
+      const newPlayerBet = PlayersManager.getPlayerBet(clientId);
+      respondData.playerId = clientId;
+      respondData.type = call;
+      respondData.bet = newPlayerBet;
+      respondData.money = playerMoney;
+    } else if (action === bet) {
       PlayersMoneyManager.updatePlayerMoney(clientId, data);
       const playerMoney = PlayersManager.getPlayerMoney(clientId);
       PlayersBetManager.updateBetOnServer(clientId, data);

@@ -121,16 +121,16 @@ class PlayersManager {
         }
     }
 
-    public setPlayerSignsVisible(playerId: string, value: boolean) {
+    public setPlayerActionSignVisible(playerId: string, value: boolean) {
         const players = this.getPlayers();
         const player = players[playerId];
-        player.setCheckSignVisible(value);
+        player.setPlayerActionSignVisible(value);
     }
 
     public setPlayersSignsVisible(value: boolean) {
         const players = this.getPlayers();
         for (const playerId in players) {
-            this.setPlayerSignsVisible(playerId, value);
+            this.setPlayerActionSignVisible(playerId, value);
         }
     }
 }

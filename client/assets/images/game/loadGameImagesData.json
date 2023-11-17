@@ -27,6 +27,10 @@
         "path": "game/signs",
         "key": "dealer_sign"
       },
+      "playerCallSign": {
+        "path": "game/signs",
+        "key": "call_sign"
+      },
     "gameTable": {
       "path": "game/tables",
       "key": "table"

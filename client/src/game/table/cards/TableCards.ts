@@ -73,7 +73,7 @@ export default class TableCards extends Container{
 
   public async dealCardsToTable(cardsSymbols: ICardData[]){
     const newUpdatedCardsLength = cardsSymbols.length
-    const tableLaidCardsLength = this.getTableLaidCardsLength()
+    const tableLaidCardsLength = this.getTableLaidCardsLength
       await this.newCardsSlideFromTopAnim(newUpdatedCardsLength, tableLaidCardsLength)
       if(tableLaidCardsLength === 0) await this.layOutCards()
        await this.newCardsTurnOverAnim(cardsSymbols, tableLaidCardsLength)
@@ -90,7 +90,7 @@ export default class TableCards extends Container{
     return this.cards[index]
   }
   
-  public getTableLaidCardsLength(): number{
-    return this.cards.filter(card => card.isPlacedOnTable() === true).length;
+  public get getTableLaidCardsLength(): number{
+    return this.cards.filter(card => card.isPlacedOnTable === true).length;
   }
 }

@@ -209,7 +209,7 @@ class GameRoom extends Room {
   setupListeners() {
     this.onMessage("playerTurnAction", (client, data) => {
       const clientId = client.sessionId;
-      if (!GameManager.isCurrentPlayerTurn(clientId)) return;
+      // if (!GameManager.isCurrentPlayerTurn(clientId)) return;
       const respondData = GameManager.playerTurnAction(clientId, data);
       this.startGameTurnTimer();
       this.updateGameRound();

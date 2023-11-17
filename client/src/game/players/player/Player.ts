@@ -68,12 +68,26 @@ export default class Player {
     this.playerComponents.timer.resetTimer()
   }
 
-  public setCheckSignVisible(value: boolean){
-    this.playerComponents.checkSign?.setVisible(value)
-  }
-
   public destroy(){
     this.playerComponents.destroy()
+  }
+
+  public setPlayerActionSignVisible(value: boolean){
+    this.playerComponents.actionSign?.setVisible(value)
+  }
+
+  public setPlayerSignTexture(newTexture: string){
+    this.playerComponents.actionSign?.changeTexture(newTexture)
+  }
+
+  public setActionSignVisibleAndTexture(texture: string,visible: boolean){
+    this.setPlayerSignTexture(texture)
+    this.setPlayerActionSignVisible(visible)
+
+
+    // const actionSign = this.playerComponents.actionSign
+    // actionSign?.changeTexture(texture)
+    // actionSign?.setVisible(visible)
   }
   
 }

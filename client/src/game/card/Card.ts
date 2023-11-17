@@ -83,7 +83,7 @@ export default class Card extends CreateSprite {
         this.visible = value
       }
 
-      public isPlacedOnTable(): boolean{
+      public get isPlacedOnTable(): boolean{
         return this.isTurned && this.isSlideDown
       }
 }

@@ -15,7 +15,7 @@ export default class PlayerFactory extends BaseEntity {
     nickname: Text
     money: Text
     dealerSign: CreateSprite | null
-    checkSign: CreateSprite | null
+    actionSign: CreateSprite | null
     id: string
     bet: Bet
     gamePosition: string
@@ -32,10 +32,11 @@ export default class PlayerFactory extends BaseEntity {
     this.nickname = this.createNickname()
     this.money = this.createMoney()
     this.dealerSign = this.createDealerSign()
-    this.checkSign = this.createCheckSign()
+    this.actionSign = this.createActionSign()
     this.bet = this.createBet()
     this.cards = this.createCards()
     this.timer = this.createTimer()
+
   }
 
   private createAvatar(): Sprite | null {
@@ -96,11 +97,11 @@ export default class PlayerFactory extends BaseEntity {
     return dealerSign
   }
 
-  private createCheckSign(): CreateSprite | null  {
-    const config = this.config.checkSign
-    const checkSign = CreateComponent.create(config);
-    if (checkSign !== null)  this.addChild(checkSign);
+  private createActionSign(): CreateSprite | null  {
+    const config = this.config.actionSign
+    const actionSign = CreateComponent.create(config);
+    if (actionSign !== null)  this.addChild(actionSign);
 
-    return checkSign
+    return actionSign
   }
 }

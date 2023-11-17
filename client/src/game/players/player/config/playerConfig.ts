@@ -109,7 +109,7 @@ export default {
       anchorY: 0.5,
       visible: false
     },
-    checkSign:  {
+    actionSign:  {
       path: "",
       key: "check_sign",
       type: "sprite",
@@ -206,7 +206,10 @@ export default {
           visible: true
         },
         mask: {
-          width: 196
+          x: -90,
+          y: -10,
+          width: 196,
+          height: 19
         },
       }
     },

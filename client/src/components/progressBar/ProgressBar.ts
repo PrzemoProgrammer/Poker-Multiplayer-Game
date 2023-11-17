@@ -48,10 +48,10 @@ export default class ProgressBar extends Container {
   }
 
   private createBarMask(width: number): Graphics | null {
+    const {x, y, height} = this.config.mask
     const mask = new Graphics();
     mask.beginFill(0xFF0000); 
-    // mask.drawRect(110, -10 , 200, 19); 
-    mask.drawRect(-90, -10 , width, 19); 
+    mask.drawRect(x, y , width, height); 
     mask.endFill();
     this.addChild(mask);
     
@@ -64,7 +64,7 @@ export default class ProgressBar extends Container {
   this.bar!.mask = this.barMask
   }
 
-  public getBarMaskWidth(): number{
+  public get getBarMaskWidth(): number{
     return this.barMask!.width
   }
 

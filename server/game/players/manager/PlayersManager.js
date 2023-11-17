@@ -129,6 +129,20 @@ class PlayersManager {
     }
     return playersCards;
   }
+
+  get areAllPlayersCheck() {
+    const players = this.getPlayersObject;
+    const areAllPlayersCheck = Object.values(players).every(
+      (player) => player.playerData.clientData.check === true
+    );
+    return areAllPlayersCheck;
+  }
+
+  calculateBetDifferenceToHightest(clientId) {
+    const maxGameBet = this.getBiggestBetFromPlayers;
+    const playerBet = this.getPlayerBet(clientId);
+    return maxGameBet - playerBet;
+  }
 }
 
 module.exports = new PlayersManager();
