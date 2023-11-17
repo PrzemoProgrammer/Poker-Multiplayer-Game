@@ -209,7 +209,7 @@ class GameRoom extends Room {
   setupListeners() {
     this.onMessage("playerTurnAction", (client, data) => {
       const clientId = client.sessionId;
-      // if (!GameManager.isCurrentPlayerTurn(clientId)) return;
+      if (!GameManager.isCurrentPlayerTurn(clientId)) return;
       const respondData = GameManager.playerTurnAction(clientId, data);
       this.startGameTurnTimer();
       this.updateGameRound();
@@ -232,7 +232,7 @@ class GameRoom extends Room {
     console.log(`${client.id} left the game.`);
     GameManager.deletePlayerFromGame(client.sessionId);
     this.broadcast("playerLeaveGame", client.id);
-    //WYtypuj kolejną osobę do tury jeszce raz jeśli wychodzący miał teraz turę
+    //nominate another person
   }
 
   onDispose() {
