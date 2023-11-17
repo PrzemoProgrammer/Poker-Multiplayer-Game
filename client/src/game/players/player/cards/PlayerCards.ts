@@ -1,5 +1,5 @@
 import { Sprite, Container} from "pixi.js";
-import AssetsManager from "../../../../managers/AssetsManager";
+import AudioManager from "../../../../managers/AudioManager";
 import IDefaultSpriteConfig from "../../../../components/sprite/interface/IDefaultSpriteConfig";
 import ICardData from "../../../../interfaces/ICardData";
 import Card from "../../../card/Card";
@@ -27,7 +27,7 @@ export default class PlayerCards extends Container {
   }
 
   private dealAnim(card: Card, x: number,y: number, scale: number){
-    AssetsManager.playAudio("deal_card")
+    AudioManager.playAudio("deal_card")
     card.dealAnim(x,y,scale)
   }
 

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import loadingScreenConfig from "../../config/loadingScreenConfig";
-import AssetsManager from "../../managers/AssetsManager";
+import ImageManager from "../../managers/ImageManager";
 import ILoadingScreenConfig from "./interface/ILoadingScreenConfig";
 
 export default class LoadingScreen {
@@ -22,7 +22,7 @@ export default class LoadingScreen {
 
     private createBackground() {
       const {key, x, y, anchorX, anchorY} = this.config.background
-        const spritePath = AssetsManager.getImage(key);
+        const spritePath = ImageManager.getImage(key);
         if (!spritePath) return;
         let bg = PIXI.Sprite.from(spritePath);
         bg.anchor.set(anchorX, anchorY);
@@ -34,7 +34,7 @@ export default class LoadingScreen {
 
     private createWoman() {
       const {key, x, y, anchorX, anchorY} = this.config.womanCharacter
-        const spritePath = AssetsManager.getImage(key);
+        const spritePath = ImageManager.getImage(key);
         if (!spritePath) return;
         let woman = PIXI.Sprite.from(spritePath);
         woman.anchor.set(anchorX, anchorY);
@@ -46,7 +46,7 @@ export default class LoadingScreen {
 
     createLoadingText() {
       const {key, x, y, anchorX, anchorY} = this.config.loadingText
-        const spritePath = AssetsManager.getImage(key);
+        const spritePath = ImageManager.getImage(key);
         if (!spritePath) return;
         let text = PIXI.Sprite.from(spritePath);
         text.anchor.set(anchorX, anchorY);

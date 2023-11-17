@@ -1,11 +1,11 @@
 import * as PIXI from "pixi.js";
-import AssetsManager from "../../managers/AssetsManager";
+import ImageManager from "../../managers/ImageManager";
 import IDefaultSpriteConfig from "./interface/IDefaultSpriteConfig";
 
 export default class Sprite extends PIXI.Sprite {
     constructor(config: IDefaultSpriteConfig) {
         const { key, x, y, anchorX, anchorY, visible, scaleX, scaleY, angle} = config;
-        const spritePath = AssetsManager.getImage(key);
+        const spritePath = ImageManager.getImage(key);
 
         if (spritePath) {
             super(PIXI.Texture.from(spritePath));
@@ -22,7 +22,7 @@ export default class Sprite extends PIXI.Sprite {
     }
 
     public changeTexture(newTexture: string) {
-        const updatedTexture = AssetsManager.getImage(newTexture)
+        const updatedTexture = ImageManager.getImage(newTexture)
         if (updatedTexture) {
             const texture = PIXI.Texture.from(updatedTexture);
             this.texture = texture;

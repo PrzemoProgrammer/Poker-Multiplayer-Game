@@ -1,5 +1,5 @@
 import PlayersStorage from "../storage/PlayersStorage";
-import AssetsManager from "../../../managers/AssetsManager";
+import AudioManager from "../../../managers/AudioManager";
 import IPlayersDataStorage from "../storage/interface/IPlayersDataStorage";
 import IPlayersCards from "../../../interfaces/IPlayersCards";
 import Player from "../player/Player";
@@ -8,43 +8,42 @@ import { MAX_PLAYER_CARDS } from "../../config/gameConfig";
 import { CROUPIER_CARD_DEAL_CONFIG } from "../../card/config/cardAnimsConfig";
 
 class PlayersManager {
-    constructor() {}
 
-    public addPlayer(player: Player) {
+    public static addPlayer(player: Player) {
         PlayersStorage.addPlayer(player);
     }
 
-    public getPlayers(): IPlayersDataStorage {
+    public static getPlayers(): IPlayersDataStorage {
         return PlayersStorage.getPlayers;
     }
 
-    public getPlayersCount(): number {
+    public static getPlayersCount(): number {
         const players = this.getPlayers();
         return Object.keys(players).length;
     }
 
-    public getPlayer(id: string) {
+    public static getPlayer(id: string) {
         return PlayersStorage.getPlayer(id);
     }
 
-    public updatePlayerMoneyText(playerId: string, players: IPlayersDataStorage, updateMoneyText: number) {
+    public static updatePlayerMoneyText(playerId: string, players: IPlayersDataStorage, updateMoneyText: number) {
         players[playerId].updateMoneyText(updateMoneyText);
     }
 
-    public updatePlayerBet(playerId: string, players: IPlayersDataStorage, updateBet: number) {
+    public static updatePlayerBet(playerId: string, players: IPlayersDataStorage, updateBet: number) {
         players[playerId].updateBets(updateBet);
         if (updateBet > 0) players[playerId].setBetVisible(true);
     }
 
-    public updatePlayerPosition(playerId: string, players: IPlayersDataStorage, updatedPosition: string) {
+    public static updatePlayerPosition(playerId: string, players: IPlayersDataStorage, updatedPosition: string) {
         players[playerId].updateGamePosition(updatedPosition);
     }
 
-    public checkDisplayDealerSign(playerId: string, players: IPlayersDataStorage, updatedPosition: string) {
+    public static checkDisplayDealerSign(playerId: string, players: IPlayersDataStorage, updatedPosition: string) {
         if (updatedPosition === "dealer") players[playerId].setDealerSignVisible(true);
     }
 
-    public async playDealCardsForPlayersAnim() {
+    public static async playDealCardsForPlayersAnim() {
         const players = this.getPlayers();
         const {
             nextAnimDelay,
@@ -66,7 +65,7 @@ class PlayersManager {
         }
     }
 
-    public turnOverPlayersCardsAnim(drawCards: IPlayersCards, onlyYou: boolean) {
+    public static turnOverPlayersCardsAnim(drawCards: IPlayersCards, onlyYou: boolean) {
       const players = this.getPlayers();
       const myId = ColyseusClient.getMyId;
   
@@ -86,7 +85,7 @@ class PlayersManager {
       }
   }
 
-  public async startScaleUpCardsAnim(exceptMe: boolean){
+  public static async startScaleUpCardsAnim(exceptMe: boolean){
     const players = this.getPlayers();
     const movePromises = []
     for (const playerId in players) {
@@ -98,7 +97,7 @@ class PlayersManager {
     await Promise.all(movePromises)
   }
   
-    public resetBets() {
+    public static resetBets() {
         const players = this.getPlayers();
         for (const playerId in players) {
             const player = players[playerId];
@@ -106,14 +105,14 @@ class PlayersManager {
         }
     }
 
-    public deletePlayer(playerId: string) {
-        AssetsManager.playAudio("player_leave");
+    public static deletePlayer(playerId: string) {
+        AudioManager.playAudio("player_leave");
         const player = this.getPlayer(playerId);
         player.destroy();
         PlayersStorage.deletePlayer(playerId);
     }
 
-    public turnOffPlayersTimer() {
+    public static turnOffPlayersTimer() {
         const players = this.getPlayers();
         for (const playerId in players) {
             const player = players[playerId];
@@ -121,13 +120,13 @@ class PlayersManager {
         }
     }
 
-    public setPlayerActionSignVisible(playerId: string, value: boolean) {
+    public static setPlayerActionSignVisible(playerId: string, value: boolean) {
         const players = this.getPlayers();
         const player = players[playerId];
         player.setPlayerActionSignVisible(value);
     }
 
-    public setPlayersSignsVisible(value: boolean) {
+    public static setPlayersSignsVisible(value: boolean) {
         const players = this.getPlayers();
         for (const playerId in players) {
             this.setPlayerActionSignVisible(playerId, value);
@@ -135,4 +134,4 @@ class PlayersManager {
     }
 }
 
-export default new PlayersManager();
+export default PlayersManager

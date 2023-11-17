@@ -3,7 +3,7 @@ import ITableCardsConfig from "./interface/ITableCardsConfig";
 import IDefaultSpriteConfig from "../../../components/sprite/interface/IDefaultSpriteConfig";
 import ICardData from "../../../interfaces/ICardData";
 import Card from "../../card/Card";
-import AssetsManager from "../../../managers/AssetsManager";
+import AudioManager from "../../../managers/AudioManager";
 
 export default class TableCards extends Container{
     config:ITableCardsConfig
@@ -60,13 +60,13 @@ export default class TableCards extends Container{
   }
 
   async slideCardFormTopAnim(cardIndex: number){
-    AssetsManager.playAudio("slide_card")
+    AudioManager.playAudio("slide_card")
     const card = this.getCard(cardIndex)
     await card.slideFromTopAnim()
   }
 
   async turnOverCardAnim(cardIndex: number, cardSymbol: string){
-    AssetsManager.playAudio("turn_card")
+    AudioManager.playAudio("turn_card")
     const card = this.getCard(cardIndex)
     await card.turnOverAnim(cardSymbol)
   }

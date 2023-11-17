@@ -83,11 +83,6 @@ export default class Player {
   public setActionSignVisibleAndTexture(texture: string,visible: boolean){
     this.setPlayerSignTexture(texture)
     this.setPlayerActionSignVisible(visible)
-
-
-    // const actionSign = this.playerComponents.actionSign
-    // actionSign?.changeTexture(texture)
-    // actionSign?.setVisible(visible)
   }
   
 }

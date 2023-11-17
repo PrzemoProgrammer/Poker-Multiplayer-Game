@@ -1,27 +1,24 @@
-import PokerBarFactoryAdapter from "../adater/PokerBarFactoryAdapter";
+import PokerBarAdapter from "../adater/PokerBarAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
 import {BUTTON_TYPES} from "../../../UI/pokerBar/config/pokerBarConfig";
 
 class PokerBarManager {
-    pokerBarAdapter: PokerBarFactoryAdapter 
-    constructor() {
-        this.pokerBarAdapter = new PokerBarFactoryAdapter()
-    }
-
-    public initPokerBar(scene: BaseScene){
+    private static pokerBarAdapter: PokerBarAdapter = new PokerBarAdapter();
+    
+    public static initPokerBar(scene: BaseScene){
         const pokerBarFactory = this.pokerBarAdapter.createPokerBar()
         scene.addChild(pokerBarFactory)
     }
 
-    public updateMoneyText(text: number){
-        this.pokerBarAdapter.updateMoneyText(text)
+    public static updateMoneyText(text: number){
+        this.pokerBarAdapter.updateMoneyText = text
     }
 
-    public updateBetText(text: number){
-        this.pokerBarAdapter.updateBetText(text)
+    public static updateBetText(text: number){
+        this.pokerBarAdapter.updateBetText = text
     }
 
-    public setupButtonOnClick(type: string, callback: () => void){
+    public static setupButtonOnClick(type: string, callback: () => void){
        const [fold, check, call, raise, bet] = BUTTON_TYPES
         if(type === fold) this.pokerBarAdapter.getFoldButton?.onClick(callback)
         if(type === check) this.pokerBarAdapter.getCheckButton?.onClick(callback)
@@ -31,5 +28,5 @@ class PokerBarManager {
     }
   }
   
-  export default new PokerBarManager();
+  export default  PokerBarManager
   

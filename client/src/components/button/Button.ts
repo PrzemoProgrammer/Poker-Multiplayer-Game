@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import CreateSprite from "../sprite/Sprite";
-import AssetsManager from "../../managers/AssetsManager";
+import ImageManager from "../../managers/ImageManager";
 import IButtonConfig from "./interface/IButtonConfig";
 
 export default class Button extends CreateSprite {
@@ -14,7 +14,7 @@ export default class Button extends CreateSprite {
     super(spriteConfig)
     this.config = config
     this.mainSprite = this.texture.textureCacheIds[0]
-    this.spritePush = AssetsManager.getImage(this.config.spritePush);
+    this.spritePush = ImageManager.getImage(this.config.spritePush);
     this.scaleValue = this.config.scaleValue
     this.interactive = true;
     this.buttonMode = true;

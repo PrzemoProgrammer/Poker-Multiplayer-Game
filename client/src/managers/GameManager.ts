@@ -1,4 +1,4 @@
-import AssetsManager from "../managers/AssetsManager";
+import AudioManager from "../managers/AudioManager";
 import BaseScene from "../abstraction/BaseScene";
 import ColyseusClient from "../services/colyseus/ColyseusClient";
 import PokerBarManager from "../UI/pokerBar/manager/PokerBarManager";
@@ -24,7 +24,7 @@ import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IGameResultData from "../interfaces/IGameResultData";
 
 class GameManager {
-     public async updateGameOnStart(initGameData: IServerGameUpdateOnStart){
+     public static async  updateGameOnStart(initGameData: IServerGameUpdateOnStart){
         const players = PlayersManager.getPlayers();
         const {drawCards, playersBets, playersMoney, playersGamePositions } = initGameData.players
 
@@ -44,30 +44,30 @@ class GameManager {
         this.updatePlayerTurn(initGameData.game.playerTurnData)
     }
 
-      public updatePlayerMoney(playerId: string, players: IPlayersDataStorage, playersMoney: IPlayersMoney){
+      public static updatePlayerMoney(playerId: string, players: IPlayersDataStorage, playersMoney: IPlayersMoney){
         const updateMoneyText = playersMoney[playerId].money
         PlayersManager.updatePlayerMoneyText(playerId, players, updateMoneyText)
         if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateMoneyText(updateMoneyText)
       }
 
-      public updatePlayerBet(playerId: string, players: IPlayersDataStorage, playersBets: IPlayersBets){
+      public static updatePlayerBet(playerId: string, players: IPlayersDataStorage, playersBets: IPlayersBets){
         const updateBet = playersBets[playerId].bet
         if(playersBets[playerId] !== undefined) PlayersManager.updatePlayerBet(playerId, players, updateBet)
         if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(updateBet)
       }
 
-      public updatePlayerPosition(playerId: string, players: IPlayersDataStorage, playersGamePositions: IPlayerGamePositions){
+      public static updatePlayerPosition(playerId: string, players: IPlayersDataStorage, playersGamePositions: IPlayerGamePositions){
         const updatedPosition = playersGamePositions[playerId].position
         PlayersManager.updatePlayerPosition(playerId, players, updatedPosition)
         PlayersManager.checkDisplayDealerSign(playerId, players, updatedPosition)
       }
 
-      public updateInterfaceMoneyText(updatedText: number){
+      public static updateInterfaceMoneyText(updatedText: number){
         PokerBarManager.updateMoneyText(updatedText)
         this.setupUiInterfaceButtons()
       } 
 
-      private setupUiInterfaceButtons(){
+      private static setupUiInterfaceButtons(){
         const [fold, check, call, raise, bet] = BUTTON_TYPES
         const requestData = {action: "", data: 0}
         PokerBarManager.setupButtonOnClick(fold, ()=>{
@@ -92,21 +92,21 @@ class GameManager {
         })
       }
 
-      public updatePlayerTurn(gamePlayerTurnData: IPlayerTurnData){
+      public static updatePlayerTurn(gamePlayerTurnData: IPlayerTurnData){
         const {playerIdGameTurn, serverTime, turnRespondTime} = gamePlayerTurnData
-        AssetsManager.playAudio("player_turn_start")
+        AudioManager.playAudio("player_turn_start")
         PlayersManager.turnOffPlayersTimer()
         PlayersManager.setPlayerActionSignVisible(playerIdGameTurn, false)
         const player = PlayersManager.getPlayer(playerIdGameTurn)
         if(player) player.startTimer(serverTime, turnRespondTime )
       }
 
-      public createUiInterface(scene: BaseScene){
+      public static createUiInterface(scene: BaseScene){
         BettingManager.initBetting(scene)
         PokerBarManager.initPokerBar(scene);
       }
 
-      public createPlayer(playerData: IServerPlayerData){
+      public static createPlayer(playerData: IServerPlayerData){
         const { id, money, nick, sit, bet, position } = playerData;
         const { sitPosition, betPosition, cardsPositions } = PlayerSitPositionManager.getPositionsConfig(sit);
         const config = { ...PLAYER_CONFIG };
@@ -131,7 +131,7 @@ class GameManager {
         return player;
       }
 
-      public async initNextRound(nextRoundData: INextRoundData){
+      public static async initNextRound(nextRoundData: INextRoundData){
         const{tableCards,tableBets} = nextRoundData.game
         await TableManager.layOutCards(tableCards)
         TableManager.updateTotalBetsText(tableBets)
@@ -139,15 +139,15 @@ class GameManager {
         PlayersManager.setPlayersSignsVisible(false)
       }
 
-      public deletePlayer(playerId: string){
+      public static deletePlayer(playerId: string){
         PlayersManager.deletePlayer(playerId)
       }
 
-      public updatePlayerTurnAction(playerTurnAction: IUpdatePlayerTurnAction){
+      public static updatePlayerTurnAction(playerTurnAction: IUpdatePlayerTurnAction){
         const [foldType, checkType, callType, raiseType, betType] = BUTTON_TYPES
         const {playerId, type, bet, money} = playerTurnAction
         const player = PlayersManager.getPlayer(playerId)
-        AssetsManager.playAudio("player_turn_end")
+        AudioManager.playAudio("player_turn_end")
         if(type === checkType) {
           const signTexture = "check_sign"
           player.setActionSignVisibleAndTexture(signTexture, true)
@@ -170,13 +170,13 @@ class GameManager {
         }
       }
 
-      public setupGamePositionsConfig(playersData: IPlayersConfig){
+      public static setupGamePositionsConfig(playersData: IPlayersConfig){
         const mayId = ColyseusClient.getMyId
         const myPlayerSitData = playersData[mayId].sit
         PlayerSitPositionManager.setupConfigPositions(myPlayerSitData);
       }
 
-      public async initGameResult(gameResultData: IGameResultData){
+      public static async initGameResult(gameResultData: IGameResultData){
         const {players:{playersCards}, game} = gameResultData
         PlayersManager.turnOffPlayersTimer()
         await PlayersManager.startScaleUpCardsAnim(true)
@@ -184,5 +184,5 @@ class GameManager {
       }
   }
 
-  export default new GameManager();
+  export default GameManager
   

@@ -1,7 +1,7 @@
 import PokerBarFactory from "../factory/PokerBarFactory";
 import Button from "../../../components/button/Button";
 
-class PokerBarAdapter {
+export default class PokerBarAdapter {
     pokerBar: PokerBarFactory | null
     constructor() {
         this.pokerBar = null
@@ -11,11 +11,11 @@ class PokerBarAdapter {
      return this.pokerBar = new PokerBarFactory();
     }
 
-    public updateMoneyText(text: number){
+    public set updateMoneyText(text: number){
      this.pokerBar?.moneyText?.updateMessage(text);
     }
 
-    public updateBetText(text: number){
+    public set updateBetText(text: number){
         this.pokerBar?.betsText?.updateMessage(text)
     }
 
@@ -39,6 +39,3 @@ class PokerBarAdapter {
         return this.pokerBar!.betButton
     }
   }
-  
-  export default PokerBarAdapter;
-  

@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import sceneManager from "../managers/SceneManager";
-import AssetsManager from "../managers/AssetsManager";
+import ImageManager from "../managers/ImageManager";
 import LoadingScreen from "../components/loadingScreen/LoadingScreen";
 import BaseScene from "../abstraction/BaseScene";
 
@@ -30,7 +30,7 @@ class BootScene extends BaseScene {
         let sprite = images[i];
         let source = `assets/images/loadScreen/${sprite}.png`
   
-        AssetsManager.addImage(sprite, source);
+        ImageManager.addImage(sprite, source);
     }
   }
   
