@@ -1,5 +1,5 @@
 
-<img align="right" alt="coding" src="https://img.pixers.pics/pho_wat(s3:700/FO/46/19/02/93/700_FO46190293_e3fb287ad7023e35b0d0f4d77412a938.jpg,660,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,440,650,jpg)/fototapety-poker-icon.jpg.jpg" width="200" height="auto">
+<img align="right" alt="coding" src="https://img.pixers.pics/pho_wat(s3:700/FO/46/19/02/93/700_FO46190293_e3fb287ad7023e35b0d0f4d77412a938.jpg,660,700,cms:2018/10/5bd1b6b8d04b8_220x50-watermark.png,over,440,650,jpg)/fototapety-poker-icon.jpg.jpg" width="300" height="auto">
 
 # Poker Texas Hold'em - Online Game
 * Created in 𝗣𝗶𝘅𝗶.𝗷𝘀,
