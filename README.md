@@ -1,5 +1,5 @@
 
-<img align="right" alt="coding" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX16586411.jpg" width="400" height="auto">
+<img align="right" alt="coding" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX16586411.jpg" width="350" height="auto">
 
 # Poker Texas Hold'em - Online Game
 * Created in 𝗣𝗶𝘅𝗶.𝗷𝘀,
