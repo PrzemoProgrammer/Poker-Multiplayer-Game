@@ -3,8 +3,8 @@ const CurrentPlayerTurnStorage = require("../../../storage/CurrentPlayerTurnStor
 const GamePlayersSitPositionsStorage = require("../../../storage/PlayersSitPositionsStorage");
 const { GAME_POSITIONS, MAX_PLAYERS } = require("../../../config/gameConfig");
 
-class PlayersTurnManager {
-  initPlayerIdGameTurn(playersGamePositions, players) {
+module.exports = class PlayersTurnManager {
+  static initPlayerIdGameTurn(playersGamePositions, players) {
     const playerSitPositionGameTurn = this.getPlayerSitPositionGameTurn(
       playersGamePositions,
       players
@@ -20,7 +20,7 @@ class PlayersTurnManager {
     return playerIdGameTurn;
   }
 
-  calculateNextPlayerIdTurn() {
+  static calculateNextPlayerIdTurn() {
     const nextPlayerSitPositionGameTurn =
       this.getNextPlayerSitPositionGameTurn();
     const playerIdGameTurn = this.getPlayerIdGameTurn(
@@ -34,7 +34,7 @@ class PlayersTurnManager {
     return playerIdGameTurn;
   }
 
-  getNextPlayerSitPositionGameTurn() {
+  static getNextPlayerSitPositionGameTurn() {
     //dokończyć
     const currentPlayerSitPositionGameTurn =
       CurrentPlayerTurnStorage.getSitPosition;
@@ -84,7 +84,7 @@ class PlayersTurnManager {
     return nextPlayerSitPositionGameTurn;
   }
 
-  calculatePlayerIdGameTurn(playersGamePositions, players) {
+  static calculatePlayerIdGameTurn(playersGamePositions, players) {
     const playerSitPositionGameTurn = this.getPlayerSitPositionGameTurn(
       playersGamePositions,
       players
@@ -93,7 +93,7 @@ class PlayersTurnManager {
     return this.getPlayerIdGameTurn(playerSitPositionGameTurn);
   }
 
-  getPlayerSitPositionGameTurn(playersGamePositions, players) {
+  static getPlayerSitPositionGameTurn(playersGamePositions, players) {
     const bigBlindGamePosition = GAME_POSITIONS[2];
     let playerSitPositionGameTurn = null;
     for (const playerId in players) {
@@ -107,7 +107,7 @@ class PlayersTurnManager {
     return playerSitPositionGameTurn;
   }
 
-  getPlayerIdGameTurn(playerSitPositionGameTurn) {
+  static getPlayerIdGameTurn(playerSitPositionGameTurn) {
     const players = PlayersManager.getPlayersObject;
     let playerIdGameTurn = null;
     for (const playerId in players) {
@@ -121,24 +121,22 @@ class PlayersTurnManager {
     return playerIdGameTurn;
   }
 
-  setCurrentGameTurnPlayer(playerId, playerSitPosition) {
+  static setCurrentGameTurnPlayer(playerId, playerSitPosition) {
     CurrentPlayerTurnStorage.setPlayerData(playerId, playerSitPosition);
   }
 
-  calculateNextPlayerSitPositionGameTurn(value) {
+  static calculateNextPlayerSitPositionGameTurn(value) {
     let sit = value + 1;
     if (this.isMoreThanMaxPlayers(sit)) sit = 1;
 
     return sit;
   }
 
-  isMoreThanMaxPlayers(value) {
+  static isMoreThanMaxPlayers(value) {
     return value > MAX_PLAYERS;
   }
 
-  isCurrentPlayerTurn(playerId) {
+  static isCurrentPlayerTurn(playerId) {
     return playerId === CurrentPlayerTurnStorage.getId;
   }
-}
-
-module.exports = new PlayersTurnManager();
+};

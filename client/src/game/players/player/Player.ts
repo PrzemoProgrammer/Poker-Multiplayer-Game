@@ -7,7 +7,7 @@ export default class Player {
   config: IPlayerConfig
   id: string
   gamePosition: string
-  playerComponents: PlayerFactory
+  protected playerComponents: PlayerFactory
   constructor(config: IPlayerConfig) {
     this.playerComponents = new PlayerFactory(config)
     this.config = config

@@ -2,7 +2,7 @@ import TableFactory from "../factory/TableFactory";
 import TableCards from "../cards/TableCards";
 import Bet from "../../bet/Bet";
 
-class TableAdapter {
+export default  class TableAdapter {
     table: TableFactory | null
     constructor() {
         this.table = null
@@ -29,5 +29,3 @@ class TableAdapter {
     }
 
   }
-  
-  export default TableAdapter;

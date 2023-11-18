@@ -1,23 +1,21 @@
 const PlayersSitPositionsStorage = require("../../../storage/PlayersSitPositionsStorage");
 
-class PlayersSitPositionManager {
-  get getSmallestNumber() {
+module.exports = class PlayersSitPositionManager {
+  static get getSmallestNumber() {
     const sitPositions = PlayersSitPositionsStorage.getSitPositions;
     return Math.min.apply(null, sitPositions);
   }
 
-  get getEmptyPosition() {
+  static get getEmptyPosition() {
     return PlayersSitPositionsStorage.getEmptyPosition;
   }
 
-  sortPositions() {
+  static sortPositions() {
     PlayersSitPositionsStorage.sortPositions();
   }
 
-  releasePosition(position) {
+  static releasePosition(position) {
     PlayersSitPositionsStorage.addPosition(position);
     this.sortPositions();
   }
-}
-
-module.exports = new PlayersSitPositionManager();
+};

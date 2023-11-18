@@ -1,8 +1,4 @@
 class CroupierCardsStorage extends Array {
-  constructor() {
-    super();
-  }
-
   addCard(value) {
     this.push(value);
   }

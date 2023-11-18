@@ -3,7 +3,7 @@ import AudioManager from "../../../../managers/AudioManager";
 import IDefaultSpriteConfig from "../../../../components/sprite/interface/IDefaultSpriteConfig";
 import ICardData from "../../../../interfaces/ICardData";
 import Card from "../../../card/Card";
-import { SCALE_UP_ANIM_CONFIG } from "../../../card/config/cardAnimsConfig";
+import { SCALE_UP_ANIM_CONFIG, CARD_AUDIO_CONFIG } from "../../../card/config/cardAnimsConfig";
 import gsap from "gsap";
 
 
@@ -27,7 +27,8 @@ export default class PlayerCards extends Container {
   }
 
   private dealAnim(card: Card, x: number,y: number, scale: number){
-    AudioManager.playAudio("deal_card")
+    const dealCardAudio = CARD_AUDIO_CONFIG.deal
+    AudioManager.playAudio(dealCardAudio)
     card.dealAnim(x,y,scale)
   }
 

@@ -5,41 +5,39 @@ const {
 } = require("../../../config/gameConfig");
 const PlayersManager = require("../../manager/PlayersManager");
 
-class PlayersGamePositionManager {
-  constructor() {
-    this.gamePositions = GAME_POSITIONS;
-  }
+module.exports = class PlayersGamePositionManager {
+  static gamePositions = GAME_POSITIONS;
 
-  initGamePositions(players) {
+  static initGamePositions(players) {
     const gamePositions = this.getPlayersIDWithGamePositions(players);
     this.updateGamePositionsOnServer(gamePositions);
     return gamePositions;
   }
 
-  updateGamePositionsOnServer(gamePositions) {
+  static updateGamePositionsOnServer(gamePositions) {
     for (const playerId in gamePositions) {
       const newPlayerGamePosition = gamePositions[playerId].position;
       this.updateGamePositionOnServer(playerId, newPlayerGamePosition);
     }
   }
 
-  updateGamePositionOnServer(playerId, newPlayerGamePosition) {
+  static updateGamePositionOnServer(playerId, newPlayerGamePosition) {
     PlayersManager.updatePlayerGamePosition(playerId, newPlayerGamePosition);
   }
 
-  getPlayersIDWithGamePositions(players) {
+  static getPlayersIDWithGamePositions(players) {
     const gamePositions = this.drawPositions();
     return this.setPlayersPosition(gamePositions, players);
   }
 
-  drawPositions() {
+  static drawPositions() {
     const dealer = this.drawDealer();
     const smallBlind = this.drawSmallBlind(dealer);
     const bigBlind = this.drawBigBlind(smallBlind);
     return { dealer, smallBlind, bigBlind };
   }
 
-  setPlayersPosition({ dealer, smallBlind, bigBlind }, players) {
+  static setPlayersPosition({ dealer, smallBlind, bigBlind }, players) {
     const playersPositionData = {};
 
     for (const playerId in players) {
@@ -63,7 +61,7 @@ class PlayersGamePositionManager {
     return playersPositionData;
   }
 
-  drawDealer() {
+  static drawDealer() {
     const allSitPositions = SIT_POSITIONS;
     console.log(allSitPositions);
     const randomIndex = Math.floor(Math.random() * allSitPositions.length);
@@ -71,24 +69,22 @@ class PlayersGamePositionManager {
     return randomSitPosition;
   }
 
-  drawSmallBlind(dealerPosition) {
+  static drawSmallBlind(dealerPosition) {
     return this.recalculatePlayersLimit(dealerPosition);
   }
 
-  drawBigBlind(smallBlindPosition) {
+  static drawBigBlind(smallBlindPosition) {
     return this.recalculatePlayersLimit(smallBlindPosition);
   }
 
-  recalculatePlayersLimit(value) {
+  static recalculatePlayersLimit(value) {
     let position = value + 1;
     if (this.isMoreThanMaxPlayers(position)) position = 1;
 
     return position;
   }
 
-  isMoreThanMaxPlayers(value) {
+  static isMoreThanMaxPlayers(value) {
     return value > MAX_PLAYERS;
   }
-}
-
-module.exports = new PlayersGamePositionManager();
+};

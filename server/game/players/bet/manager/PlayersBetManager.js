@@ -5,8 +5,8 @@ const {
   GAME_POSITIONS,
 } = require("../../../config/gameConfig");
 
-class PlayersBetManager {
-  initBets(playersIDWithGamePositions, players) {
+module.exports = class PlayersBetManager {
+  static initBets(playersIDWithGamePositions, players) {
     const calculatedPlayersBets = this.calculateBetsOnStart(
       playersIDWithGamePositions,
       players
@@ -15,20 +15,20 @@ class PlayersBetManager {
     return calculatedPlayersBets;
   }
 
-  updateBetsOnServer(calculatedPlayersBets) {
+  static updateBetsOnServer(calculatedPlayersBets) {
     for (const playerId in calculatedPlayersBets) {
       const newPlayerBet = calculatedPlayersBets[playerId].bet;
       this.updateBetOnServer(playerId, newPlayerBet);
     }
   }
 
-  updateBetOnServer(playerId, newPlayerBet) {
+  static updateBetOnServer(playerId, newPlayerBet) {
     const actualPlayerBet = PlayersManager.getPlayerBet(playerId);
     const updateNewPlayerBet = actualPlayerBet + newPlayerBet;
     PlayersManager.updatePlayerBet(playerId, updateNewPlayerBet);
   }
 
-  calculateBetsOnStart(playersIDWithGamePositions, players) {
+  static calculateBetsOnStart(playersIDWithGamePositions, players) {
     const playersIDWithMoney = this.calculateMoneyAndBets(
       playersIDWithGamePositions,
       players
@@ -37,7 +37,7 @@ class PlayersBetManager {
     return playersIDWithMoney;
   }
 
-  calculateMoneyAndBets(playersIDWithGamePositions, players) {
+  static calculateMoneyAndBets(playersIDWithGamePositions, players) {
     const smallBlindValue = SMALL_BLIND_BET;
     const bigBlindValue = BIG_BLIND_BET;
     const smallBlindGamePosition = GAME_POSITIONS[1];
@@ -62,13 +62,11 @@ class PlayersBetManager {
     return playersIDMoneyAndBets;
   }
 
-  resetPlayersBets() {
+  static resetPlayersBets() {
     const players = PlayersManager.getPlayersObject;
     for (const playerId in players) {
       const player = players[playerId];
       player.updateBet = 0;
     }
   }
-}
-
-module.exports = new PlayersBetManager();
+};

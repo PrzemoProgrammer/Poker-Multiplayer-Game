@@ -1,29 +1,23 @@
-import TableFactoryAdapter from "../adapter/TableFactoryAdapter";
+import TableAdapter from "../adapter/TableAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
 import ICardData from "../../../interfaces/ICardData";
 
+export default class TableManager {
+    private static tableAdapter: TableAdapter = new TableAdapter();
 
-class TableManager {
-    tableAdapter: TableFactoryAdapter 
-    constructor() {
-        this.tableAdapter = new TableFactoryAdapter()
-    }
-
-    public initTable(scene: BaseScene){
+    public static initTable(scene: BaseScene){
     const bettingFactory = this.tableAdapter.createTable()
     scene.addChild(bettingFactory)
     }
 
-    public async layOutCards(cardsSymbols: ICardData[]){
+    public static async layOutCards(cardsSymbols: ICardData[]){
         const tableCards = this.tableAdapter.getCards
         await tableCards.dealCardsToTable(cardsSymbols)
     }
 
-    public updateTotalBetsText(updatedText: string | number){
+    public static updateTotalBetsText(updatedText: string | number){
         this.tableAdapter.setTotalBetsVisible(true)
         this.tableAdapter.updateTotalBetsText(updatedText)
-
     }
   }
   
-  export default new TableManager();

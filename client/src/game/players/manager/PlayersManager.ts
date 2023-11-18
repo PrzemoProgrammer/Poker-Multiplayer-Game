@@ -6,8 +6,9 @@ import Player from "../player/Player";
 import ColyseusClient from "../../../services/colyseus/ColyseusClient";
 import { MAX_PLAYER_CARDS } from "../../config/gameConfig";
 import { CROUPIER_CARD_DEAL_CONFIG } from "../../card/config/cardAnimsConfig";
+import {AUDIO_CONFIG} from "../../../game/players/player/config/playerConfig";
 
-class PlayersManager {
+export default class PlayersManager {
 
     public static addPlayer(player: Player) {
         PlayersStorage.addPlayer(player);
@@ -106,7 +107,8 @@ class PlayersManager {
     }
 
     public static deletePlayer(playerId: string) {
-        AudioManager.playAudio("player_leave");
+        const playerLeaveAudio = AUDIO_CONFIG.playerLeave
+        AudioManager.playAudio(playerLeaveAudio);
         const player = this.getPlayer(playerId);
         player.destroy();
         PlayersStorage.deletePlayer(playerId);
@@ -133,5 +135,3 @@ class PlayersManager {
         }
     }
 }
-
-export default PlayersManager

@@ -2,33 +2,33 @@ const PlayersStorage = require("../storage/PlayersStorage");
 const Player = require("../player/Player");
 const { GAME_POSITIONS } = require("../../config/gameConfig");
 
-class PlayersManager {
-  addPlayer(key, clientData) {
+module.exports = class PlayersManager {
+  static addPlayer(key, clientData) {
     const player = new Player(clientData);
     PlayersStorage.addPlayer(key, player);
   }
 
-  updatePlayerCards(playerId, newPlayerCards) {
+  static updatePlayerCards(playerId, newPlayerCards) {
     const player = this.getPlayer(playerId);
     player.updateCards = newPlayerCards;
   }
 
-  updatePlayerMoney(playerId, updatedPlayerMoney) {
+  static updatePlayerMoney(playerId, updatedPlayerMoney) {
     const player = this.getPlayer(playerId);
     player.updateMoney = updatedPlayerMoney;
   }
 
-  updatePlayerGamePosition(playerId, newPlayerGamePosition) {
+  static updatePlayerGamePosition(playerId, newPlayerGamePosition) {
     const player = this.getPlayer(playerId);
     player.updateGamePosition = newPlayerGamePosition;
   }
 
-  updatePlayerBet(playerId, newPlayerBet) {
+  static updatePlayerBet(playerId, newPlayerBet) {
     const player = this.getPlayer(playerId);
     player.updateBet = newPlayerBet;
   }
 
-  get getBiggestBetFromPlayers() {
+  static get getBiggestBetFromPlayers() {
     const players = this.getPlayersObject;
     const playersBets = [];
     for (const playerId in players) {
@@ -39,7 +39,7 @@ class PlayersManager {
     return maxGameBet;
   }
 
-  get getSmallBLindPlayerData() {
+  static get getSmallBLindPlayerData() {
     const players = this.getPlayersObject;
     const smallBlindPlayerData = {};
     for (const playerId in players) {
@@ -53,21 +53,21 @@ class PlayersManager {
     return smallBlindPlayerData;
   }
 
-  get getPlayers() {
+  static get getPlayers() {
     return PlayersStorage.getPlayers;
   }
 
-  getPlayer(playerId) {
+  static getPlayer(playerId) {
     return PlayersStorage.getPlayer(playerId);
   }
 
-  get getPlayersObject() {
+  static get getPlayersObject() {
     const playersMap = this.getPlayers;
     const playersToObject = Object.fromEntries(playersMap);
     return playersToObject;
   }
 
-  get getPlayersClientData() {
+  static get getPlayersClientData() {
     const players = this.getPlayersObject;
     const playersClientData = {};
     for (const key in players) {
@@ -76,7 +76,7 @@ class PlayersManager {
     return playersClientData;
   }
 
-  get getPlayersAllData() {
+  static get getPlayersAllData() {
     const players = this.getPlayersObject;
     const playersData = {};
     for (const key in players) {
@@ -85,43 +85,43 @@ class PlayersManager {
     return playersData;
   }
 
-  getPlayerClientData(playerId) {
+  static getPlayerClientData(playerId) {
     const player = this.getPlayer(playerId);
     const playerClientData = player.getClientData;
     return playerClientData;
   }
 
-  get getPlayerCount() {
+  static get getPlayerCount() {
     return PlayersStorage.getPlayerCount;
   }
 
-  deletePlayer(clientID) {
+  static deletePlayer(clientID) {
     PlayersStorage.deletePlayer(clientID);
   }
 
-  setPlayerCheckStatus(playerId, value) {
+  static setPlayerCheckStatus(playerId, value) {
     const player = this.getPlayer(playerId);
     player.setCheckStatus = value;
   }
 
-  resetPlayersSigns() {
+  static resetPlayersSigns() {
     const players = this.getPlayersObject;
     for (const key in players) {
       this.setPlayerCheckStatus(key, false);
     }
   }
 
-  getPlayerBet(playerId) {
+  static getPlayerBet(playerId) {
     const player = this.getPlayer(playerId);
     return player.getBet;
   }
 
-  getPlayerMoney(playerId) {
+  static getPlayerMoney(playerId) {
     const player = this.getPlayer(playerId);
     return player.getMoney;
   }
 
-  get getPlayersCards() {
+  static get getPlayersCards() {
     const players = this.getPlayersObject;
     const playersCards = {};
     for (const key in players) {
@@ -130,7 +130,7 @@ class PlayersManager {
     return playersCards;
   }
 
-  get areAllPlayersCheck() {
+  static get areAllPlayersCheck() {
     const players = this.getPlayersObject;
     const areAllPlayersCheck = Object.values(players).every(
       (player) => player.playerData.clientData.check === true
@@ -138,11 +138,9 @@ class PlayersManager {
     return areAllPlayersCheck;
   }
 
-  calculateBetDifferenceToHightest(clientId) {
+  static calculateBetDifferenceToHightest(clientId) {
     const maxGameBet = this.getBiggestBetFromPlayers;
     const playerBet = this.getPlayerBet(clientId);
     return maxGameBet - playerBet;
   }
-}
-
-module.exports = new PlayersManager();
+};

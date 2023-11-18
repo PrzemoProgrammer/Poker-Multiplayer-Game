@@ -1,7 +1,7 @@
 const PlayersManager = require("../../manager/PlayersManager");
 
-class PlayersMoneyManager {
-  updatePlayersMoney(playersBets, players) {
+module.exports = class PlayersMoneyManager {
+  static updatePlayersMoney(playersBets, players) {
     const updatedPlayersMoney = this.calculatePlayersMoney(
       playersBets,
       players
@@ -10,18 +10,18 @@ class PlayersMoneyManager {
     return updatedPlayersMoney;
   }
 
-  updatePlayersMoneyOnServer(updatedPlayersMoney) {
+  static updatePlayersMoneyOnServer(updatedPlayersMoney) {
     for (const playerId in updatedPlayersMoney) {
       const updatedPlayerMoney = updatedPlayersMoney[playerId].money;
       this.updatePlayerMoneyOnServer(playerId, updatedPlayerMoney);
     }
   }
 
-  updatePlayerMoneyOnServer(playerId, updatedPlayerMoney) {
+  static updatePlayerMoneyOnServer(playerId, updatedPlayerMoney) {
     PlayersManager.updatePlayerMoney(playerId, updatedPlayerMoney);
   }
 
-  calculatePlayersMoney(playersBets, players) {
+  static calculatePlayersMoney(playersBets, players) {
     const updatedPlayersMoney = {};
     for (const playerId in players) {
       updatedPlayersMoney[playerId] = {};
@@ -34,18 +34,16 @@ class PlayersMoneyManager {
     return updatedPlayersMoney;
   }
 
-  updatePlayerMoney(playerId, newBet) {
+  static updatePlayerMoney(playerId, newBet) {
     const player = PlayersManager.getPlayer(playerId);
     const updatedPlayerMoney = this.calculatePlayerMoney(player, newBet);
     this.updatePlayerMoneyOnServer(playerId, updatedPlayerMoney);
     return updatedPlayerMoney;
   }
 
-  calculatePlayerMoney(player, newBet) {
+  static calculatePlayerMoney(player, newBet) {
     const actualPlayerMoney = player.getMoney || player.clientData.money;
     const updatedPlayerMoney = actualPlayerMoney - newBet;
     return updatedPlayerMoney < 0 ? actualPlayerMoney : updatedPlayerMoney;
   }
-}
-
-module.exports = new PlayersMoneyManager();
+};

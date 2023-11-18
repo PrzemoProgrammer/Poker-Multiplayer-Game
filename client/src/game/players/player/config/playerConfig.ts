@@ -1,4 +1,10 @@
-export default {
+export const PLAYER_SIGN_TEXTURE_TYPES = ["check_sign", "call_sign", "raise_sign"]
+export const AUDIO_CONFIG = {
+  playerTurnStart: "player_turn_start",
+  playerTurnEnd: "player_turn_end",
+  playerLeave: "player_leave"
+}  
+export const PLAYER_CONFIG = {
     x: 0,
     y: 0,
     id: "123",

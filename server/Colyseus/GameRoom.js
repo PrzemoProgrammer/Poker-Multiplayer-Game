@@ -87,7 +87,6 @@ class GameRoom extends Room {
   }
 
   updateGameRound() {
-    console.log("actual is preflop round");
     if (GameManager.isPreflopRoundFinish) {
       this.initFlopRound();
     } else if (GameManager.isFlopRoundFinish) {
@@ -99,11 +98,10 @@ class GameRoom extends Room {
       return;
     }
 
-    //! ////////////////////// RESET GAME ////////////////////////////////
     // if (GameManager.isGameWinner()) {
     //   this.broadcast("initLobby", mergedGameData);
     // }
-    //! //////////////// CHANGE PLAYER TURN /////////////////////////////////
+
     this.updatePlayerTurn();
   }
 

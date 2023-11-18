@@ -1,3 +1,6 @@
+export const BETTING_AUDIO_CONFIG = {
+    buttonClick: "swipe_button"
+};
 export const FACTORY_CONFIG = {
     x: 1640,
     y: 300,
@@ -88,6 +91,3 @@ export const MODIFY_NUMBER_CONFIG = {
     increaseZeros: 1000
 };
 
-export const AUDIO = {
-    swipeButton: "swipe_button"
-};

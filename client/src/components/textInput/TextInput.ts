@@ -1,4 +1,4 @@
-import { calculateScaleFactor } from "../../screen/resizeScreen";
+import ScreenUtils from "../../utility/screen/ScreenUtils";
 import ITextInputConfig from "./interface/ITextInputConfig";
 import { Container} from "pixi.js";
 
@@ -51,7 +51,7 @@ export default class TextInput extends Container{
   }
 
   private resize() {
-    const scaleFactor = calculateScaleFactor();
+    const scaleFactor = ScreenUtils.calculateScaleFactor();
     const {width, height, fontSize} = this.config.style
     this.input.style.left = `${this.x * scaleFactor}px`;
     this.input.style.top = `${this.y * scaleFactor}px`;

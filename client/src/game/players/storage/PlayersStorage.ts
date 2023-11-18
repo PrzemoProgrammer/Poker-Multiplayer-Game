@@ -2,30 +2,26 @@ import IPlayersDataStorage from "./interface/IPlayersDataStorage";
 import Player from "../player/Player";
 
 class PlayersStorage {
-    players: IPlayersDataStorage
+    private static players: IPlayersDataStorage = {}
 
-    constructor() {
-        this.players = {};
-    }
-
-    public addPlayer(player: Player) {
+    public static addPlayer(player: Player) {
         const playerID = player.id
         this.players[playerID] = player
     }
 
-    public get getPlayers(): IPlayersDataStorage{
+    public static get getPlayers(): IPlayersDataStorage{
         return this.players
     }
 
-    public getPlayer(id: string): Player{
+    public static getPlayer(id: string): Player{
         return  this.players[id]
     }
 
-    public deletePlayer(playerId: string):void {
+    public static deletePlayer(playerId: string):void {
        delete this.players[playerId]
     }
 
   }
   
-  export default new PlayersStorage();
+  export default  PlayersStorage
   

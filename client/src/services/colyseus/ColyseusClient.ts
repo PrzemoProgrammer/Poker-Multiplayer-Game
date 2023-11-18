@@ -14,11 +14,9 @@ class ColyseusClient {
   private client: Colyseus.Client;
   private room: Colyseus.Room | null = null;
   myId: string
-
   constructor() {
     this.client = new Colyseus.Client(WEBSOCKET_URL);
     this.myId = ""
-
     this.bindSignals()
   }
 
@@ -74,7 +72,7 @@ class ColyseusClient {
 
       this.room?.onMessage("initPreflopRound", (data: IServerGameUpdateOnStart) => {
         console.log(data)
-        GameSignals.onStartGameData.dispatch(data)  
+        GameSignals.onAllPlayerJoined.dispatch(data)  
       });
 
       this.room?.onMessage('updateGameTurn', (data: IPlayerTurnData) => {

@@ -1,6 +1,6 @@
 import ImageStorage from "../storage/ImageStorage";
 
-class ImageManager {
+export default class ImageManager {
 
    public static addImage(key:string, source: string) {
     ImageStorage.addImage(key, source);
@@ -11,5 +11,3 @@ class ImageManager {
   }
 
 }
-
-export default ImageManager

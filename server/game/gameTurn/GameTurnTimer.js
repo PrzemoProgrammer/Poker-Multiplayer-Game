@@ -1,13 +1,11 @@
 const { PLAYER_TURN_DURATION } = require("../config/gameConfig");
 
-class GameTurnTimer {
-  constructor() {
-    this.turnDurationInSeconds = PLAYER_TURN_DURATION;
-    this.timeLimit = this.turnDurationInSeconds;
-    this.countdownInterval = null;
-  }
+module.exports = class GameTurnTimer {
+  static turnDurationInSeconds = PLAYER_TURN_DURATION;
+  static timeLimit = this.turnDurationInSeconds;
+  static countdownInterval = null;
 
-  startTimer(callback) {
+  static startTimer(callback) {
     this.countdownInterval = setInterval(() => {
       if (this.timeLimit > 0) {
         this.timeLimit--;
@@ -18,27 +16,26 @@ class GameTurnTimer {
     }, 1000);
   }
 
-  resetTimeLimit() {
+  static resetTimeLimit() {
     this.timeLimit = this.turnDurationInSeconds;
   }
 
-  stopTimer() {
+  static stopTimer() {
     clearInterval(this.countdownInterval);
     this.resetTimeLimit();
   }
 
-  get getServerTime() {
+  static get getServerTime() {
     return new Date().getTime();
   }
 
-  get getTurnRespondTime() {
+  static get getTurnRespondTime() {
     return this.turnDurationInSeconds;
   }
 
-  getTimeData() {
+  static getTimeData() {
     const serverTime = this.getServerTime;
     const turnRespondTime = this.getTurnRespondTime;
     return { serverTime, turnRespondTime };
   }
-}
-module.exports = new GameTurnTimer();
+};

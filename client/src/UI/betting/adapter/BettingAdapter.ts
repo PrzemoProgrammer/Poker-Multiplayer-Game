@@ -3,7 +3,7 @@ import BettingFactory from "../factory/BettingFactory";
 import DragObject from "../../../components/draggableObject/DraggableObject";
 import Button from "../../../components/button/Button";
 
-class BettingFactoryAdapter {
+export default class BettingAdapter {
     private betting: BettingFactory | null
 
     constructor() {
@@ -51,5 +51,3 @@ class BettingFactoryAdapter {
         return this.betting!.betText?.getTextInNumber
     }
 }
-
-export default BettingFactoryAdapter;

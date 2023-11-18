@@ -1,7 +1,7 @@
 import { Howl} from "howler";
 import AudioStorage from "../storage/AudioStorage";
 
-class AudioManager {
+export default class AudioManager {
     
   public static addAudio(key:string, source: string) {
     const sound = new Howl({
@@ -19,5 +19,3 @@ class AudioManager {
     audio?.play()
    }
 }
-
-export default AudioManager

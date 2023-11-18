@@ -5,13 +5,13 @@ const {
 } = require("../../card/config/cardConfig");
 const CroupierCardsStorage = require("../storage/CroupierCardsStorage");
 
-class CroupierCardsManager {
-  constructor() {
+module.exports = class CroupierCardsManager {
+  static initCards() {
     this.createCroupierCards();
     this.shuffleCroupierCards();
   }
 
-  createCroupierCards() {
+  static createCroupierCards() {
     for (let i = 0; i < CARD_COLOR.length; i++) {
       const color = CARD_COLOR[i];
       for (let j = 0; j < CARD_NUMBER.length; j++) {
@@ -28,19 +28,19 @@ class CroupierCardsManager {
     }
   }
 
-  shuffleCroupierCards() {
+  static shuffleCroupierCards() {
     CroupierCardsStorage.shuffleCards();
   }
 
-  get getCards() {
+  static get getCards() {
     return CroupierCardsStorage.getCards;
   }
 
-  removeFirstCardFromDeck() {
+  static removeFirstCardFromDeck() {
     return CroupierCardsStorage.subtractFirstCard;
   }
 
-  getCardsFromDeck(numberOfCards) {
+  static getCardsFromDeck(numberOfCards) {
     const cards = [];
     for (let i = 0; i < numberOfCards; i++) {
       const card = this.removeFirstCardFromDeck();
@@ -48,6 +48,4 @@ class CroupierCardsManager {
     }
     return cards;
   }
-}
-
-module.exports = new CroupierCardsManager();
+};

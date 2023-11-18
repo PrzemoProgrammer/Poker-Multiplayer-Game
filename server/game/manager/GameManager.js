@@ -18,8 +18,9 @@ const {
   DEFAULT_PLAYER_BET_COUNT,
 } = require("../config/gameConfig");
 
-class GameManager {
-  startGame() {
+module.exports = class GameManager {
+  static startGame() {
+    CroupierCardsManager.initCards();
     const players = PlayersManager.getPlayersAllData;
     const playersGamePositions =
       PlayersGamePositionManager.initGamePositions(players);
@@ -59,7 +60,7 @@ class GameManager {
     };
   }
 
-  addPlayerToGame(key, userDatabaseData) {
+  static addPlayerToGame(key, userDatabaseData) {
     const sitPosition = PlayersSitPositionManager.getEmptyPosition;
     const defaultUserData = { ...userDatabaseData };
     defaultUserData.id = key;
@@ -71,20 +72,20 @@ class GameManager {
     PlayersManager.addPlayer(key, defaultUserData);
   }
 
-  startGameTurnTimer(callback) {
+  static startGameTurnTimer(callback) {
     GameTurnTimer.stopTimer();
     GameTurnTimer.startTimer(() => {
       callback();
     });
   }
 
-  changePlayerTurn() {
+  static changePlayerTurn() {
     const playerIdGameTurn = PlayersTurnManager.calculateNextPlayerIdTurn();
     const { serverTime, turnRespondTime } = this.getGameTurnTimeData;
     return { playerIdGameTurn, serverTime, turnRespondTime };
   }
 
-  get areAllPlayersDoneBetting() {
+  static get areAllPlayersDoneBetting() {
     const players = PlayersManager.getPlayersObject;
     const maxGameBet = PlayersManager.getBiggestBetFromPlayers;
     const areAllPlayersCheck = PlayersManager.areAllPlayersCheck;
@@ -99,7 +100,7 @@ class GameManager {
     return areAllPlayersDoneBetting;
   }
 
-  initNextRound(cardsCount) {
+  static initNextRound(cardsCount) {
     const newCardsOnTable = CroupierCardsManager.getCardsFromDeck(cardsCount);
     TableCardsManager.addCards(newCardsOnTable);
     const betsInPool = TableBetsManager.getBets;
@@ -120,7 +121,7 @@ class GameManager {
     };
   }
 
-  playerTurnAction(clientId, clientData) {
+  static playerTurnAction(clientId, clientData) {
     const { action, data } = clientData;
     const [fold, check, call, raise, bet] = BUTTON_TYPES;
     const respondData = { playerId: "", type: "", bet: null, money: null };
@@ -130,53 +131,59 @@ class GameManager {
       respondData.playerId = clientId;
       respondData.type = check;
     } else if (action === call) {
-      const newBet = PlayersManager.calculateBetDifferenceToHightest(clientId);
-      PlayersMoneyManager.updatePlayerMoney(clientId, newBet);
-      const playerMoney = PlayersManager.getPlayerMoney(clientId);
-      PlayersBetManager.updateBetOnServer(clientId, newBet);
-      TableBetsManager.addBetToPot(newBet);
-      const newPlayerBet = PlayersManager.getPlayerBet(clientId);
+      const playerBetDifference =
+        PlayersManager.calculateBetDifferenceToHightest(clientId);
+      const { playerMoney, newBet } = this.handlePlayerBet(
+        clientId,
+        playerBetDifference
+      );
       respondData.playerId = clientId;
       respondData.type = call;
-      respondData.bet = newPlayerBet;
+      respondData.bet = newBet;
       respondData.money = playerMoney;
     } else if (action === bet) {
-      PlayersMoneyManager.updatePlayerMoney(clientId, data);
-      const playerMoney = PlayersManager.getPlayerMoney(clientId);
-      PlayersBetManager.updateBetOnServer(clientId, data);
-      TableBetsManager.addBetToPot(data);
-      const newBet = PlayersManager.getPlayerBet(clientId);
+      const { playerMoney, newBet } = this.handlePlayerBet(clientId, data);
       respondData.playerId = clientId;
       respondData.type = bet;
       respondData.bet = newBet;
       respondData.money = playerMoney;
-      //! update money in database
     }
 
     return respondData;
   }
 
-  isCurrentPlayerTurn(clientId) {
+  static handlePlayerBet(clientId, data) {
+    PlayersMoneyManager.updatePlayerMoney(clientId, data);
+    const playerMoney = PlayersManager.getPlayerMoney(clientId);
+    PlayersBetManager.updateBetOnServer(clientId, data);
+    TableBetsManager.addBetToPot(data);
+    const newBet = PlayersManager.getPlayerBet(clientId);
+    //! update money in database
+
+    return { playerMoney, newBet };
+  }
+
+  static isCurrentPlayerTurn(clientId) {
     return PlayersTurnManager.isCurrentPlayerTurn(clientId);
   }
 
-  get isPreflopRoundFinish() {
+  static get isPreflopRoundFinish() {
     return this.areAllPlayersDoneBetting && RoundNameManager.isPreflopRound;
   }
 
-  get isFlopRoundFinish() {
+  static get isFlopRoundFinish() {
     return this.areAllPlayersDoneBetting && RoundNameManager.isFlopRound;
   }
 
-  get isTurnRoundFinish() {
+  static get isTurnRoundFinish() {
     return this.areAllPlayersDoneBetting && RoundNameManager.isTurnRound;
   }
 
-  get isRiverRoundFinish() {
+  static get isRiverRoundFinish() {
     return this.areAllPlayersDoneBetting && RoundNameManager.isRiverRound;
   }
 
-  getGameResult() {
+  static getGameResult() {
     const playersCards = PlayersManager.getPlayersCards;
     const tableCards = TableCardsManager.getTableCards;
     const winnerPlayerId = "";
@@ -189,31 +196,29 @@ class GameManager {
     //! reset game
   }
 
-  isGameWinner() {
+  static isGameWinner() {
     //get game winner
   }
 
-  get getGameTurnTimeData() {
+  static get getGameTurnTimeData() {
     return GameTurnTimer.getTimeData();
   }
 
-  getPlayerFromGame(key) {
+  static getPlayerFromGame(key) {
     return PlayersManager.getPlayerClientData(key);
   }
 
-  get getPlayersFromGame() {
+  static get getPlayersFromGame() {
     return PlayersManager.getPlayersClientData;
   }
 
-  deletePlayerFromGame(clientID) {
+  static deletePlayerFromGame(clientID) {
     const player = PlayersManager.getPlayerClientData(clientID);
     PlayersSitPositionManager.releasePosition(player.sit);
     PlayersManager.deletePlayer(clientID);
   }
 
-  get areMaxPlayers() {
+  static get areMaxPlayers() {
     return PlayersManager.getPlayerCount == MAX_PLAYERS;
   }
-}
-
-module.exports = new GameManager();
+};

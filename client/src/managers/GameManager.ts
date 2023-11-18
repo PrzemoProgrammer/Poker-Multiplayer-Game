@@ -14,7 +14,7 @@ import IServerPlayerData from "../interfaces/IServerPlayerData";
 import { TURN_OVER_PLAYER_CARD_DELAY } from "../game/card/config/cardAnimsConfig";
 import PlayerSitPositionManager from "../game/manager/PlayerSitPositionManager";
 import Player from "../game/players/player/Player";
-import PLAYER_CONFIG from "../game/players/player/config/playerConfig";
+import {PLAYER_CONFIG, PLAYER_SIGN_TEXTURE_TYPES, AUDIO_CONFIG} from "../game/players/player/config/playerConfig";
 import INextRoundData from "../interfaces/INextRoundData";
 import IUpdatePlayerTurnAction from "../interfaces/IUpdatePlayerTurnAction";
 import TableManager from "../game/table/manager/TableManager";
@@ -23,8 +23,8 @@ import {BUTTON_TYPES} from "../UI/pokerBar/config/pokerBarConfig";
 import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IGameResultData from "../interfaces/IGameResultData";
 
-class GameManager {
-     public static async  updateGameOnStart(initGameData: IServerGameUpdateOnStart){
+export default class GameManager {
+     public static async  onAllPlayerJoined(initGameData: IServerGameUpdateOnStart){
         const players = PlayersManager.getPlayers();
         const {drawCards, playersBets, playersMoney, playersGamePositions } = initGameData.players
 
@@ -64,14 +64,13 @@ class GameManager {
 
       public static updateInterfaceMoneyText(updatedText: number){
         PokerBarManager.updateMoneyText(updatedText)
-        this.setupUiInterfaceButtons()
       } 
 
       private static setupUiInterfaceButtons(){
         const [fold, check, call, raise, bet] = BUTTON_TYPES
         const requestData = {action: "", data: 0}
         PokerBarManager.setupButtonOnClick(fold, ()=>{
-          console.log(1)
+          console.log("fold button clicked")
         })
         PokerBarManager.setupButtonOnClick(check, ()=>{
           requestData.action = check
@@ -82,7 +81,7 @@ class GameManager {
           GameSignals.playerTurnAction.dispatch(requestData)
         })    
         PokerBarManager.setupButtonOnClick(raise, ()=>{
-          console.log(4)
+          console.log("raise button clicked")
         })    
         PokerBarManager.setupButtonOnClick(bet, ()=>{
           const selectedBetValue = BettingManager.getBetValueNumber
@@ -94,7 +93,8 @@ class GameManager {
 
       public static updatePlayerTurn(gamePlayerTurnData: IPlayerTurnData){
         const {playerIdGameTurn, serverTime, turnRespondTime} = gamePlayerTurnData
-        AudioManager.playAudio("player_turn_start")
+        const startPlayerTurnAudio = AUDIO_CONFIG.playerTurnStart
+        AudioManager.playAudio(startPlayerTurnAudio)
         PlayersManager.turnOffPlayersTimer()
         PlayersManager.setPlayerActionSignVisible(playerIdGameTurn, false)
         const player = PlayersManager.getPlayer(playerIdGameTurn)
@@ -104,6 +104,7 @@ class GameManager {
       public static createUiInterface(scene: BaseScene){
         BettingManager.initBetting(scene)
         PokerBarManager.initPokerBar(scene);
+        this.setupUiInterfaceButtons()
       }
 
       public static createPlayer(playerData: IServerPlayerData){
@@ -144,30 +145,36 @@ class GameManager {
       }
 
       public static updatePlayerTurnAction(playerTurnAction: IUpdatePlayerTurnAction){
+        const [checkTexture, callTexture, raiseTexture] = PLAYER_SIGN_TEXTURE_TYPES
         const [foldType, checkType, callType, raiseType, betType] = BUTTON_TYPES
         const {playerId, type, bet, money} = playerTurnAction
         const player = PlayersManager.getPlayer(playerId)
-        AudioManager.playAudio("player_turn_end")
+        const playerTurnEndAudio = AUDIO_CONFIG.playerTurnEnd
+        AudioManager.playAudio(playerTurnEndAudio)
         if(type === checkType) {
-          const signTexture = "check_sign"
+          const signTexture = checkTexture
           player.setActionSignVisibleAndTexture(signTexture, true)
         }
         else if(type === betType) {  
-          const players = PlayersManager.getPlayers();
-         PlayersManager.updatePlayerBet(playerId, players, bet)
-          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(bet)
-          PlayersManager.updatePlayerMoneyText(playerId, players, money)
-          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateMoneyText(money)
+          this.updatePlayerMoneyAndBetText(playerId, bet, money)
         }
         else if(type === callType) {  
-          const players = PlayersManager.getPlayers();
-          const signTexture = "call_sign"
+          const signTexture = callTexture
           player.setActionSignVisibleAndTexture(signTexture,true)
-         PlayersManager.updatePlayerBet(playerId, players, bet)
-          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(bet)
-          PlayersManager.updatePlayerMoneyText(playerId, players, money)
-          if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateMoneyText(money)
+          this.updatePlayerMoneyAndBetText(playerId, bet, money)
         }
+      }
+
+      public static updatePlayerMoneyAndBetText(playerId: string, bet: number, money: number){
+        const players = PlayersManager.getPlayers();
+        PlayersManager.updatePlayerBet(playerId, players, bet)
+        PlayersManager.updatePlayerMoneyText(playerId, players, money)
+        if(ColyseusClient.isMyId(playerId)) this.updateUiMoneyAndBetText(bet, money)
+      }
+
+      public static updateUiMoneyAndBetText(bet: number, money: number){
+        PokerBarManager.updateBetText(bet)
+        PokerBarManager.updateMoneyText(money)
       }
 
       public static setupGamePositionsConfig(playersData: IPlayersConfig){
@@ -183,6 +190,3 @@ class GameManager {
          PlayersManager.turnOverPlayersCardsAnim(playersCards, false);
       }
   }
-
-  export default GameManager
-  

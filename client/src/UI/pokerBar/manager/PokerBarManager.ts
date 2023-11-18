@@ -1,8 +1,8 @@
-import PokerBarAdapter from "../adater/PokerBarAdapter";
+import PokerBarAdapter from "../adapter/PokerBarAdapter";
 import BaseScene from "../../../abstraction/BaseScene";
 import {BUTTON_TYPES} from "../../../UI/pokerBar/config/pokerBarConfig";
 
-class PokerBarManager {
+export default class PokerBarManager {
     private static pokerBarAdapter: PokerBarAdapter = new PokerBarAdapter();
     
     public static initPokerBar(scene: BaseScene){
@@ -27,6 +27,3 @@ class PokerBarManager {
         if(type === bet) this.pokerBarAdapter.getBetButton?.onClick(callback)
     }
   }
-  
-  export default  PokerBarManager
-  
