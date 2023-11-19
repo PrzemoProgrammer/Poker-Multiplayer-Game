@@ -1,10 +1,5 @@
 Project structure:
 
-
-
-
-
-
 ```md
 src
 ├─ abstraction
