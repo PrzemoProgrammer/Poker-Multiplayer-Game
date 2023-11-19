@@ -1,7 +1,7 @@
 import * as Colyseus from 'colyseus.js';
 import IServerPlayerData from "../../interfaces/IServerPlayerData";
 import IPlayersConfig from "../../game/players/interface/IPlayersConfig";
-import IServerGameUpdateOnStart from "../../interfaces/IServerGameUpdateOnStart";
+import IAllPlayerJoinedServerData from "../../interfaces/IAllPlayerJoinedServerData";
 import IPlayerTurnData from "../../interfaces/IPlayerTurnData";
 import INextRoundData from "../../interfaces/INextRoundData";
 import IPlayerTurnAction from "../../interfaces/IPlayerTurnAction";
@@ -46,7 +46,7 @@ class ColyseusClient {
     GameSignals.playerTurnAction.add((actionData: IPlayerTurnAction) => this.playerTurnAction(actionData));
   }
 
-  playerTurnAction(data: IPlayerTurnAction){
+  public playerTurnAction(data: IPlayerTurnAction){
     this.sendMessage("playerTurnAction", data);
   }
 
@@ -70,7 +70,7 @@ class ColyseusClient {
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
-      this.room?.onMessage("initPreflopRound", (data: IServerGameUpdateOnStart) => {
+      this.room?.onMessage("initPreflopRound", (data: IAllPlayerJoinedServerData) => {
         console.log(data)
         GameSignals.onAllPlayerJoined.dispatch(data)  
       });

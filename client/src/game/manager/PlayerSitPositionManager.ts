@@ -1,5 +1,5 @@
 import { PLAYER_POSITIONS_CONFIG } from "../config/gameConfig";
-import IPlayerPositionsConfig from "../../interfaces/IPlayerPositionsConfig";
+import IPlayerPositionsConfig from "../interface/IPlayerPositionsConfig";
 
 export default  class PlayerSitPositionManager {
   private static positionsConfig: IPlayerPositionsConfig[] = this.convertConfigToArray();

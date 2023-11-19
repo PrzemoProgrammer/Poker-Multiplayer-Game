@@ -9,7 +9,7 @@ import GameSignals from "../gameSignals/GameSignals";
 import IServerPlayerData from "../interfaces/IServerPlayerData";;;
 import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IPlayerTurnData from "../interfaces/IPlayerTurnData";
-import IServerGameUpdateOnStart from "../interfaces/IServerGameUpdateOnStart";
+import IAllPlayerJoinedServerData from "../interfaces/IAllPlayerJoinedServerData";
 import INextRoundData from "../interfaces/INextRoundData";
 import GameManager from "../managers/GameManager";
 import PlayersManager from "../game/players/manager/PlayersManager";
@@ -33,7 +33,7 @@ class PlayScene extends BaseScene {
     bindSignals(): void {
         GameSignals.onPlayerJoined.add((playerData: IServerPlayerData) => this.addPlayerToGame(playerData));
         GameSignals.onGetPlayers.add((playerData: IPlayersConfig) => this.addPlayersToGame(playerData));
-        GameSignals.onAllPlayerJoined.add((initGameData: IServerGameUpdateOnStart) =>
+        GameSignals.onAllPlayerJoined.add((initGameData: IAllPlayerJoinedServerData) =>
             this.onAllPlayerJoined(initGameData),
         );
         GameSignals.onChangePlayerTurn.add((newPlayerTurn: IPlayerTurnData )=> this.changePlayerTurn(newPlayerTurn))
@@ -57,7 +57,7 @@ class PlayScene extends BaseScene {
         }
     }
 
-    onAllPlayerJoined(initGameData: IServerGameUpdateOnStart) {
+    onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData) {
       console.log(initGameData)
       GameManager.onAllPlayerJoined(initGameData);
     }

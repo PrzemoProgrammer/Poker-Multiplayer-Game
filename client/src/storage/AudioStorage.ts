@@ -1,19 +1,13 @@
 import { Howl} from "howler";
 
-class AudioStorage {
-    audio: Map<string, Howl>;
+export default class AudioStorage {
+    private static audio: Map<string, Howl> = new Map();
   
-    constructor() {
-      this.audio = new Map();
-    }
-
-    public addAudio(key:string, source: Howl) {
+    public static addAudio(key:string, source: Howl) {
       this.audio.set(key, source);
     }
   
-    public getAudio(key: string): Howl | undefined {
+    public static getAudio(key: string): Howl | undefined {
       return this.audio.get(key);
     }
   }
-  
-  export default new AudioStorage();

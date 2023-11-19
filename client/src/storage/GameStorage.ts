@@ -1,41 +1,29 @@
 import { GAME_HEIGHT, GAME_WIDTH } from "../config/config";
-import { Application, Container } from "pixi.js";
+import { Application } from "pixi.js";
 import BaseScene from "../abstraction/BaseScene";
 
 
-class GameStorage {
-    game: Application
+export default class GameStorage {
+   private static game: Application = new Application({
+    backgroundColor: 0xd3d3d3,
+    width: GAME_WIDTH,
+    height: GAME_HEIGHT,
+});
 
-    constructor() {
-        this.game = this.createGame()
-    }
-
-    private createGame(): Application{
-       return new Application({
-            backgroundColor: 0xd3d3d3,
-            width: GAME_WIDTH,
-            height: GAME_HEIGHT,
-        });
-    }
-
-    public getGame(): Application{
+    public static getGame(): Application{
         return this.game
     }
 
-    public removeChild(gameInstance: BaseScene | undefined): void{
+    public static removeChild(gameInstance: BaseScene | undefined): void{
         if(gameInstance)
         this.game.stage.removeChild(gameInstance); 
     }
 
-    public addChild(gameInstance: BaseScene): void{
+    public static addChild(gameInstance: BaseScene): void{
         this.game.stage.addChild(gameInstance);  
     }
 
-    public getChildren(){
+    public static getChildren(){
         return this.game.stage.children
     }
   }
-  
-
-  export default new GameStorage();
-  

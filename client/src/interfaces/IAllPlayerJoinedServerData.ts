@@ -2,7 +2,7 @@ import IPlayersCards from "./IPlayersCards";
 import IPlayersBets from "./IPlayersBets";
 import IPlayersMoney from "./IPlayersMoney";
 import IPlayerTurnData from "./IPlayerTurnData";
-import IPlayerGamePositions from "./IPlayerGamePositions";
+import IPlayerGamePositions from "../game/interface/IPlayerGamePositions";
 
 export default interface IServerGameUpdateOnStart {
     players: {

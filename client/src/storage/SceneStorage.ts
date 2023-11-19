@@ -1,29 +1,23 @@
 import BaseScene from "../abstraction/BaseScene";
 
-  class SceneStorage {
-    scenes: Map<string, BaseScene>;
+export default class SceneStorage {
+    private static  scenes: Map<string, BaseScene> = new Map();
   
-    constructor() {
-      this.scenes = new Map();
-    }
-  
-    public addScene(scene: BaseScene): void {
+    public static addScene(scene: BaseScene): void {
       const key = scene.sceneKey;
       this.scenes.set(key, scene);
     }
   
-    public getScene(key: string): BaseScene | undefined {
+    public static getScene(key: string): BaseScene | undefined {
       return this.scenes.get(key);
     }
   
-    public get getFirstSceneKey(): string | undefined {
+    public static get getFirstSceneKey(): string | undefined {
       const keys = Array.from(this.scenes.keys());
       return keys.length > 0 ? keys[0] : undefined;
     }
   
-    public deleteScene(key: string): void {
+    public static deleteScene(key: string): void {
       this.scenes.delete(key);
     }
   }
-  
-  export default new SceneStorage();

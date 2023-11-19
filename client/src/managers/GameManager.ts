@@ -5,10 +5,10 @@ import PokerBarManager from "../UI/pokerBar/manager/PokerBarManager";
 import BettingManager from "../UI/betting/manager/BettingManager";
 import IPlayersDataStorage from "../game/players/storage/interface/IPlayersDataStorage";
 import IPlayersBets from "../interfaces/IPlayersBets";
-import IPlayerGamePositions from "../interfaces/IPlayerGamePositions";
+import IPlayerGamePositions from "../game/interface/IPlayerGamePositions";
 import IPlayersMoney from "../interfaces/IPlayersMoney";
 import PlayersManager from "../game/players/manager/PlayersManager";
-import IServerGameUpdateOnStart from "../interfaces/IServerGameUpdateOnStart";
+import IAllPlayerJoinedServerData from "../interfaces/IAllPlayerJoinedServerData";
 import IPlayerTurnData from "../interfaces/IPlayerTurnData";
 import IServerPlayerData from "../interfaces/IServerPlayerData";
 import { TURN_OVER_PLAYER_CARD_DELAY } from "../game/card/config/cardAnimsConfig";
@@ -24,7 +24,7 @@ import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IGameResultData from "../interfaces/IGameResultData";
 
 export default class GameManager {
-     public static async  onAllPlayerJoined(initGameData: IServerGameUpdateOnStart){
+     public static async  onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData){
         const players = PlayersManager.getPlayers();
         const {drawCards, playersBets, playersMoney, playersGamePositions } = initGameData.players
 
