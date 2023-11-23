@@ -6,5 +6,9 @@
     "loginButton": {
       "path": "loginScreen/buttons",
       "key": "login_button"
+    },
+    "loginButtonPush": {
+      "path": "loginScreen/buttons",
+      "key": "login_button_push"
     }
 }

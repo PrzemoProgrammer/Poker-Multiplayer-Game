@@ -1,1 +1,2 @@
-export const SERVER_PORT = 2567;
+export const SERVER_PORT = 8081;
+export const SOCKET_PORT = 2567;

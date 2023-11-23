@@ -1,7 +1,7 @@
 export const BETTING_AUDIO_CONFIG = {
     buttonClick: "swipe_button"
 };
-export const FACTORY_CONFIG = {
+export const VIEW_CONFIG = {
     x: 1640,
     y: 300,
     background: {

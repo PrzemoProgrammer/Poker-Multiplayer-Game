@@ -1,4 +1,3 @@
-import * as PIXI from "pixi.js";
 import sceneManager from "../managers/SceneManager";
 import AudioManager from "../managers/AudioManager";
 import ImageManager from "../managers/ImageManager";

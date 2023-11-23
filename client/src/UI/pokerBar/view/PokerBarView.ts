@@ -5,7 +5,7 @@ import Button from "../../../components/button/Button";
 import {POKER_BAR_CONFIG} from "../config/pokerBarConfig";
 import IPokerBarConfig from "../interface/IPokerBarConfig";
 
-export default class PokerBarFactory extends Container {
+export default class PokerBarView extends Container {
   bottomBar: Sprite | null;
   moneyText: CreateText | null;
   betsText: CreateText | null;

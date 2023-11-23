@@ -10,6 +10,7 @@ const TableCardsManager = require("../table/cards/manager/TableCardsManager");
 const GameTurnTimer = require("../gameTurn/GameTurnTimer");
 const TableBetsManager = require("../table/bets/manager/TableBetsManager");
 const RoundNameManager = require("../round/manager/RoundNameManager");
+const PokerHandChecker = require("../pokerHand/PokerHandChecker");
 const { BUTTON_TYPES } = require("../config/gameConfig");
 
 const {
@@ -186,14 +187,20 @@ module.exports = class GameManager {
   static getGameResult() {
     const playersCards = PlayersManager.getPlayersCards;
     const tableCards = TableCardsManager.getTableCards;
-    const winnerPlayerId = "";
-    const betsInPool = null;
-    const winnerPlayerMoney = null;
-    // console.log(playersCards);
-    // console.log(tableCards);
-
+    const winnerPlayerId = PokerHandChecker.getPlayerWithBestCombination(
+      playersCards,
+      tableCards
+    );
+    const betsInPool = TableBetsManager.getBets;
+    const { playerMoney } = this.handlePlayerBet(winnerPlayerId, -betsInPool);
+    const winnerPlayerMoney = playerMoney;
+    //! update money in database
+    console.log(winnerPlayerId);
+    console.log("winner");
     return { playersCards, winnerPlayerId, betsInPool, winnerPlayerMoney };
     //! reset game
+    // PlayersBetManager.resetPlayersBets();
+    // PlayersManager.resetPlayersSigns();
   }
 
   static isGameWinner() {

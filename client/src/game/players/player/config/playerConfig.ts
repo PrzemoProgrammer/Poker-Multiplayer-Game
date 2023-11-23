@@ -1,4 +1,4 @@
-export const PLAYER_SIGN_TEXTURE_TYPES = ["check_sign", "call_sign", "raise_sign"]
+export const PLAYER_SIGN_TEXTURE_TYPES = ["check_sign", "call_sign", "raise_sign", "winner_sign"]
 export const AUDIO_CONFIG = {
   playerTurnStart: "player_turn_start",
   playerTurnEnd: "player_turn_end",
@@ -7,7 +7,7 @@ export const AUDIO_CONFIG = {
 export const PLAYER_CONFIG = {
     x: 0,
     y: 0,
-    id: "123",
+    id: "1",
     sit: 1,
     position: "player",
     avatar: {

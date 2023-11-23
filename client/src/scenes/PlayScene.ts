@@ -12,7 +12,6 @@ import IPlayerTurnData from "../interfaces/IPlayerTurnData";
 import IAllPlayerJoinedServerData from "../interfaces/IAllPlayerJoinedServerData";
 import INextRoundData from "../interfaces/INextRoundData";
 import GameManager from "../managers/GameManager";
-import PlayersManager from "../game/players/manager/PlayersManager";
 import TableManager from "../game/table/manager/TableManager";
 import IUpdatePlayerTurnAction from "../interfaces/IUpdatePlayerTurnAction";
 import IGameResultData from "../interfaces/IGameResultData";
@@ -58,7 +57,6 @@ class PlayScene extends BaseScene {
     }
 
     onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData) {
-      console.log(initGameData)
       GameManager.onAllPlayerJoined(initGameData);
     }
 
@@ -67,8 +65,8 @@ class PlayScene extends BaseScene {
     }
 
     createPlayerAndAddToGame(playerData: IServerPlayerData) {
-        const player = this.createPlayer(playerData)
-        PlayersManager.addPlayer(player);
+      const player = GameManager.createPlayer(playerData)
+      if (player !== null) this.addChild(player.getPlayerComponents);
     }
 
     async initNextRound(nextRoundData: INextRoundData){
@@ -85,12 +83,6 @@ class PlayScene extends BaseScene {
 
     initGameResult(gameResultData: IGameResultData){
       GameManager.initGameResult(gameResultData)
-    }
-
-    createPlayer(playerData: IServerPlayerData){
-      const player = GameManager.createPlayer(playerData)
-      if (player !== null) this.addChild(player.getPlayerComponents);
-      return player;
     }
 
     startSetupGameScene() {

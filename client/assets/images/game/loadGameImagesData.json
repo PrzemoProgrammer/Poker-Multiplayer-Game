@@ -31,6 +31,10 @@
         "path": "game/signs",
         "key": "call_sign"
       },
+      "playerWinnerSign": {
+        "path": "game/signs",
+        "key": "winner_sign"
+      },
     "gameTable": {
       "path": "game/tables",
       "key": "table"

@@ -1,15 +1,15 @@
 import { Sprite } from "pixi.js";
 import IPlayerConfig from "./interface/IPlayerConfig";
 import Card from "../../../interfaces/ICardData";
-import PlayerFactory from "./factory/PlayerFactory"
+import PlayerView from "./view/PlayerView"
 
 export default class Player {
   config: IPlayerConfig
   id: string
   gamePosition: string
-  protected playerComponents: PlayerFactory
+  protected playerComponents: PlayerView
   constructor(config: IPlayerConfig) {
-    this.playerComponents = new PlayerFactory(config)
+    this.playerComponents = new PlayerView(config)
     this.config = config
     this.id = this.config.id
     this.gamePosition = this.config.position
@@ -80,9 +80,14 @@ export default class Player {
     this.playerComponents.actionSign?.changeTexture(newTexture)
   }
 
-  public setActionSignVisibleAndTexture(texture: string,visible: boolean){
+  public setActionSignAndTextureVisible(texture: string,visible: boolean){
     this.setPlayerSignTexture(texture)
     this.setPlayerActionSignVisible(visible)
+  }
+
+  public get getPosition() {
+    const { x, y } = this.playerComponents;
+    return { x, y };
   }
   
 }

@@ -1,24 +1,23 @@
-// bettingFactory.ts
-import BettingFactory from "../factory/BettingFactory";
+import BettingView from "../view/BettingView";
 import DragObject from "../../../components/draggableObject/DraggableObject";
 import Button from "../../../components/button/Button";
 
 export default class BettingAdapter {
-    private betting: BettingFactory | null
+    private betting: BettingView | null
 
     constructor() {
         this.betting = null
     }
 
-    public createBetting(): BettingFactory{
-        return this.betting = new BettingFactory();
+    public createBetting(): BettingView{
+        return this.betting = new BettingView();
     }
 
     public get getBettingY(): number{
         return this.betting!.y
     }
 
-    public get getBettingFactory(): BettingFactory{
+    public get getBettingView(): BettingView{
         return this.betting!
     }
 

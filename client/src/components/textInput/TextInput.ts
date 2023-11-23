@@ -17,7 +17,7 @@ export default class TextInput extends Container{
     this.handleInputChange = () => {}
     this.handleInputFocus = () => {}
     this.handleInputBlur = () => {}
-    this.input = this.createInput()
+    this.input = this.createInput
     this.init()
   }
 
@@ -28,12 +28,12 @@ export default class TextInput extends Container{
     document.body.appendChild(this.input);
   }
 
-  private createInput(): HTMLInputElement{
+  private get createInput(): HTMLInputElement{
     return document.createElement("input");
   }
 
   private setupInput() {
-    const {type, id, classList, style:{position,background, border }} = this.config
+    const {type, id, classList, style:{position, background, border }} = this.config
     this.input.type = type;
     this.input.id = id;
     this.input.style.position = position;
@@ -52,9 +52,13 @@ export default class TextInput extends Container{
 
   private resize() {
     const scaleFactor = ScreenUtils.calculateScaleFactor();
+    const {offsetX, offsetY }= ScreenUtils.calculateOffsetXY();
     const {width, height, fontSize} = this.config.style
-    this.input.style.left = `${this.x * scaleFactor}px`;
-    this.input.style.top = `${this.y * scaleFactor}px`;
+    const scaleX = (this.x - width/2) *scaleFactor + offsetX
+    const scaleY = (this.y - height/2) *scaleFactor + offsetY
+
+    this.input.style.left = `${scaleX}px`;
+    this.input.style.top = `${scaleY}px`;
     this.input.style.width = `${width * scaleFactor}px`;
     this.input.style.height = `${height * scaleFactor}px`;
     this.input.style.fontSize = `${fontSize * scaleFactor}px`;
@@ -65,7 +69,6 @@ export default class TextInput extends Container{
       const text = this.input.value;
       callback({ text });
     };
-
     this.input.addEventListener("input", this.handleInputChange);
   }
 
@@ -73,7 +76,6 @@ export default class TextInput extends Container{
     this.handleInputFocus = () => {
       callback();
     };
-
     this.input.addEventListener("focus", this.handleInputFocus);
   }
 
@@ -81,7 +83,6 @@ export default class TextInput extends Container{
     this.handleInputBlur = () => {
       callback();
     };
-
     this.input.addEventListener("blur", this.handleInputBlur);
   }
 

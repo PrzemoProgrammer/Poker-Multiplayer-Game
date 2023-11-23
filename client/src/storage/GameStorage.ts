@@ -2,10 +2,9 @@ import { GAME_HEIGHT, GAME_WIDTH } from "../config/config";
 import { Application } from "pixi.js";
 import BaseScene from "../abstraction/BaseScene";
 
-
 export default class GameStorage {
    private static game: Application = new Application({
-    backgroundColor: 0xd3d3d3,
+    // backgroundColor: 0xd3d3d3,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
 });

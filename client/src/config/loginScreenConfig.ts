@@ -15,7 +15,7 @@ export default {
   },
   usernameTextInputConfig:{
       x: GAME_WIDTH/2,
-      y: GAME_HEIGHT/2,
+      y: GAME_HEIGHT/2 - 150,
       id: "login-input",
       type: "text",
       classList: "no-focus-border",
@@ -28,11 +28,10 @@ export default {
          fontSize: 30,
       }
   },
-
   passwordTextInputConfig:{
-   x: GAME_WIDTH/2,
-   y: GAME_HEIGHT/2 + 100,
-   type: "text",
+   x:  GAME_WIDTH/2,
+   y: GAME_HEIGHT/2 - 50,
+   type: "password",
    classList: "no-focus-border",
    id: "login-input",
    style: {
@@ -44,36 +43,69 @@ export default {
       fontSize: 30,
    }
   },
-  nicknameTextInputConfig: {
-   x: GAME_WIDTH/2,
-   y: GAME_HEIGHT/2 + 200,
-   type: "text",
-   classList: "no-focus-border",
-   id: "login-input",
-   style: {
-      position: "absolute",
-      background: "",
-      border: "none",
-      width: 300,
-      height: 50,
-      fontSize: 30,
-   }
-},
   loginButtonConfig: {
-      spritePush: "betting_hide_button",
+      spritePush: "login_button_push",
       scaleValue: 1,
       spriteConfig: {
-          key: "betting_show_button",
+          key: "login_button",
           type: "sprite",
-          x: GAME_WIDTH/2,
+          x: GAME_WIDTH/2 - 150,
           y: GAME_HEIGHT/2 + 200,
           scaleX: 1,
           scaleY: 1,
           angle: 0,
-          anchorX: 0,
-          anchorY: 1,
+          anchorX: 0.5,
+          anchorY: 0.5,
           visible: true,
       },
   },
+  registerButtonConfig: {
+   spritePush: "register_button_push",
+   scaleValue: 1,
+   spriteConfig: {
+       key: "register_button",
+       type: "sprite",
+       x: GAME_WIDTH/2 + 150,
+       y: GAME_HEIGHT/2 + 200,
+       scaleX: 1,
+       scaleY: 1,
+       angle: 0,
+       anchorX: 0.5,
+       anchorY: 0.5,
+       visible: true,
+   },
+},
+usernameText: {
+   message: "Login",
+   x: GAME_WIDTH/2 - 200,
+   y: GAME_HEIGHT/2 - 150,
+   scaleX: 1,
+   scaleY: 1,
+   angle: 0,
+   anchorX: 1,
+   anchorY: 0.5,
+   visible: true,
+   textConfig: {
+       fontFamily: "Arial",
+       fontSize: 40,
+       fill: 0xffffff,
+   },
+},
+passwordText: {
+   message: "Password",
+   x:  GAME_WIDTH/2 - 200,
+   y: GAME_HEIGHT/2 - 50,
+   scaleX: 1,
+   scaleY: 1,
+   angle: 0,
+   anchorX: 1,
+   anchorY: 0.5,
+   visible: true,
+   textConfig: {
+       fontFamily: "Arial",
+       fontSize: 40,
+       fill: 0xffffff,
+   },
+}
 
 }

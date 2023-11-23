@@ -4,15 +4,15 @@ import TableCards from "../cards/TableCards";
 import ITableConfig from "../interface/ITableConfig";
 import tableConfig from "../config/tableConfig";
 
-export default class TableFactory extends Container {
+export default class TableView extends Container {
     config: ITableConfig
     totalBets: Bet 
     cards:TableCards 
     constructor() {
         super()
         this.config = tableConfig
-        this.totalBets = this.createTotalBets();
         this.cards = this.createCards();
+        this.totalBets = this.createTotalBets();
     }
 
     public createTotalBets(): Bet {

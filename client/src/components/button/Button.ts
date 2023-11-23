@@ -21,7 +21,7 @@ export default class Button extends CreateSprite {
     this.originalScale = this.scale.clone();
 }
 
-  onClick(cb: Function) {
+  public onClick(cb: Function) {
     this.on("pointerdown", () => {
         if(this.spritePush)
         this.texture = PIXI.Texture.from(this.spritePush)
@@ -35,15 +35,19 @@ export default class Button extends CreateSprite {
     });
   }
 
-  resetButton() {
+  public set setInteractive(value: boolean) {
+    this.interactive = value;
+  }
+
+  public resetButton() {
     this.scale.copyFrom(this.originalScale);
   }
 
-  hide() {
+  public hide() {
     this.visible = false;
   }
 
-  show() {
+  public show() {
     this.visible = true;
   }
 }

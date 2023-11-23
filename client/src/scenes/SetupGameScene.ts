@@ -6,7 +6,6 @@ class SetupGameScene extends BaseScene {
   authToken: string | undefined
     constructor() {
       super("SetupGameScene");
-
     }
 
     async init(){

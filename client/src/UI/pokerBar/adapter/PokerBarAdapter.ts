@@ -1,14 +1,14 @@
-import PokerBarFactory from "../factory/PokerBarFactory";
+import PokerBarView from "../view/PokerBarView";
 import Button from "../../../components/button/Button";
 
 export default class PokerBarAdapter {
-    pokerBar: PokerBarFactory | null
+    pokerBar: PokerBarView | null
     constructor() {
         this.pokerBar = null
     }
 
-    public createPokerBar():PokerBarFactory {
-     return this.pokerBar = new PokerBarFactory();
+    public createPokerBar():PokerBarView {
+     return this.pokerBar = new PokerBarView();
     }
 
     public set updateMoneyText(text: number){

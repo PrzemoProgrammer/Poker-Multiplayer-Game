@@ -58,7 +58,8 @@ src
 │  ├─ assetsConfig.ts
 │  ├─ config.ts
 │  ├─ loadingScreenConfig.ts
-│  └─ loginScreenConfig.ts
+│  ├─ loginScreenConfig.ts
+│  └─ registerScreenConfig.ts
 ├─ game
 │  ├─ bet
 │  │  ├─ Bet.ts
@@ -85,15 +86,15 @@ src
 │  │  │  │  └─ PlayerCards.ts
 │  │  │  ├─ config
 │  │  │  │  └─ playerConfig.ts
-│  │  │  ├─ factory
-│  │  │  │  └─ PlayerFactory.ts
 │  │  │  ├─ interface
 │  │  │  │  └─ IPlayerConfig.ts
 │  │  │  ├─ Player.ts
-│  │  │  └─ timer
-│  │  │     ├─ interface
-│  │  │     │  └─ ITimerConfig.ts
-│  │  │     └─ Timer.ts
+│  │  │  ├─ timer
+│  │  │  │  ├─ interface
+│  │  │  │  │  └─ ITimerConfig.ts
+│  │  │  │  └─ Timer.ts
+│  │  │  └─ view
+│  │  │     └─ PlayerView.ts
 │  │  └─ storage
 │  │     ├─ interface
 │  │     │  └─ IPlayersDataStorage.ts
@@ -101,6 +102,9 @@ src
 │  └─ table
 │     ├─ adapter
 │     │  └─ TableAdapter.ts
+│     ├─ bets
+│     │  └─ config
+│     │     └─ tableBetsConfig.ts
 │     ├─ cards
 │     │  ├─ config
 │     │  │  └─ tableCardsConfig.ts
@@ -109,12 +113,12 @@ src
 │     │  └─ TableCards.ts
 │     ├─ config
 │     │  └─ tableConfig.ts
-│     ├─ factory
-│     │  └─ TableFactory.ts
 │     ├─ interface
 │     │  └─ ITableConfig.ts
-│     └─ manager
-│        └─ TableManager.ts
+│     ├─ manager
+│     │  └─ TableManager.ts
+│     └─ view
+│        └─ TableView.ts
 ├─ gameSignals
 │  └─ GameSignals.ts
 ├─ index.ts
@@ -129,6 +133,7 @@ src
 │  ├─ IPlayersMoney.ts
 │  ├─ IPlayerTurnAction.ts
 │  ├─ IPlayerTurnData.ts
+│  ├─ IRegisterScreenConfig.ts
 │  ├─ IServerPlayerData.ts
 │  └─ IUpdatePlayerTurnAction.ts
 ├─ managers
@@ -142,6 +147,7 @@ src
 │  ├─ LoginScene.ts
 │  ├─ PlayScene.ts
 │  ├─ PreloadScene.ts
+│  ├─ RegisterScene.ts
 │  └─ SetupGameScene.ts
 ├─ services
 │  ├─ colyseus
@@ -165,25 +171,28 @@ src
 │  │  │  └─ BettingAdapter.ts
 │  │  ├─ config
 │  │  │  └─ bettingConfig.ts
-│  │  ├─ factory
-│  │  │  └─ BettingFactory.ts
 │  │  ├─ interface
 │  │  │  └─ IBettingConfig.ts
-│  │  └─ manager
-│  │     └─ BettingManager.ts
+│  │  ├─ manager
+│  │  │  └─ BettingManager.ts
+│  │  └─ view
+│  │     └─ BettingView.ts
 │  └─ pokerBar
 │     ├─ adapter
 │     │  └─ PokerBarAdapter.ts
 │     ├─ config
 │     │  └─ pokerBarConfig.ts
-│     ├─ factory
-│     │  └─ PokerBarFactory.ts
 │     ├─ interface
 │     │  └─ IPokerBarConfig.ts
-│     └─ manager
-│        └─ PokerBarManager.ts
-└─ utility
-   └─ screen
-      └─ ScreenUtils.ts
+│     ├─ manager
+│     │  └─ PokerBarManager.ts
+│     └─ view
+│        └─ PokerBarView.ts
+├─ utility
+│  └─ screen
+│     └─ ScreenUtils.ts
+└─ view
+   ├─ LoginSceneView.ts
+   └─ RegisterScreenView.ts
 
 ```

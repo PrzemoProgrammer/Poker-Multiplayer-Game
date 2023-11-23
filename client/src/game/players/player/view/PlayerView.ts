@@ -1,4 +1,3 @@
-// import * as PIXI from "pixi.js";
 import { Sprite, Text } from "pixi.js";
 import CreateSprite from "../../../../components/sprite/Sprite";
 import BaseEntity from "../../../../abstraction/BaseEntity";
@@ -6,10 +5,10 @@ import CreateComponent from "../../../../actions/CreateComponent";
 import CreateText from "../../../../components/text/Text";
 import Bet from "../../../bet/Bet";
 import IPlayerConfig from "../interface/IPlayerConfig";
-import PlayerCards from "./../cards/PlayerCards";
-import Timer from "./../timer/Timer";
+import PlayerCards from "../cards/PlayerCards";
+import Timer from "../timer/Timer";
 
-export default class PlayerFactory extends BaseEntity {
+export default class PlayerView extends BaseEntity {
     avatarSprite: Sprite | null
     config: IPlayerConfig
     nickname: Text

@@ -98,7 +98,7 @@ export default class PlayersManager {
     await Promise.all(movePromises)
   }
   
-    public static resetBets() {
+    public static resetPlayersBets() {
         const players = this.getPlayers();
         for (const playerId in players) {
             const player = players[playerId];

@@ -1,0 +1,22 @@
+{
+    "registerScreenBackground": {
+      "path": "registerScreen/background",
+      "key": "register_screen_background"
+    },
+    "registerButton": {
+      "path": "registerScreen/buttons",
+      "key": "register_button"
+    },
+    "registerButtonPush": {
+      "path": "registerScreen/buttons",
+      "key": "register_button_push"
+    },
+    "backButton": {
+      "path": "registerScreen/buttons",
+      "key": "back_button"
+    },
+    "backButtonPush": {
+      "path": "registerScreen/buttons",
+      "key": "back_button_push"
+    }
+}

@@ -3,10 +3,10 @@ import CreateComponent from "../../../actions/CreateComponent";
 import Button from "../../../components/button/Button";
 import DragObject from "../../../components/draggableObject/DraggableObject";
 import CreateText from "../../../components/text/Text";
-import {FACTORY_CONFIG} from "../config/bettingConfig";
+import {VIEW_CONFIG} from "../config/bettingConfig";
 import IBettingConfig from "../interface/IBettingConfig";
 
-export default class BettingFactory extends Container {
+export default class BettingView extends Container {
   isOpen: boolean
 background: Sprite | null
 toggleButton: Button | null;
@@ -17,7 +17,7 @@ config: IBettingConfig;
 
   constructor() {
     super();
-    this.config = FACTORY_CONFIG;
+    this.config = VIEW_CONFIG;
     this.x = this.config.x
     this.y = this.config.y
     this.toggleButton = this.createButton()

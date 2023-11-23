@@ -6,8 +6,8 @@ export default class PokerBarManager {
     private static pokerBarAdapter: PokerBarAdapter = new PokerBarAdapter();
     
     public static initPokerBar(scene: BaseScene){
-        const pokerBarFactory = this.pokerBarAdapter.createPokerBar()
-        scene.addChild(pokerBarFactory)
+        const pokerBarView = this.pokerBarAdapter.createPokerBar()
+        scene.addChild(pokerBarView)
     }
 
     public static updateMoneyText(text: number){

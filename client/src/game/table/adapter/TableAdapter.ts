@@ -1,15 +1,15 @@
-import TableFactory from "../factory/TableFactory";
+import TableView from "../view/TableView";
 import TableCards from "../cards/TableCards";
 import Bet from "../../bet/Bet";
 
 export default  class TableAdapter {
-    table: TableFactory | null
+    table: TableView | null
     constructor() {
         this.table = null
     }
 
-    public createTable(): TableFactory{
-        return this.table = new TableFactory()
+    public createTable(): TableView{
+        return this.table = new TableView()
     }
 
     public get getCards(): TableCards{
