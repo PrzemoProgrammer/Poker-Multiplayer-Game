@@ -1,139 +1,3 @@
-// module.exports = class PokerHandChecker {
-//    findPlayerWithBestCombination(playersCards, tableCards) {
-//     const playersPokerHands = {};
-//     for (const playerId in playersCards) {
-//       const playerCardsArray = playersCards[playerId];
-
-//       if (this.hasRoyalFlush(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 9;
-//       } else if (this.hasStraightFlush(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 8;
-//       } else if (this.findFourOfAKind(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 7;
-//       } else if (this.hasFullHouse(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 6;
-//       } else if (this.hasFlush(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 5;
-//       } else if (this.hasStraight(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 4;
-//       } else if (this.hasThreeOfAKind(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 3;
-//       } else if (this.hasTwoPairs(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 2;
-//       } else if (this.hasOnePair(playerCardsArray, tableCards)) {
-//         playersPokerHands[playerId] = 1;
-//       } else {
-//         playersPokerHands[playerId] = 0;
-//       }
-//     }
-
-//     return playersPokerHands;
-//   }
-
-//    findHighestCard(playerCards) {
-//     return playerCards.reduce(
-//       (maxCard, card) => (card.value > maxCard.value ? card : maxCard),
-//       playerCards[0]
-//     );
-//   }
-
-//    hasOnePair(playerCards, tableCards) {
-//     return this.hasNOfAKind(playerCards, tableCards, 2);
-//   }
-
-//    hasTwoPairs(playerCards, tableCards) {
-//     return this.hasNOfAKind(playerCards, tableCards, 2, 2);
-//   }
-
-//    hasThreeOfAKind(playerCards, tableCards) {
-//     return this.hasNOfAKind(playerCards, tableCards, 3);
-//   }
-
-//    hasNOfAKind(playerCards, tableCards, n, distinctValues = 1) {
-//     const allCards = [...playerCards, ...tableCards];
-//     const valueCount = {};
-//     for (const card of allCards) {
-//       valueCount[card.value] = (valueCount[card.value] || 0) + 1;
-//     }
-//     return (
-//       Object.values(valueCount).includes(n) &&
-//       Object.keys(valueCount).length === distinctValues
-//     );
-//   }
-
-//    hasStraight(playerCards, tableCards) {
-//     const allCards = [...playerCards, ...tableCards].sort(
-//       (a, b) => a.value - b.value
-//     );
-//     return this.findConsecutiveSequence(
-//       allCards.map((card) => parseInt(card.value, 10)),
-//       5
-//     );
-//   }
-
-//    findConsecutiveSequence(arr, length) {
-//     return arr.some((value, index) =>
-//       arr.slice(index, index + length).every((v, i) => v === value + i)
-//     );
-//   }
-
-//    hasFlush(playerCards, tableCards) {
-//     const allCards = [...playerCards, ...tableCards];
-//     const suitsGroups = {};
-//     for (const card of allCards) {
-//       suitsGroups[card.suit] = (suitsGroups[card.suit] || 0) + 1;
-//     }
-//     return Object.values(suitsGroups).some((count) => count >= 5);
-//   }
-
-//    hasFullHouse(playerCards, tableCards) {
-//     const allCards = [...playerCards, ...tableCards];
-//     const valueCounts = {};
-//     for (const card of allCards) {
-//       valueCounts[card.value] = (valueCounts[card.value] || 0) + 1;
-//     }
-//     return (
-//       Object.values(valueCounts).includes(2) &&
-//       Object.values(valueCounts).includes(3)
-//     );
-//   }
-
-//    findFourOfAKind(playerCards, tableCards) {
-//     return this.hasNOfAKind(playerCards, tableCards, 4);
-//   }
-
-//    hasStraightFlush(playerCards, tableCards) {
-//     const allCards = [...playerCards, ...tableCards].sort(
-//       (a, b) => a.value - b.value
-//     );
-//     return (
-//       this.findConsecutiveSequence(
-//         allCards.map((card) => parseInt(card.value, 10)),
-//         5
-//       ) && this.hasFlush(playerCards, tableCards)
-//     );
-//   }
-
-//    hasRoyalFlush(playerCards, tableCards) {
-//     const allCards = [...playerCards, ...tableCards];
-//     const royalFlushValues = ["10", "11", "12", "13", "14"];
-//     const suitsGroups = {};
-//     for (const card of allCards) {
-//       if (!suitsGroups[card.suit]) {
-//         suitsGroups[card.suit] = [];
-//       }
-//       suitsGroups[card.suit].push(card.value);
-//     }
-//     return Object.values(suitsGroups).some(
-//       (values) =>
-//         values.length >= 5 &&
-//         royalFlushValues.every((value) => values.includes(value))
-//     );
-//   }
-// };
-//! ///////////
-// const PokerHandChecker = require("../PokerHandChecker");
-
 module.exports = class PokerHandChecker {
   static getPlayerWithBestCombination(playersCards, tableCards) {
     const playersPokerHandCombinations =
@@ -143,7 +7,6 @@ module.exports = class PokerHandChecker {
     );
 
     console.log(playersPokerHandCombinations);
-
     return playerWithBestCombination;
   }
 
@@ -242,7 +105,6 @@ module.exports = class PokerHandChecker {
     const allCards = [...playerCards, ...tableCards];
     const sortedCards = allCards.sort((a, b) => a.value - b.value);
 
-    // Sprawdź, czy istnieje sekwencja pięciu kart z rzędu
     for (let i = 0; i < sortedCards.length - 4; i++) {
       const straightSequence = sortedCards.slice(i, i + 5);
 
@@ -255,7 +117,6 @@ module.exports = class PokerHandChecker {
   }
 
   static isStraight(cards) {
-    // Sprawdź, czy karty tworzą sekwencję z rzędu
     for (let i = 0; i < cards.length - 1; i++) {
       if (parseInt(cards[i].value) !== parseInt(cards[i + 1].value) - 1) {
         return false;
@@ -309,7 +170,6 @@ module.exports = class PokerHandChecker {
     const allCards = [...playerCards, ...tableCards];
     const valueCount = {};
 
-    // Liczenie ilości kart o danej wartości
     allCards.forEach((card) => {
       if (!valueCount[card.value]) {
         valueCount[card.value] = 1;
@@ -318,32 +178,27 @@ module.exports = class PokerHandChecker {
       }
     });
 
-    // Sprawdzanie, czy istnieją cztery karty o tej samej wartości
     for (const value in valueCount) {
       if (valueCount[value] === 4) {
-        return true; // Gracz ma Four of a Kind
+        return true;
       }
     }
 
-    return false; // Gracz nie ma Four of a Kind
+    return false;
   }
 
   static hasStraightFlush(playerCards, tableCards) {
     const allCards = [...playerCards, ...tableCards];
 
-    // Sortowanie kart według wartości
     allCards.sort((a, b) => a.value - b.value);
 
-    // Sprawdzanie Straight Flush
     for (let i = 0; i <= allCards.length - 5; i++) {
       const straightFlushCandidate = allCards.slice(i, i + 5);
 
-      // Sprawdzanie, czy wszystkie karty mają ten sam kolor
       const isSameSuit = straightFlushCandidate.every(
         (card) => card.suit === straightFlushCandidate[0].suit
       );
 
-      // Sprawdzanie, czy wartości kart tworzą sekwencję
       const isStraight = straightFlushCandidate.every((card, index) => {
         if (index < 4) {
           return (
@@ -355,11 +210,11 @@ module.exports = class PokerHandChecker {
       });
 
       if (isSameSuit && isStraight) {
-        return true; // Gracz ma Straight Flush
+        return true;
       }
     }
 
-    return false; // Gracz nie ma Straight Flush
+    return false;
   }
 
   static hasRoyalFlush(playerCards, tableCards) {
@@ -367,7 +222,6 @@ module.exports = class PokerHandChecker {
     const suits = new Set();
     const values = new Set();
 
-    // Check for cards of the same suit
     for (const card of allCards) {
       suits.add(card.suit);
     }
@@ -375,12 +229,9 @@ module.exports = class PokerHandChecker {
     for (const suit of suits) {
       const suitCards = allCards.filter((card) => card.suit === suit);
 
-      // Check if there are at least 5 cards of the same suit
       if (suitCards.length >= 5) {
-        // Reset the values set
         values.clear();
 
-        // Check for A, K, Q, J, 10 in the same suit
         for (const card of suitCards) {
           values.add(card.value);
         }
@@ -392,12 +243,12 @@ module.exports = class PokerHandChecker {
           values.has("13") &&
           values.has("14")
         ) {
-          return true; // Royal Flush found
+          return true;
         }
       }
     }
 
-    return false; // No Royal Flush
+    return false;
   }
 
   static findPlayerWithBestCombination(playersCombinations) {

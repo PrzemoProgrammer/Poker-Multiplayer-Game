@@ -197,10 +197,14 @@ module.exports = class GameManager {
     //! update money in database
     console.log(winnerPlayerId);
     console.log("winner");
+    this.resetGame();
     return { playersCards, winnerPlayerId, betsInPool, winnerPlayerMoney };
-    //! reset game
-    // PlayersBetManager.resetPlayersBets();
-    // PlayersManager.resetPlayersSigns();
+  }
+
+  static resetGame() {
+    PlayersBetManager.resetPlayersBets();
+    PlayersManager.resetPlayersSigns();
+    //! here is not all
   }
 
   static isGameWinner() {

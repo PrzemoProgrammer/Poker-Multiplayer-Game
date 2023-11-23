@@ -30,7 +30,6 @@ module.exports = class PlayersMoneyManager {
       const updatedPlayerMoney = this.calculatePlayerMoney(player, playerBets);
       updatedPlayersMoney[playerId].money = updatedPlayerMoney;
     }
-
     return updatedPlayersMoney;
   }
 
