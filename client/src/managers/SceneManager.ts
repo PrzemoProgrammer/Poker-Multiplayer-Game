@@ -10,11 +10,13 @@ export default class SceneManager {
         GameStorage.addChild(scene)
       });
     }
-  
+
     public static autoStartFirstScene(): void {
-      const firstSceneKey = SceneStorage.getFirstSceneKey
-      if(firstSceneKey)
-      this.startScene(firstSceneKey);
+      const scenesMap = SceneStorage.getScenes
+      const scenesKeys = Array.from(scenesMap.keys());
+      const firstScene = scenesKeys.length > 0 ? scenesKeys[0] : undefined;
+      if(firstScene)
+      this.startScene(firstScene);
     }
   
     public static startScene(key: string):void {

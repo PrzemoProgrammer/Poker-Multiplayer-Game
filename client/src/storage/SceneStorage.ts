@@ -11,10 +11,9 @@ export default class SceneStorage {
     public static getScene(key: string): BaseScene | undefined {
       return this.scenes.get(key);
     }
-  
-    public static get getFirstSceneKey(): string | undefined {
-      const keys = Array.from(this.scenes.keys());
-      return keys.length > 0 ? keys[0] : undefined;
+
+    public static get getScenes(): Map<string,{}>{
+      return this.scenes
     }
   
     public static deleteScene(key: string): void {
