@@ -1,15 +1,16 @@
-import * as PIXI from "pixi.js";
+import {Container} from "pixi.js";
 import loadingScreenConfig from "../../config/loadingScreenConfig";
-import ImageManager from "../../managers/ImageManager";
 import ILoadingScreenConfig from "./interface/ILoadingScreenConfig";
+import CreateComponent from "../../actions/CreateComponent";
+import CreateSprite from "../../components/sprite/Sprite";
 
 export default class LoadingScreen {
-    scene: PIXI.Container;
-    woman: PIXI.Container | undefined;
-    background: PIXI.Sprite | undefined;
-    text: PIXI.Sprite | undefined;
+    scene: Container;
+    woman: CreateSprite 
+    background: CreateSprite
+    text: CreateSprite;
     config: ILoadingScreenConfig
-    constructor(scene: PIXI.Container) {
+    constructor(scene: Container) {
         // this.totalAssets = null;
         // this.loadedAssets = null;
         this.config = loadingScreenConfig;
@@ -20,40 +21,25 @@ export default class LoadingScreen {
         // this.createProgressBar();
     }
 
-    private createBackground() {
-      const {key, x, y, anchorX, anchorY} = this.config.background
-        const spritePath = ImageManager.getImage(key);
-        if (!spritePath) return;
-        let bg = PIXI.Sprite.from(spritePath);
-        bg.anchor.set(anchorX, anchorY);
-        bg.position.set(x, y);
-        this.scene.addChild(bg);
-
-        return bg;
+    public createBackground(): CreateSprite{
+      const spriteConfig = this.config.background;
+        const sprite = CreateComponent.createSprite(spriteConfig);
+        if (sprite) this.scene.addChild(sprite);
+        return sprite;
     }
 
-    private createWoman() {
-      const {key, x, y, anchorX, anchorY} = this.config.womanCharacter
-        const spritePath = ImageManager.getImage(key);
-        if (!spritePath) return;
-        let woman = PIXI.Sprite.from(spritePath);
-        woman.anchor.set(anchorX, anchorY);
-        woman.position.set(x, y);
-        this.scene.addChild(woman);
-
-        return woman;
+    public createWoman(): CreateSprite {
+      const spriteConfig = this.config.womanCharacter;
+        const sprite = CreateComponent.createSprite(spriteConfig);
+        if (sprite) this.scene.addChild(sprite);
+        return sprite;
     }
 
-    createLoadingText() {
-      const {key, x, y, anchorX, anchorY} = this.config.loadingText
-        const spritePath = ImageManager.getImage(key);
-        if (!spritePath) return;
-        let text = PIXI.Sprite.from(spritePath);
-        text.anchor.set(anchorX, anchorY);
-        text.position.set(x, y);
-        this.scene.addChild(text);
-
-        return text;
+    public createLoadingText(): CreateSprite {
+      const spriteConfig = this.config.loadingText;
+        const sprite = CreateComponent.createSprite(spriteConfig);
+        if (sprite) this.scene.addChild(sprite);
+        return sprite;
     }
 
     //   createProgressBar() {

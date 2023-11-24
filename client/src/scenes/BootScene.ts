@@ -10,8 +10,8 @@ class BootScene extends BaseScene {
 
     }
 
-    async init(){
-      await this.preload()
+     init(){
+      this.preload()
       this.startLoadingScreen()
       this.startNextScene()
     }
