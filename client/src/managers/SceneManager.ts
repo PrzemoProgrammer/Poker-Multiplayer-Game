@@ -21,8 +21,7 @@ export default class SceneManager {
   
     public static startScene(key: string):void {
       const scene = SceneStorage.getScene(key)
-      if(scene)
-      scene.init()
+      scene?.init()
     }
   
    public static removeScene(key: string):void  {
