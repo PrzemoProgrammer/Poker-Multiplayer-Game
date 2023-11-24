@@ -61,17 +61,14 @@ class ColyseusClient {
       });
 
       this.room?.onMessage('getPlayers', (data: IServerPlayerData) => {
-        console.log(data)
         GameSignals.onGetPlayers.dispatch(data)     
       });
 
       this.room?.onMessage("playerJoined", (data: IPlayersConfig) => {
-        console.log('Received playerJoined message:', data);
         GameSignals.onPlayerJoined.dispatch(data)  
       });
 
       this.room?.onMessage("initPreflopRound", (data: IAllPlayerJoinedServerData) => {
-        console.log(data)
         GameSignals.onAllPlayerJoined.dispatch(data)  
       });
 

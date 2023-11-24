@@ -22,9 +22,6 @@ import GameSignals from "../gameSignals/GameSignals";
 import {BUTTON_TYPES} from "../UI/pokerBar/config/pokerBarConfig";
 import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IGameResultData from "../interfaces/IGameResultData";
-import {MAX_PLAYERS} from "../game/config/gameConfig";
-import { PLAYER_POSITIONS_CONFIG } from "../game/config/gameConfig";
-
 
 export default class GameManager {
      public static async  onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData){
