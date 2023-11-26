@@ -1,5 +1,4 @@
-import * as PIXI from "pixi.js";
-import spritesConfig from "../../assets/images/spritesConfig.json";
+import staticSpritesConfig from "../../assets/images/staticSpritesConfig.json";
 import CreateComponent from "../actions/CreateComponent";
 import ISpriteConfig from "../components/sprite/interface/ISpriteConfig";
 import sceneManager from "../managers/SceneManager";
@@ -98,8 +97,8 @@ class PlayScene extends BaseScene {
     }
 
     createStaticComponents() {
-      for (let spriteConfig in spritesConfig) {
-          const spriteData: ISpriteConfig = spritesConfig[spriteConfig as keyof typeof spritesConfig];
+      for (let spriteConfig in staticSpritesConfig) {
+          const spriteData: ISpriteConfig = staticSpritesConfig[spriteConfig as keyof typeof staticSpritesConfig];
           const sprite = CreateComponent.create(spriteData);
           if (sprite !== null) this.addChild(sprite);
       }
