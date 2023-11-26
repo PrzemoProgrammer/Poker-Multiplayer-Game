@@ -12,33 +12,78 @@ module.exports = class PokerHandChecker {
 
   static calculatePlayersPokerHandCombinations(playersCards, tableCards) {
     const playersPokerHands = {};
+
     for (const playerId in playersCards) {
       const playerCardsArray = playersCards[playerId];
+      let pokerHapokerHandValuend = 0;
 
-      if (this.hasRoyalFlush(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 9;
-      } else if (this.hasStraightFlush(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 8;
-      } else if (this.findFourOfAKind(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 7;
-      } else if (this.hasFullHouse(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 6;
-      } else if (this.hasFlush(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 5;
-      } else if (this.hasStraight(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 4;
-      } else if (this.hasThreeOfAKind(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 3;
-      } else if (this.hasTwoPairs(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 2;
-      } else if (this.hasOnePair(playerCardsArray, tableCards)) {
-        playersPokerHands[playerId] = 1;
-      } else {
-        playersPokerHands[playerId] = 0;
+      switch (true) {
+        case this.hasRoyalFlush(playerCardsArray, tableCards):
+          pokerHandValue = 9;
+          break;
+        case this.hasStraightFlush(playerCardsArray, tableCards):
+          pokerHandValue = 8;
+          break;
+        case this.findFourOfAKind(playerCardsArray, tableCards):
+          pokerHandValue = 7;
+          break;
+        case this.hasFullHouse(playerCardsArray, tableCards):
+          pokerHandValue = 6;
+          break;
+        case this.hasFlush(playerCardsArray, tableCards):
+          pokerHandValue = 5;
+          break;
+        case this.hasStraight(playerCardsArray, tableCards):
+          pokerHandValue = 4;
+          break;
+        case this.hasThreeOfAKind(playerCardsArray, tableCards):
+          pokerHandValue = 3;
+          break;
+        case this.hasTwoPairs(playerCardsArray, tableCards):
+          pokerHandValue = 2;
+          break;
+        case this.hasOnePair(playerCardsArray, tableCards):
+          pokerHandValue = 1;
+          break;
+        default:
+          pokerHandValue = 0;
       }
+
+      playersPokerHands[playerId] = pokerHandValue;
     }
+
     return playersPokerHands;
   }
+
+  // static calculatePlayersPokerHandCombinations(playersCards, tableCards) {
+  //   const playersPokerHands = {};
+  //   for (const playerId in playersCards) {
+  //     const playerCardsArray = playersCards[playerId];
+
+  //     if (this.hasRoyalFlush(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 9;
+  //     } else if (this.hasStraightFlush(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 8;
+  //     } else if (this.findFourOfAKind(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 7;
+  //     } else if (this.hasFullHouse(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 6;
+  //     } else if (this.hasFlush(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 5;
+  //     } else if (this.hasStraight(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 4;
+  //     } else if (this.hasThreeOfAKind(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 3;
+  //     } else if (this.hasTwoPairs(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 2;
+  //     } else if (this.hasOnePair(playerCardsArray, tableCards)) {
+  //       playersPokerHands[playerId] = 1;
+  //     } else {
+  //       playersPokerHands[playerId] = 0;
+  //     }
+  //   }
+  //   return playersPokerHands;
+  // }
 
   static findHighestCard(playerCards) {
     const sortedCards = playerCards.sort((a, b) => b.value - a.value);
