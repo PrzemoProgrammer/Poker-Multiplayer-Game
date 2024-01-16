@@ -34,7 +34,7 @@ export default class TableCards extends Container{
   private async layOutCards(){
     const spacing = this.cardsSpace;
     const firstCardX = this.cards[0].x;
-    const movePromises = []
+    const movePromises: Promise<void>[] = []
     for (let i = 1; i < this.cards.length; i++) {
         const card = this.getCard(i)
       const newCardX = firstCardX + (i * spacing);

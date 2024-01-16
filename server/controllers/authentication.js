@@ -1,5 +1,5 @@
 const databaseManager = require("../MongoDB/DatabaseManager");
-const passwordHasher = require("../dataHasher/PasswordHasher");
+const PasswordHasher = require("../dataHasher/PasswordHasher");
 const JWT = require("../JWT/JWTManager");
 
 async function authentication(req, res) {
@@ -10,7 +10,7 @@ async function authentication(req, res) {
   try {
     const userPassword = usernameString + passwordString;
 
-    const hashedPassword = await passwordHasher.hashPassword(userPassword);
+    const hashedPassword = await PasswordHasher.hashPassword(userPassword);
 
     const player = await databaseManager.findPlayer({
       passwordHash: hashedPassword,

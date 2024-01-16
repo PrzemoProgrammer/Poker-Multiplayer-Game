@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
+const { SECRET_KEY } = require("./config");
 
 module.exports = class JWTManager {
-  static secretKey = "kaszankaa3827109";
+  static secretKey = SECRET_KEY;
 
   static generateToken(data) {
     return jwt.sign(data, this.secretKey);

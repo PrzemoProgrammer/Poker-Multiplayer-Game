@@ -1,5 +1,5 @@
 const databaseManager = require("../MongoDB/DatabaseManager");
-const passwordHasher = require("../dataHasher/PasswordHasher");
+const PasswordHasher = require("../dataHasher/PasswordHasher");
 
 async function register(req, res) {
   const { username, password, nick } = req.body;
@@ -15,7 +15,7 @@ async function register(req, res) {
       });
     }
 
-    const hashedPassword = await passwordHasher.hashPassword(userPassword);
+    const hashedPassword = await PasswordHasher.hashPassword(userPassword);
 
     const player = await databaseManager.findPlayer({
       passwordHash: hashedPassword,

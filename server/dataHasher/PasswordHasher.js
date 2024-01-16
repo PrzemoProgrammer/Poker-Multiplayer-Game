@@ -18,3 +18,4 @@ class PasswordHasher {
 const passwordHasher = new PasswordHasher();
 
 module.exports = passwordHasher;
+//TODO: Make static
