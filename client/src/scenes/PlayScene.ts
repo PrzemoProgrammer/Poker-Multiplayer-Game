@@ -10,7 +10,7 @@ import IPlayersConfig from "../game/players/interface/IPlayersConfig";
 import IPlayerTurnData from "../interfaces/IPlayerTurnData";
 import IAllPlayerJoinedServerData from "../interfaces/IAllPlayerJoinedServerData";
 import INextRoundData from "../interfaces/INextRoundData";
-import GameManager from "../managers/GameManager";
+import GameManager from "../game/manager/GameManager";
 import TableManager from "../game/table/manager/TableManager";
 import IUpdatePlayerTurnAction from "../interfaces/IUpdatePlayerTurnAction";
 import IGameResultData from "../interfaces/IGameResultData";
