@@ -1,0 +1,97 @@
+
+#rooms-screen-container {
+    position:fixed;
+      /* display: flex;
+      flex-direction: column;
+      align-items: center; */
+      /* justify-content: center; */
+      width: 100%;
+      height: 100%;
+      /* padding: 20px; */
+       /* background-color: #d4eb0a; */
+  }
+
+
+
+
+
+
+  #rooms-screen-container #back-button-container{
+    margin-left: 30px;
+    margin-top: 30px;
+  }
+  
+
+
+
+
+
+
+  #rooms-screen-container #rooms-container {
+    display: flex;
+    justify-content:center;
+      margin: 40px 200px 40px 200px;
+  }
+
+
+
+
+
+
+
+  #rooms-screen-container #rooms-wrapper {
+    /* margin: 40px 200px 40px 200px; */
+    /* flex-direction:row; */
+    justify-content:space-between;
+    display: flex;
+    /* grid-gap: 20px; */
+    /* grid-template-columns: repeat(auto-fit, minmax(800px, 1fr)); */
+    width: 800px
+  }
+
+
+
+
+
+  
+
+  #room {
+    width: 200px;
+    height: 200px;
+    background-color: #696262;
+    border-radius: 20px;
+    padding: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #room:hover {
+    background-color: #9e9797;
+  }
+  
+  #room p {
+    margin: 5px 0;
+  }
+  
+  /* #room .room-id {
+    font-weight: bold;
+  }
+  
+  #room .entry-fee {
+    color: #007bff;
+  }
+  
+  #room .player-count {
+    color: #28a745;
+  } */
+
+
+
+
+
+
+
+  #rooms-screen-container #back-button {
+    cursor: pointer;
+    pointer-events: all;
+  }

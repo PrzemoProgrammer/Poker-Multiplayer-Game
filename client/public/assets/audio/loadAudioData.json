@@ -1,0 +1,38 @@
+{
+    "dealCard": {
+      "path": "card",
+      "key": "deal_card"
+    },
+    "playerLeave": {
+        "path": "player",
+        "key": "player_leave"
+      },
+      "playerTurnEnd": {
+        "path": "player",
+        "key": "player_turn_end"
+      },
+      "playerTurnStart": {
+        "path": "player",
+        "key": "player_turn_start"
+      },
+      "playerWin": {
+        "path": "player",
+        "key": "player_win"
+      },
+      "playerWin": {
+        "path": "player",
+        "key": "player_join"
+      },
+      "slideCard": {
+        "path": "card",
+        "key": "slide_card"
+      },
+      "swipeButton": {
+        "path": "button",
+        "key": "swipe_button"
+      },
+      "turnCard": {
+        "path": "card",
+        "key": "turn_card"
+      }
+  }

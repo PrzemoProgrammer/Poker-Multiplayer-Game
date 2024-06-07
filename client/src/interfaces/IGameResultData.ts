@@ -5,8 +5,9 @@ export default interface IGameResultData {
         playersCards: IPlayersCards,
       },
       game: {
-        winnerPlayerId: string,
-        winnerPlayerMoney: number,
+        winnersPlayerId: string,
+        winningPlayerChips: number,
+        winningsPerPlayer: number,
         tableBets: number,
       },
   }

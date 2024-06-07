@@ -1,204 +1,142 @@
-import AudioManager from "../../managers/AudioManager";
-import BaseScene from "../../abstraction/BaseScene";
-import ColyseusClient from "../../services/colyseus/ColyseusClient";
-import PokerBarManager from "../../UI/pokerBar/manager/PokerBarManager";
-import BettingManager from "../../UI/betting/manager/BettingManager";
-import IPlayersDataStorage from "../players/storage/interface/IPlayersDataStorage";
-import IPlayersBets from "../../interfaces/IPlayersBets";
-import IPlayerGamePositions from "../interface/IPlayerGamePositions";
-import IPlayersMoney from "../../interfaces/IPlayersMoney";
-import PlayersManager from "../players/manager/PlayersManager";
+import SocketClient from "../../services/webSocket/SocketClient";
 import IAllPlayerJoinedServerData from "../../interfaces/IAllPlayerJoinedServerData";
 import IPlayerTurnData from "../../interfaces/IPlayerTurnData";
 import IServerPlayerData from "../../interfaces/IServerPlayerData";
-import { TURN_OVER_PLAYER_CARD_DELAY } from "../card/config/cardAnimsConfig";
-import PlayerSitPositionManager from "./PlayerSitPositionManager";
-import Player from "../players/player/Player";
-import {PLAYER_CONFIG, PLAYER_SIGN_TEXTURE_TYPES, AUDIO_CONFIG} from "../players/player/config/playerConfig";
 import INextRoundData from "../../interfaces/INextRoundData";
 import IUpdatePlayerTurnAction from "../../interfaces/IUpdatePlayerTurnAction";
-import TableManager from "../table/manager/TableManager";
 import GameSignals from "../../gameSignals/GameSignals";
-import {BUTTON_TYPES} from "../../UI/pokerBar/config/pokerBarConfig";
-import IPlayersConfig from "../players/interface/IPlayersConfig";
+// import IPlayersConfig from "../players/interface/IPlayersConfig";
 import IGameResultData from "../../interfaces/IGameResultData";
+import SceneManager from "../../managers/SceneManager";
+import PagesManager from '../../pages/manager/PagesManager.js'; 
+import UIManager from '../../UI/manager/UIManager.js'; 
 
 export default class GameManager {
-     public static async  onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData){
-        const players = PlayersManager.getPlayers();
-        const {drawCards, playersBets, playersMoney, playersGamePositions } = initGameData.players
+  protected static game: any = null
 
-        for (const playerId in players) {
-        this.updatePlayerMoney(playerId, players, playersMoney)
-        this.updatePlayerBet(playerId, players, playersBets)
-        this.updatePlayerPosition(playerId, players, playersGamePositions)
-        }
+  static startGame(playersData: any) {
+  const game = SceneManager.getScene("Game")
+  const background = SceneManager.getScene("Background")
+  // SceneManager.startScene("Game")
 
-        await PlayersManager.playDealCardsForPlayersAnim();
-        await new Promise<void>((resolve) => {
-            setTimeout(() => {
-                PlayersManager.turnOverPlayersCardsAnim(drawCards, true);
-                resolve(); 
-            }, TURN_OVER_PLAYER_CARD_DELAY);
-        });
-        this.updatePlayerTurn(initGameData.game.playerTurnData)
-    }
-
-      public static updatePlayerMoney(playerId: string, players: IPlayersDataStorage, playersMoney: IPlayersMoney){
-        const updateMoneyText = playersMoney[playerId].money
-        PlayersManager.updatePlayerMoneyText(playerId, players, updateMoneyText)
-        if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateMoneyText(updateMoneyText)
-      }
-
-      public static updatePlayerBet(playerId: string, players: IPlayersDataStorage, playersBets: IPlayersBets){
-        const updateBet = playersBets[playerId].bet
-        if(playersBets[playerId] !== undefined) PlayersManager.updatePlayerBet(playerId, players, updateBet)
-        if(ColyseusClient.isMyId(playerId)) PokerBarManager.updateBetText(updateBet)
-      }
-
-      public static updatePlayerPosition(playerId: string, players: IPlayersDataStorage, playersGamePositions: IPlayerGamePositions){
-        const updatedPosition = playersGamePositions[playerId].position
-        PlayersManager.updatePlayerPosition(playerId, players, updatedPosition)
-        PlayersManager.checkDisplayDealerSign(playerId, players, updatedPosition)
-      }
-
-      public static updateInterfaceMoneyText(updatedText: number){
-        PokerBarManager.updateMoneyText(updatedText)
-      } 
-
-      private static setupUiInterfaceButtons(){
-        const [fold, check, call, raise, bet] = BUTTON_TYPES
-        const requestData = {action: "", data: 0}
-        PokerBarManager.setupButtonOnClick(fold, ()=>{
-          console.log("fold button clicked")
-        })
-        PokerBarManager.setupButtonOnClick(check, ()=>{
-          requestData.action = check
-          GameSignals.playerTurnAction.dispatch(requestData)
-        })
-        PokerBarManager.setupButtonOnClick(call, ()=>{
-          requestData.action = call
-          GameSignals.playerTurnAction.dispatch(requestData)
-        })    
-        PokerBarManager.setupButtonOnClick(raise, ()=>{
-          console.log("raise button clicked")
-        })    
-        PokerBarManager.setupButtonOnClick(bet, ()=>{
-          const selectedBetValue = BettingManager.getBetValueNumber
-          requestData.action = bet
-         if(selectedBetValue) requestData.data = selectedBetValue
-          GameSignals.playerTurnAction.dispatch(requestData)
-        })
-      }
-
-      public static updatePlayerTurn(gamePlayerTurnData: IPlayerTurnData){
-        const {playerIdGameTurn, serverTime, turnRespondTime} = gamePlayerTurnData
-        const startPlayerTurnAudio = AUDIO_CONFIG.playerTurnStart
-        AudioManager.playAudio(startPlayerTurnAudio)
-        PlayersManager.turnOffPlayersTimer()
-        PlayersManager.setPlayerActionSignVisible(playerIdGameTurn, false)
-        const player = PlayersManager.getPlayer(playerIdGameTurn)
-        if(player) player.startTimer(serverTime, turnRespondTime )
-      }
-
-      public static createUiInterface(scene: BaseScene){
-        BettingManager.initBetting(scene)
-        PokerBarManager.initPokerBar(scene);
-        this.setupUiInterfaceButtons()
-      }
-
-      public static createPlayer(playerData: IServerPlayerData){
-        const { id, money, nick, sit, bet, position } = playerData;
-        const { sitPosition, betPosition, cardsPositions } = PlayerSitPositionManager.getPositionsConfig(sit);
-        const config = { ...PLAYER_CONFIG };
-        config.x = sitPosition.x;
-        config.y = sitPosition.y;
-        config.bet.x = betPosition.x;
-        config.bet.y = betPosition.y;
-        config.id = id;
-        config.sit = sit;
-        config.bet.text.message = bet;
-        config.position = position;
-        config.nickname.message = nick;
-        config.money.message = money;
-        config.cardsAnimPositions.animStartPosition = cardsPositions.dealAnimStartPositions;
-        config.cardsAnimPositions.animEndPosition = cardsPositions.dealAnimEndPositions;
-        for (let i = 0; i < cardsPositions.dealAnimEndPositions.length; i++) {
-            config.cards[i].x = cardsPositions.dealAnimEndPositions[i].x;
-            config.cards[i].y = cardsPositions.dealAnimEndPositions[i].y;
-        }
-        const player = new Player(config)
-        PlayersManager.addPlayer(player);
-        
-        return player;
-      }
-
-      public static async initNextRound(nextRoundData: INextRoundData){
-        const{tableCards,tableBets} = nextRoundData.game
-        await TableManager.layOutCards(tableCards)
-        TableManager.updateTotalBetsTextAndMakeVisible(tableBets)
-        PlayersManager.resetPlayersBets()
-        PlayersManager.setPlayersSignsVisible(false)
-      }
-
-      public static deletePlayer(playerId: string){
-        PlayersManager.deletePlayer(playerId)
-      }
-
-      public static updatePlayerTurnAction(playerTurnAction: IUpdatePlayerTurnAction){
-        const [checkTexture, callTexture, raiseTexture] = PLAYER_SIGN_TEXTURE_TYPES
-        const [foldType, checkType, callType, raiseType, betType] = BUTTON_TYPES
-        const {playerId, type, bet, money} = playerTurnAction
-        const player = PlayersManager.getPlayer(playerId)
-        const playerTurnEndAudio = AUDIO_CONFIG.playerTurnEnd
-        AudioManager.playAudio(playerTurnEndAudio)
-        if(type === checkType) {
-          const signTexture = checkTexture
-          player.setActionSignAndTextureVisible(signTexture, true)
-        }
-        else if(type === betType) {  
-          this.updatePlayerMoneyAndBetText(playerId, bet, money)
-        }
-        else if(type === callType) {  
-          const signTexture = callTexture
-          player.setActionSignAndTextureVisible(signTexture,true)
-          this.updatePlayerMoneyAndBetText(playerId, bet, money)
-        }
-      }
-
-      public static updatePlayerMoneyAndBetText(playerId: string, bet: number, money: number){
-        const players = PlayersManager.getPlayers();
-        PlayersManager.updatePlayerBet(playerId, players, bet)
-        PlayersManager.updatePlayerMoneyText(playerId, players, money)
-        if(ColyseusClient.isMyId(playerId)) this.updateUiMoneyAndBetText(bet, money)
-      }
-
-      public static updateUiMoneyAndBetText(bet: number, money: number){
-        PokerBarManager.updateBetText(bet)
-        PokerBarManager.updateMoneyText(money)
-      }
-
-      public static setupGamePositionsConfig(playersData: IPlayersConfig){
-        const mayId = ColyseusClient.getMyId
-        const myPlayerSitData = playersData[mayId].sit
-        PlayerSitPositionManager.setupConfigPositions(myPlayerSitData);
-      }
-
-      public static async initGameResult(gameResultData: IGameResultData){
-        const {players:{playersCards}, game:{winnerPlayerId, winnerPlayerMoney, tableBets}} = gameResultData
-        const [, , , winnerTexture] = PLAYER_SIGN_TEXTURE_TYPES
-        const player = PlayersManager.getPlayer(winnerPlayerId)
-        const players = PlayersManager.getPlayers()
-        const {x,y} = player.getPosition
-        PlayersManager.turnOffPlayersTimer()
-        PlayersManager.resetPlayersBets()
-        TableManager.updateTotalBetsTextAndMakeVisible(tableBets)
-        PlayersManager.setPlayersSignsVisible(false)
-        await PlayersManager.startScaleUpCardsAnim(true)
-        player.setActionSignAndTextureVisible(winnerTexture,true)
-        PlayersManager.updatePlayerMoneyText(winnerPlayerId, players, winnerPlayerMoney)
-        if(ColyseusClient.isMyId(winnerPlayerId)) this.updateUiMoneyAndBetText(0, winnerPlayerMoney)
-        PlayersManager.turnOverPlayersCardsAnim(playersCards, false);
-        TableManager.moveBetsToWinnerAnim(x,y)
-      }
+  if(!game?.isActive) {
+    SceneManager.startScene("Game", playersData)
+    this.game = SceneManager.getScene("Game")
+    this.bindSignals();
+    background.startGameBackground()
+    return
   }
+    SceneManager.setVisible("Game", true)
+    this.game.refreshGameData(playersData)
+    background.startGameBackground()
+  }
+
+  static afterLoadGameCallback(){
+    PagesManager.handleLoadingGameVisible(false)
+    PagesManager.handleLoginPageVisible(true)
+    this.startBackground()
+  }
+
+  static startBackground(){
+    SceneManager.startScene("Background");
+  }
+
+  static resetAndHide(){
+    const game = SceneManager.getScene("Game")
+    const background = SceneManager.getScene("Background")
+    game.resetGame()
+    SceneManager.setVisible("Game", false)
+    background.startLobbyBackground()
+  }
+
+  static addPlayerToGame(playerData: IServerPlayerData) {
+    console.log(playerData)
+      if (SocketClient.isMyId(playerData.id)) return;
+      this.game.createPlayerAndAddToGame(playerData)
+  }
+
+  static onAllPlayerJoined(initGameData: IAllPlayerJoinedServerData) {
+    this.game.onAllPlayerJoined(initGameData);
+    UIManager.updateBottomBarButtons(initGameData.game.playerTurnData)
+    const playerMoneyData = {money: initGameData.players.playersMoney[SocketClient.getMyId]}
+    UIManager.update(playerMoneyData)
+  }
+
+  static changePlayerTurn(newPlayerTurn: IPlayerTurnData ){
+    this.game.updatePlayerTurn(newPlayerTurn)
+    if (SocketClient.isMyId(newPlayerTurn.playerIdGameTurn)) 
+      UIManager.updateBottomBarButtons(newPlayerTurn)
+  }
+
+  static async initNextRound(nextRoundData: INextRoundData){
+    this.game.initNextRound(nextRoundData)    
+  }
+
+  static deletePlayerFromGame(playerId: string){
+    if (SocketClient.isMyId(playerId)) {
+      this.resetAndHide()
+      UIManager.handleVisible(false)
+      PagesManager.handleLobbyPageVisible(true)
+      PagesManager.handleLoadingPageVisible(false)
+      PagesManager.setPointerEventActive(true)
+      return;
+    }
+    this.game.deletePlayer(playerId)
+  }
+
+  static  updatePlayerTurnAction(playerSignData: IUpdatePlayerTurnAction ){
+    this.game.updatePlayerTurnAction(playerSignData)
+    // UIManager.update(playerSignData)
+  }
+
+  static initGameResult(gameResultData: IGameResultData){
+    this.game.initGameResult(gameResultData)
+  }
+
+  static initGameState(roomStateData){
+    this.game.initGameState(roomStateData)
+  }
+
+  static kickPlayer(){
+    this.resetAndHide()
+    UIManager.handleVisible(false)
+    PagesManager.handleLobbyPageVisible(true)
+  }
+
+  static resetGame(data: any){
+    this.game.resetGame()
+  }
+
+  static handleSounds(value: string){
+    this.game.handleSounds(value)
+  }
+
+  static bindSignals(): void {
+    // GameSignals.onGetPlayers.add((playerData: IPlayersConfig) => this.addPlayersToGame(playerData));
+    GameSignals.onPlayerJoinRoom.add((playerData: IServerPlayerData) => this.addPlayerToGame(playerData));
+    GameSignals.onAllPlayerJoined.add((initGameData: IAllPlayerJoinedServerData) =>
+        this.onAllPlayerJoined(initGameData),
+    );
+    GameSignals.onChangePlayerTurn.add((newPlayerTurn: IPlayerTurnData )=> this.changePlayerTurn(newPlayerTurn))
+    GameSignals.onGameState.add((roomStateData: any )=> this.initGameState(roomStateData))
+    GameSignals.onInitNextRound.add((initNextRoundData: INextRoundData )=> this.initNextRound(initNextRoundData)) 
+    GameSignals.onPlayerLeave.add((playerId: string )=> this.deletePlayerFromGame(playerId))
+    GameSignals.onUpdatePlayerTurnAction.add((playerSignData: IUpdatePlayerTurnAction )=> this.updatePlayerTurnAction(playerSignData))
+    GameSignals.onGameResult.add((gameResultData: IGameResultData )=> this.initGameResult(gameResultData))
+    GameSignals.onResetGame.add((data: any )=> this.resetGame(data))
+    GameSignals.onKick.add(( )=> this.kickPlayer())
+}
+
+  static removeListeners(){
+    GameSignals.onPlayerJoinRoom.detachAll()
+    GameSignals.onGameState.detachAll()
+    GameSignals.onAllPlayerJoined.detachAll()
+    GameSignals.onInitNextRound.detachAll()
+    GameSignals.onPlayerLeave.detachAll()
+    GameSignals.onGameResult.detachAll()
+    GameSignals.onResetGame.detachAll()
+    GameSignals.onKick.detachAll()
+    GameSignals.onChangePlayerTurn.detachAll()
+    GameSignals.onUpdatePlayerTurnAction.detachAll()
+  }
+}

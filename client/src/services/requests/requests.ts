@@ -1,9 +1,9 @@
 import { requestGet, requestPost } from "./helper/helper";
 
-export const AUTHENTICATION = (data:object) => {
+export const AUTHENTICATION = (data) => {
   return requestPost(data, "authentication");
 };
 
-export const REGISTRATION = (data: object) => {
+export const REGISTRATION = (data) => {
   return requestPost(data, "registration");
 };

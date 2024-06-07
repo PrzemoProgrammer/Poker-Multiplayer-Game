@@ -5,7 +5,7 @@ const headers = {
   Accept: "application/json",
 };
 
-export const requestPost = (data: object, url:string) => {
+export const requestPost = (data, url) => {
   return fetch(`${SERVER_URL}/${url}`, {
     method: "post",
     headers: headers,
@@ -13,7 +13,7 @@ export const requestPost = (data: object, url:string) => {
   });
 };
 
-export const requestGet = (url: string) => {
+export const requestGet = (url) => {
   return fetch(`${SERVER_URL}/${url}`, {
     headers: headers,
   });

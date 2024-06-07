@@ -1,0 +1,116 @@
+#UI #top-bar {
+    position: absolute;
+    display: flex;
+    justify-content:space-between; 
+    align-items: center;
+    width: 100%;
+    font-size: 24px;
+    /* height: 107 */
+  /* transform: scale(); */
+  /* position: absolute;
+  display: flex;
+  justify-content:space-around; 
+  width: 100vw;
+  background: rgba(0,0,0,.3); */
+  /* transform: translate(0%, 0%); */
+  /* top: 100vh; */
+  /* bottom: 0; */
+  
+  /* transform-origin: bottom center; */
+}
+
+#top-bar #left-side-buttons-container {
+  margin: 20px 40px;
+}
+#left-side-buttons-container #left-side-buttons-wrapper {
+  display: flex;
+  align-items: center;
+}
+#left-side-buttons-wrapper #texture-button {
+  margin-left: 15px;
+}
+
+
+
+
+
+
+
+#top-bar #right-side-buttons-container {
+  margin: 20px 40px;
+}
+#right-side-buttons-container #right-side-buttons-wrapper {
+  display: flex;
+  align-items: center;
+}
+#right-side-buttons-wrapper #texture-button {
+  margin-right: 15px;
+}
+
+
+
+
+
+
+
+
+#top-bar #profile-container{
+  width: 280px;
+  height: 64px;
+  /* background-color: rgba(0,0,0,.1);     */
+  border-radius: 50px;
+  display: flex;
+  /* flex-direction:row; */
+  align-items: center;
+  /* backdrop-filter: blur(10px); */
+  margin-right:50px;
+  }
+  #top-bar #background{
+    /* left: 1; */
+    margin-left: -70px;
+    margin-top: -23px;
+    position:absolute;
+    width: 280px;
+    height: 64px;
+    background-color: rgba(0,0,0,.1);    
+    border-radius: 50px;
+    display: flex;
+    /* flex-direction:row; */
+    align-items: center;
+    /* filter: blur(8px);
+      -webkit-filter: blur(8px); */
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    }
+  #top-bar #profile-container #profile-image{
+    width: 56px;
+    height: 56px;
+    border-radius: 50px;
+  }
+  #top-bar #profile-container #player-information-container{
+    margin-left: 10px;
+  }
+  #top-bar #profile-container #player-information-container h1, h2{
+    margin: 2px;
+    font-size: 16px;
+  }
+  #top-bar #profile-container #player-information-container h2 {
+    color: rgb(199, 197, 197);
+    /* font-size: 18px; */
+  }
+  #top-bar #profile-container #player-information-container h1{
+    font-size: 18px;
+  }
+
+
+
+
+
+
+  @media (max-aspect-ratio: 1) {
+    #top-bar #left-side-buttons-container, #top-bar #right-side-buttons-container, #top-bar #profile-container {
+     transform: scale(1.3) !important;
+    }
+
+
+  }
