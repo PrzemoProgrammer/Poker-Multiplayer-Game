@@ -1,6 +1,6 @@
 
 <img align="right" alt="coding" src="https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX16586411.jpg" width="350" height="auto">
-
+***This project is not fully open source code, I am not allowed to share everything***
 # Poker Texas Hold'em - Online Game
 
 -- CLIETN:-------
