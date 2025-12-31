@@ -1,16 +1,1 @@
-
-# Vendors
-client/node_modules/
-client/USUNAC.ts/
-client/TODO.todo/
-server/.env/
-server/DATA.txt/
-server/node_modules/
-TestHelperForGithub/
-AssetsForEdit/
-
-# Build
-/npm-debug.log
-server/.env
-server/TODO.todo
-client/TODO.todo
+README_OWNER.txt
